@@ -40,6 +40,7 @@ INSERT INTO php_gallery.galleryTypes(type) VALUES('public');
 
 CREATE TABLE php_gallery.gallery (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	description VARCHAR(128) NOT NULL,
 	userId INT NOT NULL,
 	typeId INT NOT NULL,
 	FOREIGN KEY (userId) REFERENCES users(id),
