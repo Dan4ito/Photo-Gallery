@@ -25,4 +25,5 @@ $savedImageName = $imageUploadService->uploadImage($file);
 $user = $authorizationService->getLoggedInUser();
 $imageRepository->Save($savedImageName, $imageDescription, $user->id);
 
-header("Location: ../gallery.php?upload=success");
+http_response_code(302);
+header("Location: ../../client/views/gallery.php?upload=success");

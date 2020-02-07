@@ -83,13 +83,7 @@ function uploadImage() {
         // headers: {
         //   'Content-Type': 'multipart/form-data',
         // }
-        }).then(response => {
-            if (response.status < 400) {
-                console.log(response)
-            } else {
-                throw new Error("Error uploading image");
-            }
-        })
+        }).then(response => window.location.replace(response.url))
         .catch(error => console.log(error))
 };
 
