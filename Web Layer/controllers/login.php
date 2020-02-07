@@ -8,13 +8,11 @@ include_once('../dtos/LoginDto.php');
 include_once('../../Domain Layer/models/User.php');
 include_once('../../Domain Layer/services/ValidationService.php');
 include_once('../../Domain Layer/services/AuthorizationService.php');
-include_once('../../Domain Layer/services/CookieService.php');
 include_once('../../Data Layer/repositories/UserRepository.php');
 
 $validationService = new ValidationService();
 $authorizationService = new AuthorizationService();
 $userRepository = new UserRepository();
-$cookieService = new CookieService();
 
 $data = json_decode(file_get_contents('php://input'));
 

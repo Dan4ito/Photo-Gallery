@@ -53,7 +53,16 @@ class CookieService
 
     public function getCookieValue($cookieName)
     {
-        $val = $_COOKIE[$cookieName];
         return $_COOKIE[$cookieName];
+    }
+
+    public function getLoggedInUserFromCookie(){
+
+        $cookie = $_COOKIE['loginInfo'];
+        $decodedCookie = base64_decode($cookie);
+        list($userEmail, $hashed_password) = explode(':', $decodedCookie);
+
+        $dbUser = $this->userRepository->GetByEmail($userEmail);
+        return $dbUser;
     }
 }

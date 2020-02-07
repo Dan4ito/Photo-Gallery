@@ -13,12 +13,10 @@ abstract class DatabaseContext
         $this->connection = null;
 
         try {
-            $this->connection = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->dbname . ';charset=' . $this->charset, $this->username, $this->password);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
+            $this->connection = mysqli_connect($this->host, $this->username, $this->password, $this->dbname);
+        } catch (Exception $e) {
             echo 'Connection error: ' . $e->getMessage();
         }
-
         return $this->connection;
     }
 }
