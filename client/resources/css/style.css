@@ -77,3 +77,12 @@ label {
 #homeTitle {
     margin-top: 50px;
 }
+
+#galleryContainer{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.imageInfo{
+    text-align: center;
+}

@@ -64,6 +64,28 @@ function submitCreateForm() {
         .catch(error => console.log(error))
 };
 
+function uploadImage() {
+    event.preventDefault();
+
+    let imageDescription = document.getElementById('imageDescriptionInput').value;
+    let fileInput = document.getElementById('fileInput');
+    console.log()
+    const formData = new FormData();
+
+    formData.append('fileDescription', imageDescription);
+    formData.append('file', fileInput.files[0]);
+
+
+    fetch('../../Web Layer/controllers/uploadImage.php', {
+        method: 'POST',
+        body: formData,
+        //If you add this, upload won't work
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // }
+        }).then(response => window.location.replace(response.url))
+        .catch(error => console.log(error))
+};
 
 function clearInputFields() {
     var email = document.getElementById('email');

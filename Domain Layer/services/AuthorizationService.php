@@ -26,4 +26,9 @@ class AuthorizationService
     {
         return $this->cookieService->isCookieValid();
     }
+
+    public function getLoggedInUser()
+    {
+        return $this->cookieService->getLoggedInUserFromCookie();
+    }
 }
