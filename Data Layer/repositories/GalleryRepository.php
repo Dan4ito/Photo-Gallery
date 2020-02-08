@@ -36,4 +36,29 @@ class GalleryRepository extends DatabaseContext implements IGalleryRepository
         
     }
 
+    public function DeleteGallery($galleryId){
+        $query = "DELETE FROM php_gallery.galleries WHERE id = ?";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bind_param('s', $galleryId);
+        $statement->execute();
+        
+    }
+
+    public function GetById($galleryId){
+        $query = "SELECT * FROM php_gallery.galleries
+        WHERE id =?";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bind_param('s', $galleryId);
+        $statement->execute();
+        
+        $results = $statement->get_result();
+
+
+        $gallery = mysqli_fetch_all($results, MYSQLI_ASSOC);
+
+        return $gallery[0];
+    }
+
 }

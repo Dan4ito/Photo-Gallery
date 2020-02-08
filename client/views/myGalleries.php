@@ -31,11 +31,12 @@
         foreach ($myGalleries as $gallery) {
             echo '
             <div style="display: inline-block;">
-            <div style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/' . 'missingImage.jpg' . ');"></div>
-            <div class="imageInfo">
-                <h3>' . $gallery['name'] . '</h3>
-                <p>' . $gallery['timestamp'] . '</p>
-            </div>
+                <div style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/' . 'missingImage.jpg' . ');"></div>
+                <div class="imageInfo">
+                    <button onclick="deleteGallery(' . $gallery['id'] . ')">X</button>
+                    <h3>' . $gallery['name'] . '</h3>
+                    <p>' . $gallery['timestamp'] . '</p>
+                </div>
             </div>
             ';
         }

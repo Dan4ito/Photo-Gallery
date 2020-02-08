@@ -104,6 +104,22 @@ function createGallery() {
         .catch(error => console.log(error))
 };
 
+function deleteGallery(galleryId) {
+    event.preventDefault();
+
+
+    fetch('../../Web Layer/controllers/deleteGallery.php', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                galleryId: galleryId
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => window.location.replace(response.url))
+        .catch(error => console.log(error))
+};
+
 function clearInputFields() {
     var email = document.getElementById('email');
     if (email != null) {
