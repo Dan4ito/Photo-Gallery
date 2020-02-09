@@ -33,7 +33,6 @@
             <div style="display: inline-block;">
                 <div onclick="openGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/' . 'missingImage.jpg' . ');"></div>
                 <div class="imageInfo">
-                    <button onclick="deleteGallery(' . $gallery->id . ')">X</button>
                     <h3>' . $gallery->name . '</h3>
                     <p>' . $gallery->timestamp . '</p>
                 </div>

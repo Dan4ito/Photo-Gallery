@@ -14,7 +14,7 @@ class GalleryService
     public function DeleteGallery(int $galleryId, User $user)
     {
         $gallery = $this->galleryRepository->GetById($galleryId);
-        if ($gallery['userId'] == $user->id) {
+        if ($gallery->userId == $user->id) {
             $this->galleryRepository->DeleteGallery($galleryId);
         } else {
             throw new Exception("You cannot delete other peoples' galleries!", 400);

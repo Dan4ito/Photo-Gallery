@@ -56,7 +56,7 @@ class GalleryRepository extends DatabaseContext implements IGalleryRepository
         WHERE id =?";
 
         $statement = $this->connection->prepare($query);
-        $statement->bind_param('s', $galleryId);
+        $statement->bind_param('i', $galleryId);
         $statement->execute();
 
         $results = $statement->get_result();
@@ -67,7 +67,7 @@ class GalleryRepository extends DatabaseContext implements IGalleryRepository
 
     public function GetPublicGalleries()
     {
-        $query = "SELECT * FROM php_gallery.galleries g
+        $query = "SELECT g.* FROM php_gallery.galleries g
                     JOIN galleryTypes t ON g.typeId = t.id 
                     WHERE t.type =?";
 

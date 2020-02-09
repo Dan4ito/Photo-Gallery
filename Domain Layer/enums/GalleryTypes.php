@@ -1,8 +1,8 @@
 <?php
 class GalleryTypes
 {
-    const PUBLIC = 'public';
+    const PUBLIC = 'Public';
     const PUBLIC_VALUE = 1;
-    const PRIVATE = 'private';
+    const PRIVATE = 'Private';
     const PRIVATE_VALUE = 2;
 }
