@@ -4,14 +4,14 @@ include_once('../../Domain Layer/models/User.php');
 
 class ValidationService
 {
-
-    public function validateCredentials(User $user)
+    protected function validateUsername($username)
     {
-        $this->validateEmail($user->email);
-        $this->validatePassword($user->password);
-        return true;
+        if (strlen($username) <= 0) {
+            throw new Exception('Username is invalid', 400);
+        }
     }
-    private function validateEmail($email)
+
+    protected function validateEmail($email)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new Exception('Email is invalid', 400);
@@ -20,7 +20,7 @@ class ValidationService
         }
     }
 
-    private function validatePassword($password)
+    protected function validatePassword($password)
     {
         if (strlen($password) <= 0) {
             throw new Exception('Password is invalid', 400);

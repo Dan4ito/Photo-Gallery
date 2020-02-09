@@ -20,10 +20,18 @@ $authorizationService = new AuthorizationService();
 $imageDescription = $_POST['fileDescription'];
 $file = $_FILES['file'];
 
-$imageValidationService->validateImage($imageDescription, $file);
-$savedImageName = $imageUploadService->uploadImage($file);
-$user = $authorizationService->getLoggedInUser();
-$imageRepository->Save($savedImageName, $imageDescription, $user->id);
+try {
+    $imageValidationService->validateImage($imageDescription, $file);
+    $savedImageName = $imageUploadService->uploadImage($file);
+    $user = $authorizationService->getLoggedInUser();
+    $imageRepository->Save($savedImageName, $imageDescription, $user->id);
 
-http_response_code(302);
-header("Location: ../../client/views/gallery.php?upload=success");
+    http_response_code(302);
+    header("Location: ../../client/views/gallery.php?upload=success");
+} catch (Exception $ex) {
+
+    http_response_code($ex->getCode());
+    echo json_encode(array(
+        'error' => $ex->getMessage()
+    ));
+}

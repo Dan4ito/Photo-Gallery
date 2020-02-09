@@ -8,10 +8,10 @@ header('Access-Control-Allow-Headers: ' .
 
 include_once('../dtos/RegisterDto.php');
 include_once('../../Domain Layer/models/User.php');
-include_once('../../Domain Layer/services/ValidationService.php');
+include_once('../../Domain Layer/services/RegisterValidationService.php');
 include_once('../../Data Layer/repositories/UserRepository.php');
 
-$validationService = new ValidationService();
+$registerValidationService = new RegisterValidationService();
 $userRepository = new UserRepository();
 
 $data = json_decode(file_get_contents('php://input'));
@@ -20,7 +20,7 @@ $registerDto = new RegisterDto($data->username, $data->email, password_hash($dat
 $user = new User($registerDto->username, $registerDto->email, $registerDto->password);
 
 try {
-    $validationService->validateCredentials($user);
+    $registerValidationService->validateCredentials($user);
     $userRepository->AddUser($user);
     http_response_code(201);
 } catch (Exception $ex) {

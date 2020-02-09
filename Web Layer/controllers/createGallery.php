@@ -15,13 +15,21 @@ $galleryValidationService = new GalleryValidationService();
 $authorizationService = new AuthorizationService();
 
 
-$data = json_decode(file_get_contents('php://input'));
+try {
+    $data = json_decode(file_get_contents('php://input'));
 
-$galleryName = $data->galleryName;
+    $galleryName = $data->galleryName;
 
-$galleryValidationService->validateGallery($galleryName);
-$user = $authorizationService->getLoggedInUser();
-$galleryRepository->Create($galleryName, $user->id);
+    $galleryValidationService->validateGallery($galleryName);
+    $user = $authorizationService->getLoggedInUser();
+    $galleryRepository->Create($galleryName, $user->id);
 
-http_response_code(302);
-header("Location: ../../client/views/myGalleries.php");
+    http_response_code(302);
+    header("Location: ../../client/views/myGalleries.php");
+} catch (Exception $ex) {
+
+    http_response_code($ex->getCode());
+    echo json_encode(array(
+        'error' => $ex->getMessage()
+    ));
+}

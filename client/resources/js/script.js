@@ -1,4 +1,4 @@
-function submitLoginForm() {
+submitLoginForm = async () => {
     event.preventDefault();
 
     var email = document.getElementById('email').value;
@@ -8,41 +8,44 @@ function submitLoginForm() {
         password: password
     });
 
-    fetch('../../Web Layer/controllers/login.php', {
+    try {
+        const response = await fetch('../../Web Layer/controllers/login.php', {
             method: 'POST',
             body: formData,
             headers: {
                 'Content-Type': 'application/json'
             },
-        }).then(response => {
-            if (response.status < 400) {
-                window.location.replace(response.url)
-            } else {
-                throw new Error("Error logging in");
-            }
-        })
-        .catch(error => console.log(error))
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
 };
 
-function submitLogoutForm() {
+submitLogoutForm = async () => {
     event.preventDefault();
-
-    fetch('../../Web Layer/controllers/logout.php', {
+    try {
+        const response = await fetch('../../Web Layer/controllers/logout.php', {
             method: 'GET',
-        }).then(response => window.location.replace(response.url))
-        .catch(error => console.log(error))
+        });
+
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
 };
 
-function submitFindAllForm() {
-    event.preventDefault();
-
-    fetch('../../Web Layer/controllers/users.php', {
-            method: 'GET',
-        }).then(response => console.log(response))
-        .catch(error => console.log(error))
-};
-
-function submitCreateForm() {
+submitCreateForm = async () => {
     event.preventDefault();
 
     var email = document.getElementById('email').value;
@@ -54,45 +57,59 @@ function submitCreateForm() {
         password: password
     });
 
-    fetch('../../Web Layer/controllers/register.php', {
+    try {
+        const response = await fetch('../../Web Layer/controllers/register.php', {
             method: 'POST',
             body: formData,
             headers: {
                 'Content-Type': 'application/json'
-            },
-        }).then(response => console.log(response))
-        .catch(error => console.log(error))
+            }
+        });
+        if (response.status < 400) {
+            alert("Successfully created an account!")
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
 };
 
-function uploadImage() {
+uploadImage = async () => {
     event.preventDefault();
 
     let imageDescription = document.getElementById('imageDescriptionInput').value;
     let fileInput = document.getElementById('fileInput');
-    console.log()
     const formData = new FormData();
 
     formData.append('fileDescription', imageDescription);
     formData.append('file', fileInput.files[0]);
 
-
-    fetch('../../Web Layer/controllers/uploadImage.php', {
+    try {
+        const response = await fetch('../../Web Layer/controllers/uploadImage.php', {
             method: 'POST',
-            body: formData,
-            //If you add this, upload won't work
-            // headers: {
-            //   'Content-Type': 'multipart/form-data',
-            // }
-        }).then(response => window.location.replace(response.url))
-        .catch(error => console.log(error))
+            body: formData
+        });
+        debugger;
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
 };
 
-function createGallery() {
+createGallery = async () => {
     event.preventDefault();
 
     let galleryNameInput = document.getElementById('galleryNameInput').value;
 
-    fetch('../../Web Layer/controllers/createGallery.php', {
+    try {
+        const response = await fetch('../../Web Layer/controllers/createGallery.php', {
             method: 'POST',
             body: JSON.stringify({
                 galleryName: galleryNameInput
@@ -100,15 +117,23 @@ function createGallery() {
             headers: {
                 'Content-Type': 'application/json',
             }
-        }).then(response => window.location.replace(response.url))
-        .catch(error => console.log(error))
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
 };
 
-function deleteGallery(galleryId) {
+deleteGallery = async (galleryId) => {
     event.preventDefault();
 
-
-    fetch('../../Web Layer/controllers/deleteGallery.php', {
+    try {
+        const response = await fetch('../../Web Layer/controllers/deleteGallery.php', {
             method: 'DELETE',
             body: JSON.stringify({
                 galleryId: galleryId
@@ -116,8 +141,16 @@ function deleteGallery(galleryId) {
             headers: {
                 'Content-Type': 'application/json',
             }
-        }).then(response => window.location.replace(response.url))
-        .catch(error => console.log(error))
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
 };
 
 function clearInputFields() {

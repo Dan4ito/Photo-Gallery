@@ -12,13 +12,20 @@ include_once('../../Domain Layer/services/GalleryService.php');
 $galleryService = new GalleryService();
 $authorizationService = new AuthorizationService();
 
+try {
+    $data = json_decode(file_get_contents('php://input'));
 
-$data = json_decode(file_get_contents('php://input'));
+    $galleryId = $data->galleryId;
 
-$galleryId = $data->galleryId;
+    $user = $authorizationService->getLoggedInUser();
+    $galleryService->DeleteGallery($galleryId, $user);
 
-$user = $authorizationService->getLoggedInUser();
-$galleryService->DeleteGallery($galleryId, $user);
+    http_response_code(302);
+    header("Location: ../../client/views/myGalleries.php");
+} catch (Exception $ex) {
 
-http_response_code(302);
-header("Location: ../../client/views/myGalleries.php");
+    http_response_code($ex->getCode());
+    echo json_encode(array(
+        'error' => $ex->getMessage()
+    ));
+}

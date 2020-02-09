@@ -6,11 +6,11 @@ header('Access-Control-Allow-Headers: ' . 'Access-Control-Allow-Headers, Content
 
 include_once('../dtos/LoginDto.php');
 include_once('../../Domain Layer/models/User.php');
-include_once('../../Domain Layer/services/ValidationService.php');
+include_once('../../Domain Layer/services/LoginValidationService.php');
 include_once('../../Domain Layer/services/AuthorizationService.php');
 include_once('../../Data Layer/repositories/UserRepository.php');
 
-$validationService = new ValidationService();
+$loginValidationService = new LoginValidationService();
 $authorizationService = new AuthorizationService();
 $userRepository = new UserRepository();
 
@@ -20,8 +20,7 @@ $loginDto = new LoginDto($data->email, password_hash($data->password, PASSWORD_D
 $user = new User(null, $loginDto->email, $loginDto->password);
 
 try {
-
-    $validationService->validateCredentials($user);
+    $loginValidationService->validateCredentials($user);
     $user = $userRepository->GetByEmail($user->email);
     if ($user->id != null) {
         $authorizationService->login($user);
