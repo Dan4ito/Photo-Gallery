@@ -7,15 +7,16 @@ CREATE TABLE php_gallery.roles (
 	type VARCHAR(255) NOT NULL UNIQUE
 );
 
-INSERT INTO php_gallery.roles(type) VALUES('Admin');
 INSERT INTO php_gallery.roles(type) VALUES('User');
+INSERT INTO php_gallery.roles(type) VALUES('Admin');
+
 
 CREATE TABLE php_gallery.users (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	email VARCHAR(255) NOT NULL UNIQUE,
 	username VARCHAR(100) CHARACTER SET utf8 NOT NULL,
 	password VARCHAR(2056) NOT NULL,
-	roleId INT NOT NULL,
+	roleId INT NOT NULL DEFAULT 1,
 	FOREIGN KEY (roleId) REFERENCES roles(id)
 );
 
@@ -35,8 +36,8 @@ CREATE TABLE php_gallery.galleryTypes (
 	type VARCHAR(64) NOT NULL UNIQUE
 );
 
-INSERT INTO php_gallery.galleryTypes(type) VALUES('public');
-INSERT INTO php_gallery.galleryTypes(type) VALUES('private');
+INSERT INTO php_gallery.galleryTypes(type) VALUES('Public');
+INSERT INTO php_gallery.galleryTypes(type) VALUES('Private');
 
 
 CREATE TABLE php_gallery.galleries (
@@ -44,13 +45,13 @@ CREATE TABLE php_gallery.galleries (
 	name VARCHAR(128) NOT NULL,
 	timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	userId INT NOT NULL,
-	typeId INT NOT NULL DEFAULT 1,
+	typeId INT NOT NULL DEFAULT 2,
 	FOREIGN KEY (userId) REFERENCES users(id),
 	FOREIGN KEY (typeId) REFERENCES galleryTypes(id)
 );
 
-INSERT INTO php_gallery.galleries (name, userId, typeId) VALUES ('SKRITA GALERIQ',1 , 2);
-INSERT INTO php_gallery.galleries (name, userId) VALUES ('Drugo ime',1);
+-- INSERT INTO php_gallery.galleries (name, userId, typeId) VALUES ('SKRITA GALERIQ',1 , 2);
+-- INSERT INTO php_gallery.galleries (name, userId) VALUES ('Drugo ime',1);
 
 CREATE TABLE php_gallery.image_gallery (
 	imageId INT NOT NULL,

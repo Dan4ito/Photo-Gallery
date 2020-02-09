@@ -26,15 +26,14 @@
 
     <div class="galleryContainer">
         <?php
-        $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
+        $publicGalleries = $galleryRepository->GetPublicGalleries();
 
-        foreach ($myGalleries as $gallery) {
+        foreach ($publicGalleries as $gallery) {
             echo '
             <div style="display: inline-block;">
                 <div onclick="openGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/' . 'missingImage.jpg' . ');"></div>
                 <div class="imageInfo">
                     <button onclick="deleteGallery(' . $gallery->id . ')">X</button>
-                    <button onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>
                     <h3>' . $gallery->name . '</h3>
                     <p>' . $gallery->timestamp . '</p>
                 </div>
@@ -42,24 +41,7 @@
             ';
         }
         ?>
-        <div style="display: inline-block;">
-            <div onclick="toggleTextInput()" style="height:280px; width:250px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/createGallery.jpg)">
-            </div>
-            <div id="galleryInfo" style="display: none">
-                <input type="text" name="galleryName" id="galleryNameInput">
-                <button onclick="createGallery()" type="submit">Create</button>
-                <button onclick="toggleTextInput()" type="submit">Close</button>
-            </div>
-        </div>
-
     </div>
-
-    <script>
-        function toggleTextInput() {
-            let status = document.getElementById("galleryInfo").style.display;
-            document.getElementById("galleryInfo").style.display = status === "none" ? "inline-block" : "none";
-        }
-    </script>
 </body>
 
 </html>

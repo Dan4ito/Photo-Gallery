@@ -1,5 +1,6 @@
 <?php
 include('../../Domain Layer/design/IImageRepository.php');
+include('../../Domain Layer/models/Image.php');
 include_once(__DIR__ . '/../DatabaseContext.php');
 
 class ImageRepository extends DatabaseContext implements IImageRepository
@@ -20,15 +21,6 @@ class ImageRepository extends DatabaseContext implements IImageRepository
         return $this->connection->insert_id;
     }
 
-    public function GetImages()
-    {
-        $query = "SELECT * FROM php_gallery.images";
-        $result = $this->connection->query($query);
-
-        $images = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-        return $images;
-    }
 
     public function GetImagesForGallery(int $galleryId)
     {
@@ -41,9 +33,10 @@ class ImageRepository extends DatabaseContext implements IImageRepository
         $statement->execute();
 
         $results = $statement->get_result();
-
+        
 
         $images = mysqli_fetch_all($results, MYSQLI_ASSOC);
+        $images = array_map(function($image) { return new Image($image['id'], $image['description'], $image['name'], $image['userId'], $image['timestamp']); }, $images);
 
         return $images;
     }
