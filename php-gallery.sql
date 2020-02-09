@@ -35,22 +35,27 @@ CREATE TABLE php_gallery.galleryTypes (
 	type VARCHAR(64) NOT NULL UNIQUE
 );
 
-INSERT INTO php_gallery.galleryTypes(type) VALUES('private');
 INSERT INTO php_gallery.galleryTypes(type) VALUES('public');
+INSERT INTO php_gallery.galleryTypes(type) VALUES('private');
 
-CREATE TABLE php_gallery.gallery (
+
+CREATE TABLE php_gallery.galleries (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	description VARCHAR(128) NOT NULL,
+	name VARCHAR(128) NOT NULL,
+	timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	userId INT NOT NULL,
-	typeId INT NOT NULL,
+	typeId INT NOT NULL DEFAULT 1,
 	FOREIGN KEY (userId) REFERENCES users(id),
 	FOREIGN KEY (typeId) REFERENCES galleryTypes(id)
 );
+
+INSERT INTO php_gallery.galleries (name, userId, typeId) VALUES ('Ime na GALERIQ',1 , 1);
+INSERT INTO php_gallery.galleries (name, userId) VALUES ('Drugo ime',1);
 
 CREATE TABLE php_gallery.image_gallery (
 	imageId INT NOT NULL,
 	galleryId INT NOT NULL,
 	FOREIGN KEY (imageId) REFERENCES images(id),
-	FOREIGN KEY (galleryId) REFERENCES gallery(id),
+	FOREIGN KEY (galleryId) REFERENCES galleries(id),
 	CONSTRAINT PK_StudentClassroom PRIMARY KEY (imageId, galleryId)
 );

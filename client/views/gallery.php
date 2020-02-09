@@ -44,7 +44,7 @@
             <!-- <input type="text" name="fileTitle" placeholder="Image title..."> Tags ? -->
             <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
             <input id="fileInput" type="file" name="file">
-            <button onclick="uploadImage()">Upload</button> 
+            <button onclick="uploadImage()">Upload</button>
             <!-- <button type="submit" name="submit">Upload</button> -->
         </form>
     </div>
