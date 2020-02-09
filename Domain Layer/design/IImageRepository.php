@@ -3,7 +3,8 @@
 
 interface IImageRepository
 {
-    public function Save($savedImageName, $imageDescription, $authorId);
+    public function Save(string $savedImageName, string $imageDescription, int $authorId);
+    public function GetImagesForGallery(int $galleryId);
     public function GetImages();
 }
 ?> 

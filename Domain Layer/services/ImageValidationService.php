@@ -9,7 +9,7 @@ class ImageValidationService
         $fileName = $file['name'];
         $fileError = $file['error'];
         $fileSize = $file['size'];
-    
+
         $fileExt = strtolower(explode(".", $fileName)[1]);
 
         if (empty($imageDescription)) {

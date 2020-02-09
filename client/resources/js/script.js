@@ -76,22 +76,21 @@ submitCreateForm = async () => {
     }
 };
 
-uploadImage = async () => {
+uploadImage = async (galleryId) => {
     event.preventDefault();
 
     let imageDescription = document.getElementById('imageDescriptionInput').value;
     let fileInput = document.getElementById('fileInput');
     const formData = new FormData();
-
     formData.append('fileDescription', imageDescription);
     formData.append('file', fileInput.files[0]);
+    formData.append('galleryId', parseInt(galleryId));
 
     try {
         const response = await fetch('../../Web Layer/controllers/uploadImage.php', {
             method: 'POST',
             body: formData
         });
-        debugger;
         if (response.status < 400) {
             window.location.replace(response.url)
         } else {
@@ -102,6 +101,7 @@ uploadImage = async () => {
         alert(error);
     }
 };
+
 
 createGallery = async () => {
     event.preventDefault();
@@ -135,6 +135,55 @@ deleteGallery = async (galleryId) => {
     try {
         const response = await fetch('../../Web Layer/controllers/deleteGallery.php', {
             method: 'DELETE',
+            body: JSON.stringify({
+                galleryId: galleryId
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
+};
+
+
+deleteGallery = async (galleryId) => {
+    event.preventDefault();
+
+    try {
+        const response = await fetch('../../Web Layer/controllers/deleteGallery.php', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                galleryId: galleryId
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
+};
+
+openGallery = async (galleryId) => {
+    event.preventDefault();
+
+    try {
+        const response = await fetch('../../Web Layer/controllers/openGallery.php', {
+            method: 'POST',
             body: JSON.stringify({
                 galleryId: galleryId
             }),

@@ -12,18 +12,31 @@
 <body>
     <?php
     include_once('../../Domain Layer/services/CookieService.php');
+    include_once('../../Domain Layer/services/UrlService.php');
+    include_once('../../Domain Layer/services/GalleryUserValidatorService.php');
     include_once('../../Data Layer/repositories/ImageRepository.php');
+    include_once('../../Data Layer/repositories/GalleryRepository.php');
+
+    $galleryUserValidatorService = new GalleryUserValidatorService();
     $cookieService = new CookieService();
-    if (!$cookieService->isCookieValid()) {
+    $urlService = new UrlService();
+
+    $galleryId = $urlService->GetQueryParam("id");
+
+    if (!$cookieService->isCookieValid() || !$galleryUserValidatorService->canUserViewGallery($galleryId)) {
         header('Location: ' . '.\\login.php');
     }
+
+    $galleryRepository = new GalleryRepository();
     $imageRepository = new ImageRepository();
+
     ?>
     <?php include '../components/navbar.php' ?>
 
     <div class="galleryContainer">
         <?php
-        $images = $imageRepository->GetImages();
+        $gallery = $galleryRepository->GetById($galleryId);
+        $images = $imageRepository->GetImagesForGallery($galleryId);
 
         foreach ($images as $image) {
             echo '
@@ -37,17 +50,20 @@
             ';
         }
         ?>
+
+        <div class="galleryUpload">
+            <form action="" method="post" enctype="multipart/form-data">
+                <!-- <input type="text" name="fileTitle" placeholder="Image title..."> Tags ? -->
+                <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
+                <input id="fileInput" type="file" name="file">
+                <button onclick="uploadImage(<?php echo $urlService->GetQueryParam('id') ?>)">Upload</button>
+                <!-- <button type="submit" name="submit">Upload</button> -->
+            </form>
+        </div>
+
+
     </div>
 
-    <div class="galleryUpload">
-        <form action="" method="post" enctype="multipart/form-data">
-            <!-- <input type="text" name="fileTitle" placeholder="Image title..."> Tags ? -->
-            <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
-            <input id="fileInput" type="file" name="file">
-            <button onclick="uploadImage()">Upload</button>
-            <!-- <button type="submit" name="submit">Upload</button> -->
-        </form>
-    </div>
 </body>
 
 </html>

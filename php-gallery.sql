@@ -49,13 +49,13 @@ CREATE TABLE php_gallery.galleries (
 	FOREIGN KEY (typeId) REFERENCES galleryTypes(id)
 );
 
-INSERT INTO php_gallery.galleries (name, userId, typeId) VALUES ('Ime na GALERIQ',1 , 1);
+INSERT INTO php_gallery.galleries (name, userId, typeId) VALUES ('SKRITA GALERIQ',1 , 2);
 INSERT INTO php_gallery.galleries (name, userId) VALUES ('Drugo ime',1);
 
 CREATE TABLE php_gallery.image_gallery (
 	imageId INT NOT NULL,
 	galleryId INT NOT NULL,
 	FOREIGN KEY (imageId) REFERENCES images(id),
-	FOREIGN KEY (galleryId) REFERENCES galleries(id),
-	CONSTRAINT PK_StudentClassroom PRIMARY KEY (imageId, galleryId)
+	FOREIGN KEY (galleryId) REFERENCES galleries(id) ON DELETE CASCADE,
+	CONSTRAINT PK_ImageGallery PRIMARY KEY (imageId, galleryId)
 );

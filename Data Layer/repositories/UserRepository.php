@@ -1,12 +1,10 @@
 <?php
-
 include_once('../../Domain Layer/models/User.php');
 include_once('../../Domain Layer/design/IUserRepository.php');
 include_once(__DIR__ . '/../DatabaseContext.php');
 
 class UserRepository extends DatabaseContext implements IUserRepository
 {
-
     public function __construct()
     {
         $this->connection = $this->getConnection();
@@ -16,7 +14,7 @@ class UserRepository extends DatabaseContext implements IUserRepository
     {
         $query = 'SELECT email, username, password, id, roleId
         FROM users WHERE id =?';
-      
+
         $statement = $this->connection->prepare($query);
         $statement->bind_param('i', $id);
         $statement->execute();
@@ -33,7 +31,7 @@ class UserRepository extends DatabaseContext implements IUserRepository
         $user->id = $user_id;
         $user->roleId = $roleId;
 
-        return $user;  
+        return $user;
     }
 
     public function GetByEmail(string $email)
@@ -58,7 +56,7 @@ class UserRepository extends DatabaseContext implements IUserRepository
         $user->id = $user_id;
         $user->roleId = $roleId;
 
-        return $user;    
+        return $user;
     }
 
     public function AddUser(User $user)
@@ -70,5 +68,7 @@ class UserRepository extends DatabaseContext implements IUserRepository
         $user->roleId = 1; // no one is admin atm
         $statement->bind_param('sssi', $user->email, $user->username, $user->password, $user->roleId);
         $statement->execute();
+
+        return $this->connection->insert_id;
     }
 }

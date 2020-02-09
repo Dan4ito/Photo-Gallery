@@ -1,5 +1,4 @@
 <?php
-
 include_once('../../Data Layer/repositories/UserRepository.php');
 
 class CookieService
@@ -56,7 +55,8 @@ class CookieService
         return $_COOKIE[$cookieName];
     }
 
-    public function getLoggedInUserFromCookie(){
+    public function getLoggedInUserFromCookie()
+    {
 
         $cookie = $_COOKIE['loginInfo'];
         $decodedCookie = base64_decode($cookie);

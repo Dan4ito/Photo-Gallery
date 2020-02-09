@@ -7,31 +7,27 @@ header('Access-Control-Allow-Headers: ' .
     'Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once('../../Data Layer/repositories/ImageRepository.php');
-include_once('../../Data Layer/repositories/ImageGalleryRepository.php');
 include_once('../../Domain Layer/services/ImageValidationService.php');
 include_once('../../Domain Layer/services/ImageUploadService.php');
 include_once('../../Domain Layer/services/AuthorizationService.php');
+include_once('../../Domain Layer/services/GalleryUserValidatorService.php');
 
 $imageRepository = new ImageRepository();
-$imageGalleryRepository = new ImageGalleryRepository();
 $imageValidationService = new ImageValidationService();
 $imageUploadService = new ImageUploadService();
 $authorizationService = new AuthorizationService();
-
-
-$imageDescription = $_POST['fileDescription'];
-$file = $_FILES['file'];
-$galleryId = $_POST['galleryId'];
+$galleryUserValidatorService = new GalleryUserValidatorService();
 
 try {
-    $imageValidationService->validateImage($imageDescription, $file);
-    $savedImageName = $imageUploadService->uploadImage($file);
-    $user = $authorizationService->getLoggedInUser();
-    $imageId = $imageRepository->Save($savedImageName, $imageDescription, $user->id);
-    $imageGalleryRepository->Create($imageId, $galleryId);
+    $data = json_decode(file_get_contents('php://input'));
+    $galleryId = $data->galleryId;
 
-    http_response_code(302);
-    header("Location: ../../client/views/gallery.php?id=" . $galleryId);
+    if ($galleryUserValidatorService->canUserViewGallery($galleryId)) {
+        http_response_code(302);
+        header("Location: ../../client/views/gallery.php?id=" . $galleryId);
+    } else {
+        throw new Exception("User cannot view that private gallery!", 400);
+    }
 } catch (Exception $ex) {
 
     http_response_code($ex->getCode());
