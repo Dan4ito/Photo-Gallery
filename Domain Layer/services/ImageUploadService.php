@@ -11,7 +11,7 @@ class ImageUploadService
         $imageFullName = uniqid("", true) . "." . $fileExt;     // GUID
 
         $imageDestination = $this->imagesFolder . $imageFullName;
-        if(!is_dir($this->imagesFolder)) {
+        if (!is_dir($this->imagesFolder)) {
             mkdir($this->imagesFolder);
         }
         move_uploaded_file($fileTemp, $imageDestination);    // upload the file

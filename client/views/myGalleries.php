@@ -31,7 +31,7 @@
         foreach ($myGalleries as $gallery) {
             echo '
             <div style="display: inline-block;">
-                <div style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/' . 'missingImage.jpg' . ');"></div>
+                <div onclick="openGallery(' . $gallery['id'] . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/' . 'missingImage.jpg' . ');"></div>
                 <div class="imageInfo">
                     <button onclick="deleteGallery(' . $gallery['id'] . ')">X</button>
                     <h3>' . $gallery['name'] . '</h3>
@@ -51,13 +51,14 @@
             </div>
         </div>
 
+    </div>
 
-        <script>
-            function toggleTextInput() {
-                let status = document.getElementById("galleryInfo").style.display;
-                document.getElementById("galleryInfo").style.display = status === "none" ? "inline-block" : "none";
-            }
-        </script>
+    <script>
+        function toggleTextInput() {
+            let status = document.getElementById("galleryInfo").style.display;
+            document.getElementById("galleryInfo").style.display = status === "none" ? "inline-block" : "none";
+        }
+    </script>
 </body>
 
 </html>
