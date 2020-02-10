@@ -5,8 +5,10 @@
     <title>PHP Gallery</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../resources/css/style.css">
+	<link rel="stylesheet" href="../resources/css/displayGallery.css">
     <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/script.js"></script>
+	<script type="text/javascript" src="../resources/js/displayGallery.js"></script>
 </head>
 
 <body>
@@ -37,19 +39,29 @@
         <?php
         $gallery = $galleryRepository->GetById($galleryId);
         $images = $imageRepository->GetImagesForGallery($galleryId);
-
+        $i = 1;
+		
         foreach ($images as $image) {
             echo '
-            <div style="display: inline-block;">
-            <div style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../../images/' . $image->name . ');"></div>
-            <div class="imageInfo">
-                <h3>' . $image->description . '</h3>
-                <p>' . $image->timestamp . '</p>
-            </div>
+            <div class="row">
+                <img src="../../images/' . $image->name . '" id="imageToBeExpanded" alt = ' . $image->description . ' onclick="expandImage(this)";>
+                <div class="imageInfo">
+                    <h3>' . $image->description . '</h3>
+                    <p>' . $image->timestamp . '</p>
+                </div>
             </div>
             ';
+            $i++;
         }
         ?>
+        <div id="container">
+            <span class="closeButton" onclick="close()">&times;</span>
+            <a class="prev" onclick="slides(-1)">&laquo;</a>
+            <a class="next" onclick="slides(1)">&raquo;</a>
+            <img id="expandedImage">
+            <div id="caption"></div>            
+        </div>   
+    </div>
 
         <div class="galleryUpload">
             <form action="" method="post" enctype="multipart/form-data">
