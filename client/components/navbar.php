@@ -20,6 +20,7 @@ $isLoggedIn = $authorizationService->isLoggedIn();
 
 <?php if ($isLoggedIn) : ?>
     <a href="myGalleries.php">My Galleries</a>
+    <a href="publicGalleries.php">Public Galleries</a>
     <a href="#" onclick="submitLogoutForm()">Logout</a>
     <div id="loginInfo">
         Logged in as

@@ -20,16 +20,9 @@ class UserRepository extends DatabaseContext implements IUserRepository
         $statement->execute();
         $result = mysqli_stmt_get_result($statement);;
 
-        $row = mysqli_fetch_array($result, MYSQLI_NUM);
-        $email = $row[0];
-        $username = $row[1];
-        $password = $row[2];
-        $roleId = $row[4];
-        $user_id = $row[3];
+        $result = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-        $user = new User($username, $email, $password);
-        $user->id = $user_id;
-        $user->roleId = $roleId;
+        $user = new User($result['id'], $result['username'], $result['email'], $result['password'], $result['roleId']);
 
         return $user;
     }
@@ -43,18 +36,11 @@ class UserRepository extends DatabaseContext implements IUserRepository
         $statement = $this->connection->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
-        $result = mysqli_stmt_get_result($statement);;
+        $result = mysqli_stmt_get_result($statement);
 
-        $row = mysqli_fetch_array($result, MYSQLI_NUM);
-        $email = $row[0];
-        $username = $row[1];
-        $password = $row[2];
-        $roleId = $row[4];
-        $user_id = $row[3];
+        $result = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-        $user = new User($username, $email, $password);
-        $user->id = $user_id;
-        $user->roleId = $roleId;
+        $user = new User($result['id'], $result['username'], $result['email'], $result['password'], $result['roleId']);
 
         return $user;
     }

@@ -17,7 +17,7 @@ $userRepository = new UserRepository();
 $data = json_decode(file_get_contents('php://input'));
 
 $registerDto = new RegisterDto($data->username, $data->email, password_hash($data->password, PASSWORD_DEFAULT));
-$user = new User($registerDto->username, $registerDto->email, $registerDto->password);
+$user = new User(null, $registerDto->username, $registerDto->email, $registerDto->password);
 
 try {
     $registerValidationService->validateCredentials($user);

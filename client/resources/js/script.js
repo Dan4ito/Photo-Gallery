@@ -154,12 +154,12 @@ deleteGallery = async (galleryId) => {
 };
 
 
-deleteGallery = async (galleryId) => {
+toggleGalleryType = async (galleryId) => {
     event.preventDefault();
 
     try {
-        const response = await fetch('../../Web Layer/controllers/deleteGallery.php', {
-            method: 'DELETE',
+        const response = await fetch('../../Web Layer/controllers/toggleGalleryType.php', {
+            method: 'POST',
             body: JSON.stringify({
                 galleryId: galleryId
             }),

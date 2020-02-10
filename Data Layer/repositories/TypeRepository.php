@@ -1,5 +1,6 @@
 <?php
 include_once('../../Domain Layer/design/ITypeRepository.php');
+include_once('../../Domain Layer/models/GalleryType.php');
 include_once(__DIR__ . '/../DatabaseContext.php');
 
 class TypeRepository extends DatabaseContext implements ITypeRepository
@@ -11,7 +12,7 @@ class TypeRepository extends DatabaseContext implements ITypeRepository
 
     public function GetById(int $id)
     {
-        $query = 'SELECT type
+        $query = 'SELECT *
         FROM galleryTypes WHERE id =?';
 
         $statement = $this->connection->prepare($query);
@@ -19,8 +20,8 @@ class TypeRepository extends DatabaseContext implements ITypeRepository
         $statement->execute();
         $result = mysqli_stmt_get_result($statement);;
 
-        $result = mysqli_fetch_array($result, MYSQLI_ASSOC); // assoc?
+        $result = mysqli_fetch_array($result, MYSQLI_ASSOC); 
 
-        return $result["type"];
+        return new GalleryType($result['id'], $result['type']);
     }
 }
