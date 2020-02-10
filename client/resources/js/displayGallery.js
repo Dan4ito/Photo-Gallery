@@ -1,8 +1,6 @@
-function open() {
-    document.getElementById("imageToBeExpanded").style.display = "block";
-}
+var slide = 1;
 
-function expandImage(image) {
+function expandImage(image, slideNumber) {
     event.preventDefault();
     var container = document.getElementById("polaroid");
     var expandedImage = document.getElementById("expandedImage");
@@ -10,21 +8,19 @@ function expandImage(image) {
     var captionTime = document.getElementById("captionTime");
     container.style.display = "block";
     expandedImage.src = image.src;
-    captionDescription.innerHTML = image.alt.replace("+", " ");
-    captionTime.innerHTML = image.title.replace("+", " ");
+    captionDescription.innerHTML = image.title.replace("+", " ");
+    captionTime.innerHTML = image.alt.replace("+", " ");
+
+    slide = slideNumber;
 
     var close = document.getElementsByClassName("closeButton")[0];
     close.onclick = function() {
         container.style.display = 'none';
     }
 }
-/*
-function slides(number) {
-    var slide = 1;
-    changeSlide(number);
-}
 
 function changeSlide(number) {
+    console.log(number);
     slideFocus(slide += number);
 }
 
@@ -33,10 +29,10 @@ function currentSlide(number) {
 }
 
 function slideFocus(slideNumber) {
+    console.log("funct");
     var i;
-    var slides = document.getElementsByClassName("galleryContainer");
-    var dotSlides = document.getElementsByClassName("previews");
-    var captionText = document.getElementById("caption");
+    var slides = document.getElementsByClassName("images");
+    //   var dotSlides = document.getElementsByClassName("previewsImages");
 
     if (slideNumber > slides.length) {
         slide = 1;
@@ -46,14 +42,20 @@ function slideFocus(slideNumber) {
     }
 
     for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (i = 0; i < slides.length; i++) {
-        dotSlides[i].className = dotSlides[i].className.replace(" active", "");
+        //        dotSlides[i].className = dotSlides[i].className.replace("Active", "");
     }
     previous = slide - 1;
-    slides[previous].style.display = "block";
-    dotSlides[previous].className += "active";
-    captionText.innerHTML = dotSlides[previous].alt;
+    image = slides[previous];
+    //dotSlides[previous].className += "Active";
+
+    var container = document.getElementById("polaroid");
+    var expandedImage = document.getElementById("expandedImage");
+    var captionDescription = document.getElementById("captionDescription");
+    var captionTime = document.getElementById("captionTime");
+    container.style.display = "block";
+    expandedImage.src = image.src;
+    captionDescription.innerHTML = image.title.replace("+", " ");
+    captionTime.innerHTML = image.alt.replace("+", " ");
+
+
 }
-*/

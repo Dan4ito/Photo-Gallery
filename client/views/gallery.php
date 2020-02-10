@@ -49,7 +49,7 @@
             $time = str_replace(" ", "+", $image->timestamp);
             echo '
             <div class="row">
-                <img src="../../images/' . $image->name . '" id="imageToBeExpanded" alt = ' . $description . ' title = ' . $time . ' onclick="expandImage(this)";>
+                <img src="../../images/' . $image->name . '" id="imageToBeExpanded" class ="images" alt = ' . $time . ' title = ' . $description . ' onclick="expandImage(this, '. $i . ')";>
                 <div class="imageInfo">
                     <h3>' . $image->description . '</h3>
                     <p>' . $image->timestamp . '</p>
@@ -62,15 +62,32 @@
         <!-- <div id="container"> -->
         <div id="polaroid">    
             <span class="closeButton" onclick="close()">&times;</span>
-            <a class="prev" onclick="slides(-1)">&laquo;</a>
-            <a class="next" onclick="slides(1)">&raquo;</a>
-                <div id="wrapper">
-                    <img id="expandedImage">
-                    <div class="caption">
-                        <p id="captionDescription"></p>
-                        <p id="captionTime"></p>     
-                    </div>
-                </div>       
+            <a class="prev" onclick="changeSlide(-1)">&laquo;</a>
+            <a class="next" onclick="changeSlide(1)">&raquo;</a>
+            <div id="wrapper">
+                <img id="expandedImage">
+                <div class="caption">
+                    <p id="captionDescription"></p>
+                    <p id="captionTime"></p>     
+                </div>
+            </div>
+            <div class="previews">
+            <?php
+                $gallery = $galleryRepository->GetById($galleryId);
+                $images = $imageRepository->GetImagesForGallery($galleryId);
+                $i = 1;                 
+                foreach ($images as $image) {
+                    $description = str_replace(" ", "+", $image->description);
+                    $time = str_replace(" ", "+", $image->timestamp);        
+                    echo '
+                        <div class="previewRow">
+                            <img src="../../images/' . $image->name . '" id="previewImage" class="previewsImages" alt = ' . $time . ' title = ' . $description . ' onclick="currentSlide('. $i . ')";>
+                        </div>
+                        ';
+                    $i++;  
+                }
+            ?>
+            </div>       
         </div>
         <!-- </div> -->   
     </div>
