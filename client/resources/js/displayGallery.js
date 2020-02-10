@@ -1,18 +1,73 @@
 var slide = 1;
+var MAX_SLIDES = 6;
 
-function expandImage(image, slideNumber) {
-    event.preventDefault();
+function slidePreviews(slideNumber) {
+    var dotSlides = document.getElementsByClassName("preview");
+    var displayedImages = 0;
+
+    for (i = 0; i < dotSlides.length; i++) {
+        var firstImageToDisplay = slideNumber - MAX_SLIDES / 2;
+        if (firstImageToDisplay < 0) {
+            firstImageToDisplay = 0;
+        }
+        for (j = 0; j < firstImageToDisplay; j++) {
+            dotSlides[j].style.display = "none";
+        }
+
+        var lastImageToDisplay = slideNumber - 1;
+        if (firstImageToDisplay == 0) {
+            lastImageToDisplay += MAX_SLIDES;
+        } else {
+            lastImageToDisplay += MAX_SLIDES / 2;
+        }
+        if (lastImageToDisplay > dotSlides.length) {
+            lastImageToDisplay = dotSlides.length;
+        }
+        for (j = firstImageToDisplay; j < lastImageToDisplay; j++) {
+            if (displayedImages < MAX_SLIDES) {
+                dotSlides[j].style.display = "inline-block";
+                displayedImages++;
+            }
+        }
+
+        for (j = lastImageToDisplay; j < dotSlides.length; j++) {
+            dotSlides[j].style.display = "none";
+        }
+    }
+}
+
+function openImage(image, slideNumber) {
     var container = document.getElementById("polaroid");
     var expandedImage = document.getElementById("expandedImage");
     var captionDescription = document.getElementById("captionDescription");
     var captionTime = document.getElementById("captionTime");
+
     container.style.display = "block";
     expandedImage.src = image.src;
     captionDescription.innerHTML = image.title.replace("+", " ");
     captionTime.innerHTML = image.alt.replace("+", " ");
 
+    var slides = document.getElementsByClassName("images");
+    if (slideNumber == slides.length / 2) {
+        document.getElementsByClassName("next")[0].hidden = true;
+    } else {
+        document.getElementsByClassName("next")[0].hidden = false;
+    }
+    if (slideNumber == 1) {
+        document.getElementsByClassName("prev")[0].hidden = true;
+    } else {
+        document.getElementsByClassName("prev")[0].hidden = false;
+    }
+
     slide = slideNumber;
 
+    slidePreviews(slide);
+}
+
+function expandImage(image, slideNumber) {
+    openImage(image, slideNumber);
+
+    var container = document.getElementById("polaroid");
     var close = document.getElementsByClassName("closeButton")[0];
     close.onclick = function() {
         container.style.display = 'none';
@@ -20,7 +75,6 @@ function expandImage(image, slideNumber) {
 }
 
 function changeSlide(number) {
-    console.log(number);
     slideFocus(slide += number);
 }
 
@@ -29,10 +83,9 @@ function currentSlide(number) {
 }
 
 function slideFocus(slideNumber) {
-    console.log("funct");
     var i;
     var slides = document.getElementsByClassName("images");
-    //   var dotSlides = document.getElementsByClassName("previewsImages");
+    var dotSlides = document.getElementsByClassName("preview");
 
     if (slideNumber > slides.length) {
         slide = 1;
@@ -41,21 +94,16 @@ function slideFocus(slideNumber) {
         slide = slides.length;
     }
 
-    for (i = 0; i < slides.length; i++) {
-        //        dotSlides[i].className = dotSlides[i].className.replace("Active", "");
+    for (i = 0; i < dotSlides.length; i++) {
+        dotSlides[i].className = dotSlides[i].className.replace(" lightbox", "");
+        if (i > MAX_SLIDES) {
+            dotSlides[i].style.display = "none";
+        }
     }
-    previous = slide - 1;
+    previous = slideNumber - 1;
     image = slides[previous];
-    //dotSlides[previous].className += "Active";
 
-    var container = document.getElementById("polaroid");
-    var expandedImage = document.getElementById("expandedImage");
-    var captionDescription = document.getElementById("captionDescription");
-    var captionTime = document.getElementById("captionTime");
-    container.style.display = "block";
-    expandedImage.src = image.src;
-    captionDescription.innerHTML = image.title.replace("+", " ");
-    captionTime.innerHTML = image.alt.replace("+", " ");
+    openImage(image, slide);
 
-
+    dotSlides[previous].className += " lightbox";
 }

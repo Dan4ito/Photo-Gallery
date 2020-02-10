@@ -59,9 +59,9 @@
             $i++;
         }
         ?>
-        <!-- <div id="container"> -->
+        
         <div id="polaroid">    
-            <span class="closeButton" onclick="close()">&times;</span>
+            <span class="closeButton">&times;</span>
             <a class="prev" onclick="changeSlide(-1)">&laquo;</a>
             <a class="next" onclick="changeSlide(1)">&raquo;</a>
             <div id="wrapper">
@@ -81,7 +81,7 @@
                     $time = str_replace(" ", "+", $image->timestamp);        
                     echo '
                         <div class="previewRow">
-                            <img src="../../images/' . $image->name . '" id="previewImage" class="previewsImages" alt = ' . $time . ' title = ' . $description . ' onclick="currentSlide('. $i . ')";>
+                            <img src="../../images/' . $image->name . '" class="preview images" alt = ' . $time . ' title = ' . $description . ' onclick="currentSlide('. $i . ')";>
                         </div>
                         ';
                     $i++;  
@@ -89,17 +89,23 @@
             ?>
             </div>       
         </div>
-        <!-- </div> -->   
+
     </div>
 
         <div class="galleryUpload">
             <form action="" method="post" enctype="multipart/form-data">
-                <!-- <input type="text" name="fileTitle" placeholder="Image title..."> Tags ? -->
+                <h1>Upload file</h1>
+                <label for="image">Description</label>
                 <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
+        
+                <label for="image">Image</label>
                 <input id="fileInput" type="file" name="file">
-                <button onclick="uploadImage(<?php echo $urlService->GetQueryParam('id') ?>)">Upload</button>
-                <!-- <button type="submit" name="submit">Upload</button> -->
-            </form>
+        
+                <label for="resize">% compression*</label>
+                <input id="resize" type="number" min="0" max="100" placeholder="Compression % (Optional)">
+        
+                <button onclick="uploadImage(<?php echo $urlService->GetQueryParam('id') ?>)">Upload</button>        
+            </form>    
         </div>
 
 
