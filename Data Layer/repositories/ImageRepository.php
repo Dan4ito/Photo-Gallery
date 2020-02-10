@@ -40,4 +40,14 @@ class ImageRepository extends DatabaseContext implements IImageRepository
 
         return $images;
     }
+
+    public function DeleteImageFromGallery(int $imageId, int $galleryId)
+    {
+        $query = "DELETE FROM php_gallery.image_gallery
+                    WHERE imageId=? AND galleryId =?";         // junktion table
+
+        $statement = $this->connection->prepare($query);
+        $statement->bind_param('ii', $imageId, $galleryId);
+        $statement->execute();
+    }
 }

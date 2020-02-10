@@ -43,6 +43,7 @@
             <div style="display: inline-block;">
             <div style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../../images/' . $image->name . ');"></div>
             <div class="imageInfo">
+                <button onclick="deleteImageFromGallery(' . $image->id . ',' . $gallery->id . ')">X</button>
                 <h3>' . $image->description . '</h3>
                 <p>' . $image->timestamp . '</p>
             </div>
