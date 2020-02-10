@@ -4,8 +4,11 @@
 <head>
     <title>PHP Gallery</title>
     <meta charset="UTF-8">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i&display=swap&subset=cyrillic,cyrillic-ext" rel="stylesheet">
     <link rel="stylesheet" href="../resources/css/style.css">
-	<link rel="stylesheet" href="../resources/css/displayGallery.css">
+    <link rel="stylesheet" href="../resources/css/displayGallery.css">
+    
     <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/script.js"></script>
 	<script type="text/javascript" src="../resources/js/displayGallery.js"></script>
@@ -42,9 +45,11 @@
         $i = 1;
 		
         foreach ($images as $image) {
+            $description = str_replace(" ", "+", $image->description);
+            $time = str_replace(" ", "+", $image->timestamp);
             echo '
             <div class="row">
-                <img src="../../images/' . $image->name . '" id="imageToBeExpanded" alt = ' . $image->description . ' onclick="expandImage(this)";>
+                <img src="../../images/' . $image->name . '" id="imageToBeExpanded" alt = ' . $description . ' title = ' . $time . ' onclick="expandImage(this)";>
                 <div class="imageInfo">
                     <h3>' . $image->description . '</h3>
                     <p>' . $image->timestamp . '</p>
@@ -54,13 +59,20 @@
             $i++;
         }
         ?>
-        <div id="container">
+        <!-- <div id="container"> -->
+        <div id="polaroid">    
             <span class="closeButton" onclick="close()">&times;</span>
             <a class="prev" onclick="slides(-1)">&laquo;</a>
             <a class="next" onclick="slides(1)">&raquo;</a>
-            <img id="expandedImage">
-            <div id="caption"></div>            
-        </div>   
+                <div id="wrapper">
+                    <img id="expandedImage">
+                    <div class="caption">
+                        <p id="captionDescription"></p>
+                        <p id="captionTime"></p>     
+                    </div>
+                </div>       
+        </div>
+        <!-- </div> -->   
     </div>
 
         <div class="galleryUpload">

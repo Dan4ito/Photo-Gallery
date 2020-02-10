@@ -4,13 +4,14 @@ function open() {
 
 function expandImage(image) {
     event.preventDefault();
-
-    var container = document.getElementById("container");
+    var container = document.getElementById("polaroid");
     var expandedImage = document.getElementById("expandedImage");
-    var captionText = document.getElementById("caption");
+    var captionDescription = document.getElementById("captionDescription");
+    var captionTime = document.getElementById("captionTime");
     container.style.display = "block";
     expandedImage.src = image.src;
-    captionText.innerHTML = image.alt;
+    captionDescription.innerHTML = image.alt.replace("+", " ");
+    captionTime.innerHTML = image.title.replace("+", " ");
 
     var close = document.getElementsByClassName("closeButton")[0];
     close.onclick = function() {
