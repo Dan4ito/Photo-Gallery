@@ -14,6 +14,7 @@
     include_once('../../Domain Layer/services/CookieService.php');
     include_once('../../Domain Layer/services/AuthorizationService.php');
     include_once('../../Data Layer/repositories/GalleryRepository.php');
+    include_once('../../Data Layer/repositories/ImageRepository.php');
     $cookieService = new CookieService();
 
     if (!$cookieService->isCookieValid()) {
@@ -21,17 +22,19 @@
     }
     $galleryRepository = new GalleryRepository();
     $authorizationService = new AuthorizationService();
+    $imageRepository = new ImageRepository();
     ?>
     <?php include '../components/navbar.php' ?>
 
     <div class="galleryContainer">
         <?php
         $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
-
         foreach ($myGalleries as $gallery) {
+            $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
+            $imagePath = ($topImage->id != null ) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
             echo '
             <div style="display: inline-block;">
-                <div onclick="openGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/' . 'missingImage.jpg' . ');"></div>
+                <div onclick="openGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(' . $imagePath . ');"></div>
                 <div class="imageInfo">
                     <button onclick="deleteGallery(' . $gallery->id . ')">X</button>
                     <button onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>

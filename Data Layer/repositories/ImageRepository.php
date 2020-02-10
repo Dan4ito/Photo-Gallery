@@ -21,6 +21,24 @@ class ImageRepository extends DatabaseContext implements IImageRepository
         return $this->connection->insert_id;
     }
 
+    public function GetTopImageForGallery(int $galleryId)
+    {
+        $query = "SELECT * FROM php_gallery.image_gallery a 
+                    JOIN images i ON a.imageId = i.id 
+                    WHERE galleryId = ?  ORDER BY i.timestamp ASC LIMIT 1";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bind_param('i', $galleryId);
+        $statement->execute();
+
+        $result = $statement->get_result();
+        
+
+        $topImage = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $topImage = new Image($topImage['id'], $topImage['description'], $topImage['name'], $topImage['userId'], $topImage['timestamp']);
+
+        return $topImage;
+    }
 
     public function GetImagesForGallery(int $galleryId)
     {
