@@ -21,7 +21,7 @@ class GalleryUserValidatorService
     {
         $user = $this->authorizationService->getLoggedInUser();
         $gallery = $this->galleryRepository->GetById($galleryId);
-
+        if($gallery->id == null) return false;
         $galleryType = $this->typeRepository->GetById($gallery->typeId);
         if ($galleryType->type == GalleryTypes::PUBLIC) {
             return true;
@@ -57,7 +57,7 @@ class GalleryUserValidatorService
         }
     }
 
-    public function canUserDeleteGallery(int $galleryId)
+    public function isUserGalleryOwner(int $galleryId)
     {
         $user = $this->authorizationService->getLoggedInUser();
         $gallery = $this->galleryRepository->GetById($galleryId);
