@@ -29,7 +29,6 @@ class UserRepository extends DatabaseContext implements IUserRepository
 
     public function GetByEmail(string $email)
     {
-
         $query = 'SELECT email, username, password, id, roleId
                   FROM users WHERE email =?';
 

@@ -102,6 +102,31 @@ uploadImage = async (galleryId) => {
     }
 };
 
+deleteImageFromGallery = async (imageId, galleryId) => {
+    event.preventDefault();
+
+    try {
+        const response = await fetch('../../Web Layer/controllers/deleteImage.php', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                imageId : imageId,
+                galleryId: galleryId
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
+};
+
 
 createGallery = async () => {
     event.preventDefault();
