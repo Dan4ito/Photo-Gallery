@@ -11,12 +11,14 @@ include_once('../../Data Layer/repositories/ImageGalleryRepository.php');
 include_once('../../Domain Layer/services/ImageValidationService.php');
 include_once('../../Domain Layer/services/ImageUploadService.php');
 include_once('../../Domain Layer/services/AuthorizationService.php');
+include_once('../../Domain Layer/services/GalleryUserValidatorService.php');
 
 $imageRepository = new ImageRepository();
 $imageGalleryRepository = new ImageGalleryRepository();
 $imageValidationService = new ImageValidationService();
 $imageUploadService = new ImageUploadService();
 $authorizationService = new AuthorizationService();
+$galleryUserValidatorService = new GalleryUserValidatorService();
 
 
 $imageDescription = $_POST['fileDescription'];
@@ -24,14 +26,19 @@ $file = $_FILES['file'];
 $galleryId = $_POST['galleryId'];
 
 try {
-    $imageValidationService->validateImage($imageDescription, $file);
-    $savedImageName = $imageUploadService->uploadImage($file);
-    $user = $authorizationService->getLoggedInUser();
-    $imageId = $imageRepository->Save($savedImageName, $imageDescription, $user->id);
-    $imageGalleryRepository->Create($imageId, $galleryId);
+    if ($galleryUserValidatorService->canUserEditGallery($galleryId)) {
 
-    http_response_code(302);
-    header("Location: ../../client/views/gallery.php?id=" . $galleryId);
+        $imageValidationService->validateImage($imageDescription, $file);
+        $savedImageName = $imageUploadService->uploadImage($file);
+        $user = $authorizationService->getLoggedInUser();
+        $imageId = $imageRepository->Save($savedImageName, $imageDescription, $user->id);
+        $imageGalleryRepository->Create($imageId, $galleryId);
+
+        http_response_code(302);
+        header("Location: ../../client/views/gallery.php?id=" . $galleryId);
+    } else {
+        throw new Exception("You cannot edit other peoples' galleries!", 400);
+    }
 } catch (Exception $ex) {
 
     http_response_code($ex->getCode());

@@ -44,4 +44,27 @@ class GalleryUserValidatorService
             return false;
         }
     }
+  
+    public function canUserEditGallery(int $galleryId)
+    {
+        $user = $this->authorizationService->getLoggedInUser();
+        $gallery = $this->galleryRepository->GetById($galleryId);
+
+        if ($gallery->userId == $user->id) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function canUserDeleteGallery(int $galleryId)
+    {
+        $user = $this->authorizationService->getLoggedInUser();
+        $gallery = $this->galleryRepository->GetById($galleryId);
+        if ($gallery->userId == $user->id) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
