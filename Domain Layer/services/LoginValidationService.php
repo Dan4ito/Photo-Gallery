@@ -6,10 +6,10 @@ include_once('../../Domain Layer/services/ValidationService.php');
 class LoginValidationService extends ValidationService
 {
 
-    public function validateCredentials(User $user)
+    public function validateCredentials($userDto)
     {
-        $this->validateEmail($user->email);
-        $this->validatePassword($user->password);
+        $this->validateEmail($userDto->email);
+        $this->validatePassword($userDto->password);
         return true;
     }
 }
