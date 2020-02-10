@@ -1,7 +1,7 @@
 a {
     text-decoration: none;
     color: #6495ed;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     font-size: 20px;
     margin: 15px;
@@ -21,7 +21,8 @@ input {
     border-radius: 5px;
 }
 
-input[type=submit] {
+input[type=submit],
+button {
     padding: 10px;
     margin-top: 10px;
     background-color: #6495ed;
@@ -29,6 +30,10 @@ input[type=submit] {
     border-radius: 5px;
     color: #ffffff;
     font-size: 20px;
+}
+
+button {
+    width: 104%;
 }
 
 input[type=submit]:hover {
@@ -49,7 +54,7 @@ form {
 
 h1 {
     color: #6495ed;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     margin: 5px auto;
     text-align: center;
@@ -57,7 +62,7 @@ h1 {
 
 label {
     color: #6495ed;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     font-size: 15px;
     margin: 5px auto;
@@ -66,23 +71,13 @@ label {
 
 #loginInfo {
     float: right;
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
+    color: #555252;
+    font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     font-size: 20px;
     margin: 5px 15px;
 }
 
-
 #homeTitle {
     margin-top: 50px;
-}
-
-#galleryContainer{
-    display:flex;
-    flex-wrap: wrap;
-}
-
-.imageInfo{
-    text-align: center;
 }
