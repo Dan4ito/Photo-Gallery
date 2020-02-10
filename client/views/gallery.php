@@ -51,6 +51,7 @@
             <div class="row">
                 <img src="../../images/' . $image->name . '" id="imageToBeExpanded" class ="images" alt = ' . $time . ' title = ' . $description . ' onclick="expandImage(this, '. $i . ')";>
                 <div class="imageInfo">
+                    <button onclick="deleteImageFromGallery(' . $image->id . ',' . $gallery->id . ')">X</button>
                     <h3>' . $image->description . '</h3>
                     <p>' . $image->timestamp . '</p>
                 </div>
