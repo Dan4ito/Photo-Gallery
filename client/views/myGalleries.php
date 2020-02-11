@@ -5,8 +5,11 @@
     <title>PHP Gallery</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../resources/css/style.css">
+    <link rel="stylesheet" href="../resources/css/displayGallery.css">
+    <link rel="stylesheet" href="../resources/css/formsOutline.css">
     <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/script.js"></script>
+    <script type="text/javascript" src="../resources/js/toggle.js"></script>
 </head>
 
 <body>
@@ -27,42 +30,35 @@
     <?php include '../components/navbar.php' ?>
 
     <div class="galleryContainer">
-        <?php
-        $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
-        foreach ($myGalleries as $gallery) {
-            $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
-            $imagePath = ($topImage->id != null ) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
-            echo '
-            <div style="display: inline-block;">
-                <div onclick="openGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(' . $imagePath . ');"></div>
-                <div class="imageInfo">
-                    <button onclick="deleteGallery(' . $gallery->id . ')">X</button>
-                    <button onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>
-                    <h3>' . $gallery->name . '</h3>
-                    <p>' . $gallery->timestamp . '</p>
-                </div>
-            </div>
-            ';
-        }
-        ?>
-        <div style="display: inline-block;">
-            <div onclick="toggleTextInput()" style="height:280px; width:250px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/createGallery.jpg)">
-            </div>
-            <div id="galleryInfo" style="display: none">
-                <input type="text" name="galleryName" id="galleryNameInput">
-                <button onclick="createGallery()" type="submit">Create</button>
-                <button onclick="toggleTextInput()" type="submit">Close</button>
+        <div class="galleryCreate">
+            <img onclick="toggleTextInput()" id="imageToBeExpanded" src="../assets/createGallery.jpg">
+            <div id="galleryInfo">
+                <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
+                <button class="galleryButton" id="create" onclick="createGallery()" type="submit">Create</button>
+                <button class="galleryButton" id="close" onclick="toggleTextInput()" type="submit">Close</button>
             </div>
         </div>
 
+        <?php
+            $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
+            foreach ($myGalleries as $gallery) {
+                $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
+                $imagePath = ($topImage->id != null ) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
+                echo '
+                <div class="galleryDisplay">
+                    <button class="galleryTypeChangeButton" onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>
+                    <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>
+                    <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="'. $imagePath . '">
+                    <div class="imageInfo">
+                        <h3>' . $gallery->name . '</h3>
+                        <p>' . $gallery->timestamp . '</p>
+                    </div>
+                </div>
+                ';
+            }
+        ?>
     </div>
-
-    <script>
-        function toggleTextInput() {
-            let status = document.getElementById("galleryInfo").style.display;
-            document.getElementById("galleryInfo").style.display = status === "none" ? "inline-block" : "none";
-        }
-    </script>
+    
 </body>
 
 </html>

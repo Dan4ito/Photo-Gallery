@@ -1,17 +1,36 @@
-body {
-    margin: 10px;
+.galleryUpload {
+    position: sticky;
+    float: left;
+    top: 0;
+    left: 0;
+    width: 25%;
 }
 
-#galleryContainer {
-    display: flex;
-    flex-wrap: wrap;
+.formUpload {
+    width: 80%;
+    margin: 20px 10% 0 10%;
+    box-sizing: border-box;
+}
+
+.galleryDisplay {
+    display: inline-block;
+    margin-top: 20px;
 }
 
 .imageInfo {
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
     font-size: medium;
-    color: #404040;
+    color: #5c93a2;
+}
+
+.galleryCreate {
+    margin-top: 5px;
+    display: inline-block;
+}
+
+#galleryInfo {
+    visibility: hidden;
+    width: 194px;
 }
 
 .row {
@@ -49,6 +68,9 @@ body {
     max-height: 200px;
     opacity: 0.8;
     cursor: pointer;
+    border: 2px outset #b5887c;
+    border-radius: 8px;
+    padding: 2px;
 }
 
 .lightbox {
@@ -73,7 +95,7 @@ body {
     overflow: auto;
     width: 99%;
     max-height: 100vh;
-    background-color: #c4d7f7;
+    background-color: #adc9d1;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -104,10 +126,9 @@ body {
     display: block;
     max-width: 600px;
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
     font-size: 20px;
-    color: #555252;
     height: 130px;
+    color: #b5887c;
 }
 
 #captionDescription {
@@ -124,7 +145,7 @@ body {
     position: absolute;
     top: 5px;
     right: 20px;
-    color: #ffffff;
+    color: #b5887c;
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
@@ -160,7 +181,7 @@ body {
     width: auto;
     padding: 16px;
     margin-top: -50px;
-    color: #ffffff;
+    color: #b5887c;
     font-weight: bold;
     font-size: 40px;
     transition: 0.6s ease;

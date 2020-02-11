@@ -1,0 +1,101 @@
+input {
+    margin: 5px auto;
+    padding: 5px;
+    width: 100%;
+    font-size: 15px;
+    border: 2px solid #6495ed;
+    border-radius: 5px;
+    background-color: #e7e1dc;
+    color: #404040;
+}
+
+.logButton {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #7ca9b5;
+    border: none;
+    border-radius: 5px;
+    color: wheat;
+    font-size: 20px;
+    text-transform: uppercase;
+    width: 104%;
+}
+
+.logButton:hover {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #6495ed;
+    border: none;
+    border-radius: 5px;
+    color: wheat;
+    font-size: 20px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+form {
+    width: 25%;
+    margin: 20px 37.5% 0 37.5%;
+    box-sizing: border-box;
+}
+
+label {
+    color: #5c93a2;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 5px auto;
+    text-align: left;
+}
+
+.deleteButton {
+    border-radius: 50%;
+    background-color: #B5887C;
+    color: #ab2400;
+    font-size: medium;
+    text-align: center;
+    float: right;
+    top: 5px;
+    right: 10px;
+    opacity: 0.8;
+}
+
+.deleteButton:hover {
+    cursor: pointer;
+    opacity: 1.0;
+}
+
+.galleryTypeChangeButton {
+    display: inline-block;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #B5887C;
+    border-radius: 5px;
+    color: wheat;
+    font-size: x-small;
+    text-transform: uppercase;
+    width: 20%;
+}
+
+.galleryButton {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #B5887C;
+    border-radius: 5px;
+    color: wheat;
+    font-size: 10px;
+    text-transform: uppercase;
+    width: 45%;
+    top: 1px;
+}
+
+.galleryTypeChangeButton:hover,
+.galleryButton:hover {
+    cursor: pointer;
+    font-style: italic;
+    background-color: #a27a6f;
+}
+
+#galleryNameInput,
+::placeholder {
+    background-color: #e7e1dc;
+}

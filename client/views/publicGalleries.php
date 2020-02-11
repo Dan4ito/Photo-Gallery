@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="bg">
 
 <head>
     <title>PHP Gallery</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../resources/css/style.css">
+    <link rel="stylesheet" href="../resources/css/displayGallery.css">
     <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/script.js"></script>
 </head>
@@ -30,8 +31,8 @@
 
         foreach ($publicGalleries as $gallery) {
             echo '
-            <div style="display: inline-block;">
-                <div onclick="openGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/' . 'missingImage.jpg' . ');"></div>
+            <div class="galleryDisplay">
+                <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="../assets/' . 'missingImage.jpg' . '">
                 <div class="imageInfo">
                     <h3>' . $gallery->name . '</h3>
                     <p>' . $gallery->timestamp . '</p>
