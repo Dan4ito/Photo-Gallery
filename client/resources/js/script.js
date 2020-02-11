@@ -235,10 +235,12 @@ openGallery = async(galleryId) => {
 
 mergeGalleries = async (galleryIds) => {
     event.preventDefault();
+    let mergedGalleryName = document.getElementById('galleryNameInput').value;
     try {
         const response = await fetch('../../Web Layer/controllers/mergeGalleries.php', {
             method: 'POST',
             body: JSON.stringify({
+                mergedGalleryName : mergedGalleryName,
                 galleryIds: galleryIds
             }),
             headers: {
