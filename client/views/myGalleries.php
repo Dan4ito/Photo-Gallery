@@ -55,6 +55,8 @@
             </div>
         </div>
 
+        <a href="mergeGalleries.php"><img src="../assets/merge.jpg" style="width:300px; height:300px"></a>
+
     </div>
 
     <script>

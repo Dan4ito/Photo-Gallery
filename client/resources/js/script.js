@@ -227,6 +227,7 @@ openGallery = async (galleryId) => {
     }
 };
 
+
 function clearInputFields() {
     var email = document.getElementById('email');
     if (email != null) {

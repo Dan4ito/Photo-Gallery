@@ -28,14 +28,18 @@
 
     <div class="galleryContainer">
         <?php
+        $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
         $publicGalleries = $galleryRepository->GetPublicGalleries();
-
-        foreach ($publicGalleries as $gallery) {
+        $otherPeoplePublicGalleriesWithoutYours = array_udiff($publicGalleries, $myGalleries, function ($obj_a, $obj_b) {
+            return $obj_a->id - $obj_b->id;
+        });   // because some of yours may also be public
+        $allVisibleGalleriesForYou = array_merge($myGalleries, $otherPeoplePublicGalleriesWithoutYours);
+        foreach ($allVisibleGalleriesForYou as $gallery) {
             $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
-            $imagePath = ($topImage->id != null ) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
+            $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
             echo '
             <div style="display: inline-block;">
-                <div onclick="openGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(../assets/' . $imagePath . ');"></div>
+                <div onclick="openGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(' . $imagePath . ');"></div>
                 <div class="imageInfo">
                     <h3>' . $gallery->name . '</h3>
                     <p>' . $gallery->timestamp . '</p>
@@ -44,7 +48,9 @@
             ';
         }
         ?>
+
     </div>
+
 </body>
 
 </html>
