@@ -22,22 +22,20 @@ $galleryUserValidatorService = new GalleryUserValidatorService();
 
 
 $imageDescription = $_POST['fileDescription'];
-$file = $_FILES['file'];
 $galleryId = $_POST['galleryId'];
-$compression = $_POST['compression'];
+$fileQuality = $_POST['fileQuality'];
+$files = $_FILES['files'];
 try {
     if ($galleryUserValidatorService->canUserEditGallery($galleryId)) {
-        $imageValidationService->validateImage($imageDescription, $file);   
-        if($compression > 0) {
-            $savedImageName = $imageUploadService->uploadCompressedImage($file, $compression);    
-        }
-        else {
-            $savedImageName = $imageUploadService->uploadImage($file);
-        }
+        $imageValidationService->validateImages($imageDescription, $files);   
+        $savedImageNames = $imageUploadService->uploadImages($files, $fileQuality);
+
         $user = $authorizationService->getLoggedInUser();
-        $imageId = $imageRepository->Save($savedImageName, $imageDescription, $user->id);
-        $imageGalleryRepository->Create($imageId, $galleryId);
-        
+        foreach($savedImageNames as $savedImageName) {
+            $imageId = $imageRepository->Save($savedImageName, $imageDescription, $user->id);
+            $imageGalleryRepository->Create($imageId, $galleryId);
+        }
+
         http_response_code(302);
         header("Location: ../../client/views/gallery.php?id=" . $galleryId);
     } else {

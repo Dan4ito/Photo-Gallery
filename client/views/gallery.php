@@ -62,10 +62,10 @@
             <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
 
             <label for="image">Image</label>
-            <input id="fileInput" type="file" name="file">
+            <input id="fileInput" type="file" name="file" multiple="multiple">
 
-            <label for="resize">% compression*</label>
-            <input id="resize" type="number" min="0" max="100" placeholder="Compression % (Optional)">
+            <label for="resize">% file quality*</label>
+            <input id="resize" type="number" min="0" max="100" placeholder="File quality % (Optional)">
 
             <button class="logButton" onclick="uploadImage(' . $urlService->GetQueryParam('id') . ')">Upload</button>
         </form>
