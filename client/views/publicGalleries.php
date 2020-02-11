@@ -27,7 +27,7 @@
         ?>
         <?php include '../components/navbar.php' ?>
 
-        <div class="galleryContainer">
+        <div class="galleriesContainer">
             <?php
             $publicGalleries = $galleryRepository->GetPublicGalleries();
 
