@@ -134,7 +134,6 @@ deleteImageFromGallery = async(imageId, galleryId) => {
     }
 };
 
-
 createGallery = async() => {
     event.preventDefault();
 
@@ -233,7 +232,33 @@ openGallery = async(galleryId) => {
     }
 };
 
-mergeGalleries = async (galleryIds) => {
+sortImages = async(galleryId) => {
+    event.preventDefault();
+
+    let sortType = document.getElementById("sortImages").value;
+    try {
+        const response = await fetch('../../Web Layer/controllers/sortImages.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                galleryId: galleryId,
+                sorting: sortType
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
+};
+
+mergeGalleries = async(galleryIds) => {
     event.preventDefault();
     try {
         const response = await fetch('../../Web Layer/controllers/mergeGalleries.php', {

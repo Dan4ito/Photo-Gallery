@@ -98,4 +98,36 @@ class ImageRepository extends DatabaseContext implements IImageRepository
         $statement->bind_param('ii', $imageId, $galleryId);
         $statement->execute();
     }
+
+    public function SortImagesForGallery($type, $galleryId) 
+    {
+        $asc = ["asc", "ascending"];
+        $desc = ["desc", "descending"];
+        
+        if(in_array($type, $asc)) {
+            $sort = "ASC";
+        }
+        if(in_array($type, $desc)) {
+            $sort = "DESC";
+        }
+
+        $query = "SELECT *
+                FROM php_gallery.image_gallery
+                    JOIN php_gallery.images ON imageId = id
+                WHERE galleryId = ?
+                ORDER BY timestamp ?";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bind_param("i", $galleryId);
+        $statement->bind_param("s", $sort);
+        $statement->execute();
+        
+        $result = $statement->get_result();
+        $images = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $images = array_map(function ($image) {
+            return new Image($image['id'], $image['description'], $image['name'], $image['userId'], $image['timestamp']);
+        }, $images);
+
+        return $images;
+    }
 }

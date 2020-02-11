@@ -47,7 +47,7 @@
                 $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
                 echo '
             <div class="galleryDisplay">
-                <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="../assets/' . $imagePath . '">
+                <img onclick="openGallery(' . $gallery->id . ')" class="imageToBeExpanded" src="../assets/' . $imagePath . '">
                 <div class="imageInfo">
                     <h3>' . $gallery->name . '</h3>
                     <p>' . $gallery->timestamp . '</p>

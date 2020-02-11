@@ -34,9 +34,7 @@ class ImageGalleryRepository extends DatabaseContext implements IImageGalleryRep
             }
             $query .= $clauseToAppend;
         }
-
-
-
+        
         $result = mysqli_query($this->connection, $query);
     }
 }

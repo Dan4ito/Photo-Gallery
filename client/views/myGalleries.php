@@ -41,7 +41,7 @@
                     <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>    
                     
                     <div class="galleryNode">
-                        <img onclick="openGallery(' . $gallery->id . ')" id="galleryImageToBeDisplayed" src="' . $imagePath . '">
+                        <img onclick="openGallery(' . $gallery->id . ')" class="galleryImageToBeDisplayed" src="' . $imagePath . '">
                         <div class="imageInfo">
                             <h3>' . $gallery->name . '</h3>
                             <p>' . $gallery->timestamp . '</p>
@@ -53,7 +53,7 @@
         ?>
 
         <div class="galleryCreate">
-            <img onclick="toggleTextInput()" class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
+            <img onclick="toggleTextInput()" class="create" id="galleryImageToBeExpanded" src="../assets/createGallery.jpg">
             <div id="galleryInfo">
                 <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
                 <button class="galleryButton" id="create" onclick="createGallery()" type="submit">Create</button>
