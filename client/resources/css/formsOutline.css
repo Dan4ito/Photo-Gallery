@@ -47,51 +47,6 @@ label {
     text-align: left;
 }
 
-.deleteButton {
-    border-radius: 50%;
-    background-color: #B5887C;
-    color: #ab2400;
-    font-size: medium;
-    text-align: center;
-    top: 0;
-    opacity: 0.8;
-    float: right;
-}
-
-.deleteButton:hover {
-    cursor: pointer;
-    opacity: 1.0;
-}
-
-.galleryTypeChangeButton {
-    display: inline-block;
-    background-color: #B5887C;
-    border-radius: 5px;
-    color: wheat;
-    font-size: small;
-    text-transform: uppercase;
-    width: 40%;
-}
-
-.galleryButton {
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #B5887C;
-    border-radius: 5px;
-    color: wheat;
-    font-size: 10px;
-    text-transform: uppercase;
-    width: 45%;
-    top: 1px;
-}
-
-.galleryTypeChangeButton:hover,
-.galleryButton:hover {
-    cursor: pointer;
-    font-style: italic;
-    background-color: #a27a6f;
-}
-
 #galleryNameInput,
 ::placeholder {
     background-color: #e7e1dc;

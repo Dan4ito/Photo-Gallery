@@ -81,16 +81,23 @@ uploadImage = async(galleryId) => {
 
     let imageDescription = document.getElementById('imageDescriptionInput').value;
     let fileInput = document.getElementById('fileInput');
+    let compression = document.getElementById("resize").value;
+    if (compression == "") {
+        compression = "0";
+    }
+
     const formData = new FormData();
     formData.append('fileDescription', imageDescription);
     formData.append('file', fileInput.files[0]);
     formData.append('galleryId', parseInt(galleryId));
+    formData.append('compression', parseInt(compression));
 
     try {
         const response = await fetch('../../Web Layer/controllers/uploadImage.php', {
             method: 'POST',
             body: formData
         });
+
         if (response.status < 400) {
             window.location.replace(response.url)
         } else {
