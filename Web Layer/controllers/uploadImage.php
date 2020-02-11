@@ -24,6 +24,7 @@ $galleryUserValidatorService = new GalleryUserValidatorService();
 $imageDescription = $_POST['fileDescription'];
 $file = $_FILES['file'];
 $galleryId = $_POST['galleryId'];
+$selectedTags = explode(",",$_POST['selectedTags']);
 $compression = $_POST['compression'];
 try {
     if ($galleryUserValidatorService->canUserEditGallery($galleryId)) {
