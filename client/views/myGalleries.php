@@ -28,7 +28,19 @@
     ?>
     <?php include '../components/navbar.php' ?>
 
+<<<<<<< HEAD
     <div class="galleryContainer">
+=======
+    <div class="galleriesContainer">
+        <div class="galleryCreate">
+            <img onclick="toggleTextInput()" class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
+            <div id="galleryInfo">
+                <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
+                <button class="galleryButton" id="create" onclick="createGallery()" type="submit">Create</button>
+                <button class="galleryButton" id="close" onclick="toggleTextInput()" type="submit">Close</button>
+            </div>
+        </div>
+>>>>>>> 1d0a03974e0b0a399373be7ccc6d8235985ec7f4
 
         <?php
         $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
@@ -41,7 +53,7 @@
                     <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>    
                     
                     <div class="galleryNode">
-                        <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="' . $imagePath . '">
+                        <img onclick="openGallery(' . $gallery->id . ')" id="galleryImageToBeDisplayed" src="'. $imagePath . '">
                         <div class="imageInfo">
                             <h3>' . $gallery->name . '</h3>
                             <p>' . $gallery->timestamp . '</p>
