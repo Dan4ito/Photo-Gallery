@@ -65,6 +65,33 @@ class GalleryRepository extends DatabaseContext implements IGalleryRepository
         return new Gallery($gallery['id'], $gallery['name'], $gallery['timestamp'], $gallery['userId'], $gallery['typeId']);
     }
 
+    public function GetByIds($galleryIds)
+    {
+        $query = "SELECT * FROM php_gallery.galleries
+        WHERE";
+
+        $galleryIdsCount = count($galleryIds);
+        $clauseToAppend = null;
+        for ($i = 0; $i < $galleryIdsCount; $i++) {
+            if ($i != $galleryIdsCount - 1) {
+                $clauseToAppend = " id =" . $galleryIds[$i] . " OR";
+            } else {
+                $clauseToAppend = " id =" . $galleryIds[$i];
+            }
+            $query .= $clauseToAppend;
+        }
+
+        $results = mysqli_query($this->connection, $query);
+
+        $galleries = mysqli_fetch_all($results, MYSQLI_ASSOC);
+
+        $galleries = array_map(function ($gallery) {
+            return new Gallery($gallery['id'], $gallery['name'], $gallery['timestamp'], $gallery['userId'], $gallery['typeId']);
+        }, $galleries);
+
+        return $galleries;
+    }
+
     public function GetPublicGalleries()
     {
         $query = "SELECT g.* FROM php_gallery.galleries g

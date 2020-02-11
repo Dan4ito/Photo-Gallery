@@ -185,6 +185,30 @@ deleteGallery = async(galleryId) => {
     }
 };
 
+toggleGalleryType = async(galleryId) => {
+    event.preventDefault();
+
+    try {
+        const response = await fetch('../../Web Layer/controllers/toggleGalleryType.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                galleryId: galleryId
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
+};
+
 openGallery = async(galleryId) => {
     event.preventDefault();
 
@@ -208,6 +232,30 @@ openGallery = async(galleryId) => {
         alert(error);
     }
 };
+
+mergeGalleries = async (galleryIds) => {
+    event.preventDefault();
+    try {
+        const response = await fetch('../../Web Layer/controllers/mergeGalleries.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                galleryIds: galleryIds
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
+};
+
 
 function clearInputFields() {
     var email = document.getElementById('email');

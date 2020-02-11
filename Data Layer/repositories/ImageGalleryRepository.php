@@ -20,4 +20,23 @@ class ImageGalleryRepository extends DatabaseContext implements IImageGalleryRep
 
         return $this->connection->insert_id;
     }
+
+    public function InsertImagesForGallery($imageIds, int $galleryId)
+    {
+        $query = "INSERT INTO php_gallery.image_gallery (imageId, galleryId) VALUES ";
+
+        $imagesIdsCount = count($imageIds);
+        $clauseToAppend = null;
+        for ($i = 0; $i < $imagesIdsCount; $i++) {
+            $clauseToAppend = "(" . $imageIds[$i] . ", " . $galleryId . ")";
+            if ($i != $imagesIdsCount - 1) {
+                $clauseToAppend .= ", ";
+            }
+            $query .= $clauseToAppend;
+        }
+
+
+
+        $result = mysqli_query($this->connection, $query);
+    }
 }

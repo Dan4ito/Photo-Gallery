@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../resources/css/formsOutline.css">
     <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/script.js"></script>
-    <script type="text/javascript" src="../resources/js/toggle.js"></script>
 </head>
 
 <body>
@@ -30,6 +29,29 @@
     <?php include '../components/navbar.php' ?>
 
     <div class="galleriesContainer">
+
+        <?php
+        $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
+        foreach ($myGalleries as $gallery) {
+            $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
+            $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
+            echo '
+                <div class="galleryDisplay">
+                    <button class="galleryTypeChangeButton" onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>
+                    <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>    
+                    
+                    <div class="galleryNode">
+                        <img onclick="openGallery(' . $gallery->id . ')" id="galleryImageToBeDisplayed" src="' . $imagePath . '">
+                        <div class="imageInfo">
+                            <h3>' . $gallery->name . '</h3>
+                            <p>' . $gallery->timestamp . '</p>
+                        </div>
+                    </div>
+                </div>
+                ';
+        }
+        ?>
+
         <div class="galleryCreate">
             <img onclick="toggleTextInput()" class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
             <div id="galleryInfo">
@@ -38,30 +60,15 @@
                 <button class="galleryButton" id="close" onclick="toggleTextInput()" type="submit">Close</button>
             </div>
         </div>
-
-        <?php
-            $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
-            foreach ($myGalleries as $gallery) {
-                $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
-                $imagePath = ($topImage->id != null ) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
-                echo '
-                <div class="galleryDisplay">
-                    <button class="galleryTypeChangeButton" onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>
-                    <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>    
-                    
-                    <div class="galleryNode">
-                        <img onclick="openGallery(' . $gallery->id . ')" id="galleryImageToBeDisplayed" src="'. $imagePath . '">
-                        <div class="imageInfo">
-                            <h3>' . $gallery->name . '</h3>
-                            <p>' . $gallery->timestamp . '</p>
-                        </div>
-                    </div>
-                </div>
-                ';
-            }
-        ?>
+        <a href="mergeGalleries.php"><img src="../assets/merge.jpg" style="width:200px; height:200px"></a>
     </div>
-    
+
+    <script>
+        toggleTextInput = () => {
+            let status = document.getElementById("galleryInfo").style.visibility;
+            document.getElementById("galleryInfo").style.visibility = (status == "hidden" || status == "") ? "visible" : "hidden";
+        }
+    </script>
 </body>
 
 </html>
