@@ -29,7 +29,7 @@
     ?>
     <?php include '../components/navbar.php' ?>
 
-    <div class="galleryContainer">
+    <div class="galleriesContainer">
         <div class="galleryCreate">
             <img onclick="toggleTextInput()" class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
             <div id="galleryInfo">
@@ -50,7 +50,7 @@
                     <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>    
                     
                     <div class="galleryNode">
-                        <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="'. $imagePath . '">
+                        <img onclick="openGallery(' . $gallery->id . ')" id="galleryImageToBeDisplayed" src="'. $imagePath . '">
                         <div class="imageInfo">
                             <h3>' . $gallery->name . '</h3>
                             <p>' . $gallery->timestamp . '</p>
