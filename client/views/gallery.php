@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 
 <head>
     <title>PHP Gallery</title>
@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../resources/css/style.css">
     <link rel="stylesheet" href="../resources/css/formsOutline.css">
     <link rel="stylesheet" href="../resources/css/displayGallery.css">
+    <link rel="stylesheet" href="../resources/css/polaroidGallery.css">
+    <link rel="stylesheet" href="../resources/css/filterGallery.css">
     
     <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/script.js"></script>
@@ -38,6 +40,19 @@
 
     ?>
     <?php include '../components/navbar.php' ?>
+
+    <div class="options">
+        <input class="filter" id="filterDescription" type="text" placeholder="Filter images" name="filter">
+        <select class="filter">
+            <option value="" disabled selected>by</option>
+            <option value="tag">tag</option>
+            <option value="description">description</option>
+            <option value="date">upload date</option>
+        </select>
+        <button class="filterButton">Filter</button>
+        <button class="filterButton" id="selectMove">Move to</button>
+        <button class="filterButton" id="selectMove">Select</button>
+    </div>
 
     <div class="galleryUpload">
             <form class="formUpload" action="" method="post" enctype="multipart/form-data">
@@ -78,6 +93,7 @@
         }
         ?>
     </div>
+  
     <div id="polaroid">    
         <span class="closeButton">&times;</span>
         <a class="prev" onclick="changeSlide(-1)">&laquo;</a>

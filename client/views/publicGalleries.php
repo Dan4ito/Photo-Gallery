@@ -28,6 +28,17 @@
     <div class="galleryContainer">
         <?php
         $publicGalleries = $galleryRepository->GetPublicGalleries();
+        
+        if(count($publicGalleries) == 0) {
+            echo '
+                <div class="emptyGallery">
+                    <p class="imageInfo">
+                        There are no public galleries yet. 
+                    </p> 
+                    <img id="emptyImage" src="../assets/'. 'emptyGallery.png' . '">
+                </div>
+            ';
+        }
 
         foreach ($publicGalleries as $gallery) {
             echo '
