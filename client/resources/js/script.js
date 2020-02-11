@@ -227,6 +227,29 @@ openGallery = async (galleryId) => {
     }
 };
 
+mergeGalleries = async (galleryIds) => {
+    event.preventDefault();
+    try {
+        const response = await fetch('../../Web Layer/controllers/mergeGalleries.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                galleryIds: galleryIds
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
+};
+
 
 function clearInputFields() {
     var email = document.getElementById('email');

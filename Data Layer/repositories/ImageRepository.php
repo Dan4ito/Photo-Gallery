@@ -32,7 +32,7 @@ class ImageRepository extends DatabaseContext implements IImageRepository
         $statement->execute();
 
         $result = $statement->get_result();
-        
+
 
         $topImage = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $topImage = new Image($topImage['id'], $topImage['description'], $topImage['name'], $topImage['userId'], $topImage['timestamp']);
@@ -51,10 +51,40 @@ class ImageRepository extends DatabaseContext implements IImageRepository
         $statement->execute();
 
         $results = $statement->get_result();
-        
+
 
         $images = mysqli_fetch_all($results, MYSQLI_ASSOC);
-        $images = array_map(function($image) { return new Image($image['id'], $image['description'], $image['name'], $image['userId'], $image['timestamp']); }, $images);
+        $images = array_map(function ($image) {
+            return new Image($image['id'], $image['description'], $image['name'], $image['userId'], $image['timestamp']);
+        }, $images);
+
+        return $images;
+    }
+
+    public function GetImagesForGalleries($galleryIds)
+    {
+        $query = "SELECT * FROM php_gallery.image_gallery a
+                    JOIN images i ON a.imageId = i.id 
+                    WHERE"; // galleryId =?";         // junktion table
+
+        $galleryIdsCount = count($galleryIds);
+        $clauseToAppend = null;
+        for ($i = 0; $i < $galleryIdsCount; $i++) {
+            if ($i != $galleryIdsCount - 1) {
+                $clauseToAppend = " galleryId =" . $galleryIds[$i] . " OR";
+            } else {
+                $clauseToAppend = " galleryId =" . $galleryIds[$i];
+            }
+            $query .= $clauseToAppend;
+        }
+
+        $results = mysqli_query($this->connection, $query);
+
+        $images = mysqli_fetch_all($results, MYSQLI_ASSOC);
+
+        $images = array_map(function ($image) {
+            return new Image($image['id'], $image['description'], $image['name'], $image['userId'], $image['timestamp']);
+        }, $images);
 
         return $images;
     }

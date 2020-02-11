@@ -39,7 +39,7 @@
             $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
             echo '
             <div style="display: inline-block;">
-                <div onclick="openGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(' . $imagePath . ');"></div>
+                <div onclick="toggleGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(' . $imagePath . ');"></div>
                 <div class="imageInfo">
                     <h3>' . $gallery->name . '</h3>
                     <p>' . $gallery->timestamp . '</p>
@@ -51,6 +51,25 @@
 
     </div>
 
+    <?php echo '<button onclick="sendMergeGalleriesRequest()">Merge</button>' ?>
+    <script>
+    
+        let selectedGalleries = [];
+        toggleGallery = (selectedGalleryId) => {
+            if (!selectedGalleries.includes(selectedGalleryId)) {
+                selectedGalleries.push(selectedGalleryId)
+            } else {
+                selectedGalleries.splice(selectedGalleries.indexOf(selectedGalleryId), 1);
+            }
+            console.log(selectedGalleries);
+        }
+        sendMergeGalleriesRequest = () => {
+            if(selectedGalleries.length < 2) alert("You must select more at least two galleries for merge!")
+            else{
+                mergeGalleries(selectedGalleries);
+            }
+        }
+    </script>
 </body>
 
 </html>
