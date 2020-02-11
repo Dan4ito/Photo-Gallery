@@ -53,10 +53,9 @@ label {
     color: #ab2400;
     font-size: medium;
     text-align: center;
-    float: right;
-    top: 5px;
-    right: 10px;
+    top: 0;
     opacity: 0.8;
+    float: right;
 }
 
 .deleteButton:hover {
@@ -66,14 +65,12 @@ label {
 
 .galleryTypeChangeButton {
     display: inline-block;
-    padding: 10px;
-    margin-top: 10px;
     background-color: #B5887C;
     border-radius: 5px;
     color: wheat;
-    font-size: x-small;
+    font-size: small;
     text-transform: uppercase;
-    width: 20%;
+    width: 40%;
 }
 
 .galleryButton {

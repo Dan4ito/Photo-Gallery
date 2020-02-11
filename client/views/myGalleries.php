@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 
 <head>
     <title>PHP Gallery</title>
@@ -31,7 +31,7 @@
 
     <div class="galleryContainer">
         <div class="galleryCreate">
-            <img onclick="toggleTextInput()" id="imageToBeExpanded" src="../assets/createGallery.jpg">
+            <img onclick="toggleTextInput()" class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
             <div id="galleryInfo">
                 <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
                 <button class="galleryButton" id="create" onclick="createGallery()" type="submit">Create</button>
@@ -47,11 +47,14 @@
                 echo '
                 <div class="galleryDisplay">
                     <button class="galleryTypeChangeButton" onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>
-                    <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>
-                    <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="'. $imagePath . '">
-                    <div class="imageInfo">
-                        <h3>' . $gallery->name . '</h3>
-                        <p>' . $gallery->timestamp . '</p>
+                    <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>    
+                    
+                    <div class="galleryNode">
+                        <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="'. $imagePath . '">
+                        <div class="imageInfo">
+                            <h3>' . $gallery->name . '</h3>
+                            <p>' . $gallery->timestamp . '</p>
+                        </div>
                     </div>
                 </div>
                 ';
