@@ -1,78 +1,34 @@
-a {
-    text-decoration: none;
-    color: #6495ed;
+html {
+    background-color: #d1c3bb;
     font-family: 'Open Sans', sans-serif;
+}
+
+.mainHeader {
+    height: 40px;
+    background-color: #b29b8d;
+    border-radius: 8px;
+}
+
+.navBar {
+    background-color: #b29b8d;
+    border-radius: 8px;
+    border: 2px solid #a88e7e;
+    text-decoration: none;
+    color: #afbfc9;
     font-weight: bold;
     font-size: 20px;
-    margin: 15px;
-}
-
-a:hover {
-    text-decoration: none;
-    color: #4a81e6;
-}
-
-input {
-    margin: 5px auto;
+    margin: 30px;
     padding: 5px;
-    width: 100%;
-    font-size: 15px;
-    border: 2px solid #6495ed;
-    border-radius: 5px;
 }
 
-input[type=submit],
-button {
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #6495ed;
-    border: none;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 20px;
-}
-
-button {
-    width: 104%;
-}
-
-input[type=submit]:hover {
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #4a81e6;
-    border: none;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 20px;
-}
-
-form {
-    width: 25%;
-    margin: 50px 37.5% 0 37.5%;
-    box-sizing: border-box;
-}
-
-h1 {
-    color: #6495ed;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-    margin: 5px auto;
-    text-align: center;
-}
-
-label {
-    color: #6495ed;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-    font-size: 15px;
-    margin: 5px auto;
-    text-align: left;
+.navBar:hover {
+    text-decoration: none;
+    color: #9ebdb8;
 }
 
 #loginInfo {
     float: right;
-    color: #555252;
-    font-family: 'Open Sans', sans-serif;
+    color: #afbfc9;
     font-weight: bold;
     font-size: 20px;
     margin: 5px 15px;
@@ -80,4 +36,13 @@ label {
 
 #homeTitle {
     margin-top: 50px;
+}
+
+h1 {
+    color: #7ca9b5;
+    font-weight: bold;
+    margin: 5px auto;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
 }

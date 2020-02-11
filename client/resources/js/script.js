@@ -1,4 +1,4 @@
-submitLoginForm = async () => {
+submitLoginForm = async() => {
     event.preventDefault();
 
     var email = document.getElementById('email').value;
@@ -27,7 +27,7 @@ submitLoginForm = async () => {
     }
 };
 
-submitLogoutForm = async () => {
+submitLogoutForm = async() => {
     event.preventDefault();
     try {
         const response = await fetch('../../Web Layer/controllers/logout.php', {
@@ -45,7 +45,7 @@ submitLogoutForm = async () => {
     }
 };
 
-submitCreateForm = async () => {
+submitCreateForm = async() => {
     event.preventDefault();
 
     var email = document.getElementById('email').value;
@@ -76,7 +76,7 @@ submitCreateForm = async () => {
     }
 };
 
-uploadImage = async (galleryId) => {
+uploadImage = async(galleryId) => {
     event.preventDefault();
 
     let imageDescription = document.getElementById('imageDescriptionInput').value;
@@ -102,14 +102,14 @@ uploadImage = async (galleryId) => {
     }
 };
 
-deleteImageFromGallery = async (imageId, galleryId) => {
+deleteImageFromGallery = async(imageId, galleryId) => {
     event.preventDefault();
 
     try {
         const response = await fetch('../../Web Layer/controllers/deleteImage.php', {
             method: 'DELETE',
             body: JSON.stringify({
-                imageId : imageId,
+                imageId: imageId,
                 galleryId: galleryId
             }),
             headers: {
@@ -128,7 +128,7 @@ deleteImageFromGallery = async (imageId, galleryId) => {
 };
 
 
-createGallery = async () => {
+createGallery = async() => {
     event.preventDefault();
 
     let galleryNameInput = document.getElementById('galleryNameInput').value;
@@ -154,7 +154,7 @@ createGallery = async () => {
     }
 };
 
-deleteGallery = async (galleryId) => {
+deleteGallery = async(galleryId) => {
     event.preventDefault();
 
     try {
@@ -178,32 +178,7 @@ deleteGallery = async (galleryId) => {
     }
 };
 
-
-toggleGalleryType = async (galleryId) => {
-    event.preventDefault();
-
-    try {
-        const response = await fetch('../../Web Layer/controllers/toggleGalleryType.php', {
-            method: 'POST',
-            body: JSON.stringify({
-                galleryId: galleryId
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-        if (response.status < 400) {
-            window.location.replace(response.url)
-        } else {
-            const body = await response.json();
-            throw new Error(body.error);
-        }
-    } catch (error) {
-        alert(error);
-    }
-};
-
-openGallery = async (galleryId) => {
+openGallery = async(galleryId) => {
     event.preventDefault();
 
     try {
