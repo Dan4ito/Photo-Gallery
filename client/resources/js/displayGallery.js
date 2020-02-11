@@ -107,3 +107,13 @@ function slideFocus(slideNumber) {
 
     dotSlides[previous].className += " lightbox";
 }
+
+function highlightImage(imageID) {
+    var image = document.getElementsByClassName("images")[imageID];
+    image.style.opacity = 1.0;
+}
+
+function normalizeImage(imageID) {
+    var image = document.getElementsByClassName("images")[imageID];
+    image.style.opacity = 0.8;
+}
