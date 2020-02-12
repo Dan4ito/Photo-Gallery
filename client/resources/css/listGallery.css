@@ -1,0 +1,49 @@
+@media only screen and (max-width: 900px) {
+    #galleryCreateForm {
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1240px) {
+    #galleryCreateForm {
+        width: 80%;
+    }
+}
+
+.galleryButtons {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.galleryButtons button {
+    margin-right: 10px;
+}
+
+#createGallery {
+    width: 100%;
+    padding: 20px;
+    font-size: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: white;
+}
+
+#createGallery button, #closeGalleryFormButton {
+    font-size: 20px;
+    padding: 20px;
+}
+
+#galleryCreateForm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#galleryCreateForm > img {
+    width: 40%;
+    height: auto;
+    max-width: 300px;
+    min-width: 100px;
+}
