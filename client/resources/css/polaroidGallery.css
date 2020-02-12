@@ -1,66 +1,26 @@
-.previews {
-    float: initial;
-}
-
-.previewRow {
-    display: inline;
-    margin-left: 5px;
-}
-
-.preview {
-    display: inline-block;
-    opacity: 0.75;
-    width: 200px;
-    height: 120px;
-    object-fit: cover;
-    cursor: pointer;
-    border-radius: 2px;
-    border: 3px solid #a9a9a9;
-    cursor: pointer;
-}
-
 .lightbox {
     opacity: 1.0;
 }
 
-.preview:hover {
-    opacity: 1.0;
-    cursor: pointer;
-}
-
 #polaroid {
-    display: none;
-    margin-left: auto;
-    margin-right: auto;
-    position: fixed;
-    z-index: 1;
-    top: 48px;
-    left: auto;
-    right: auto;
-    overflow: auto;
-    width: 99%;
-    max-height: 100vh;
-    background-color: #adc9d1;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: rbga(255, 255, 255, 0.9);
 }
 
 #wrapper {
     width: 100%;
     height: auto;
     max-width: 100%;
-    max-height: 75vh;
 }
 
 #expandedImage {
     display: block;
     margin: 0 auto;
-    width: auto;
+    width: 90%;
     height: auto;
     max-width: 100%;
-    max-height: 50vh;
+    max-height: 75vh;
     transition: 0.3s;
     border-radius: 8px;
-    border: 3px solid #dddddd;
     padding: 2px;
     object-fit: contain;
 }
@@ -73,7 +33,7 @@
     text-align: center;
     font-size: 20px;
     height: 130px;
-    color: #b5887c;
+    color: white;
 }
 
 #captionDescription {
@@ -90,17 +50,18 @@
     position: absolute;
     top: 5px;
     right: 20px;
-    color: #b5887c;
+    color: white;
     font-size: 40px;
-    font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .closeButton :hover,
 .closeButton :focus {
-    color: #bbbbbb;
+    background-color: white;
+    color: white;
     cursor: pointer;
+    font-weight: bold;
 }
 
 @keyframes zoom {
@@ -126,8 +87,7 @@
     width: auto;
     padding: 16px;
     margin-top: -50px;
-    color: #b5887c;
-    font-weight: bold;
+    color: white;
     font-size: 40px;
     transition: 0.6s ease;
     border-radius: 0 3px 3px 0;
@@ -147,6 +107,8 @@
 
 .prev:hover,
 .next:hover {
-    background-color: #cccccc;
+    background-color: white;
+    color: black;
     cursor: pointer;
+    font-weight: bold;
 }

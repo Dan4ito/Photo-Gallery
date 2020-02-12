@@ -8,22 +8,26 @@ $isLoggedIn = $authorizationService->isLoggedIn();
 
 
 <div class="mainHeader">
-    <a class="navBar" href="index.php">Home</a>
-    <?php if (!$isLoggedIn) : ?>
-        <a class="navBar" href="login.php">Login</a>
-    <?php endif; ?>
-    <?php if (!$isLoggedIn) : ?>
-        <a class="navBar" href="register.php">Register a user</a>
-    <?php endif; ?>
-
     <?php if ($isLoggedIn) : ?>
-        <a class="navBar" href="myGalleries.php">My Galleries</a>
-        <a class="navBar" href="publicGalleries.php">Public Galleries</a>
-        <a class="navBar" href="mergeGalleries.php">Merge Galleries</a>
-        <a class="navBar" href="#" onclick="submitLogoutForm()">Logout</a>
         <div id="loginInfo">
             Logged in as
-            <?php echo $cookieService->getCookieValue("loginInfoToDisplay") ?>
+            <strong><?php echo $cookieService->getCookieValue("loginInfoToDisplay") ?></strong>
         </div>
     <?php endif; ?>
+    <nav id="nav">
+        <a class="navItem" href="index.php">Home</a>
+        <?php if (!$isLoggedIn) : ?>
+            <a class="navItem" href="login.php">Login</a>
+        <?php endif; ?>
+        <?php if (!$isLoggedIn) : ?>
+            <a class="navItem" href="register.php">Sign up</a>
+        <?php endif; ?>
+
+        <?php if ($isLoggedIn) : ?>
+            <a class="navItem" href="myGalleries.php">My Galleries</a>
+            <a class="navItem" href="publicGalleries.php">Public Galleries</a>
+            <a class="navItem" href="mergeGalleries.php">Merge Galleries</a>
+            <a class="navItem" href="#" onclick="submitLogoutForm()">Logout</a>
+        <?php endif; ?>
+    </nav>
 </div>

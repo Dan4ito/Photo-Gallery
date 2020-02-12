@@ -1,40 +1,4 @@
-var slide = 1;
-var MAX_SLIDES = 6;
-
-function slidePreviews(slideNumber) {
-    var dotSlides = document.getElementsByClassName("preview");
-    var displayedImages = 0;
-
-    for (i = 0; i < dotSlides.length; i++) {
-        var firstImageToDisplay = slideNumber - MAX_SLIDES / 2;
-        if (firstImageToDisplay < 0) {
-            firstImageToDisplay = 0;
-        }
-        for (j = 0; j < firstImageToDisplay; j++) {
-            dotSlides[j].style.display = "none";
-        }
-
-        var lastImageToDisplay = slideNumber - 1;
-        if (firstImageToDisplay == 0) {
-            lastImageToDisplay += MAX_SLIDES;
-        } else {
-            lastImageToDisplay += MAX_SLIDES / 2;
-        }
-        if (lastImageToDisplay > dotSlides.length) {
-            lastImageToDisplay = dotSlides.length;
-        }
-        for (j = firstImageToDisplay; j < lastImageToDisplay; j++) {
-            if (displayedImages < MAX_SLIDES) {
-                dotSlides[j].style.display = "inline-block";
-                displayedImages++;
-            }
-        }
-
-        for (j = lastImageToDisplay; j < dotSlides.length; j++) {
-            dotSlides[j].style.display = "none";
-        }
-    }
-}
+var slide = 0;
 
 function openImage(image, slideNumber) {
     var container = document.getElementById("polaroid");
@@ -47,21 +11,7 @@ function openImage(image, slideNumber) {
     captionDescription.innerHTML = image.title.replace("+", " ");
     captionTime.innerHTML = image.alt.replace("+", " ");
 
-    var slides = document.getElementsByClassName("images");
-    if (slideNumber == slides.length / 2) {
-        document.getElementsByClassName("next")[0].hidden = true;
-    } else {
-        document.getElementsByClassName("next")[0].hidden = false;
-    }
-    if (slideNumber == 1) {
-        document.getElementsByClassName("prev")[0].hidden = true;
-    } else {
-        document.getElementsByClassName("prev")[0].hidden = false;
-    }
-
     slide = slideNumber;
-
-    slidePreviews(slide);
 }
 
 function expandImage(image, slideNumber) {
@@ -75,45 +25,9 @@ function expandImage(image, slideNumber) {
 }
 
 function changeSlide(number) {
-    slideFocus(slide += number);
-}
-
-function currentSlide(number) {
-    slideFocus(slide = number);
-}
-
-function slideFocus(slideNumber) {
-    var i;
     var slides = document.getElementsByClassName("images");
-    var dotSlides = document.getElementsByClassName("preview");
+    slide += number
+    slide %= slides.length
 
-    if (slideNumber > slides.length) {
-        slide = 1;
-    }
-    if (slideNumber < 1) {
-        slide = slides.length;
-    }
-
-    for (i = 0; i < dotSlides.length; i++) {
-        dotSlides[i].className = dotSlides[i].className.replace(" lightbox", "");
-        if (i > MAX_SLIDES) {
-            dotSlides[i].style.display = "none";
-        }
-    }
-    previous = slideNumber - 1;
-    image = slides[previous];
-
-    openImage(image, slide);
-
-    dotSlides[previous].className += " lightbox";
-}
-
-function highlightImage(imageID) {
-    var image = document.getElementsByClassName("images")[imageID];
-    image.style.opacity = 1.0;
-}
-
-function normalizeImage(imageID) {
-    var image = document.getElementsByClassName("images")[imageID];
-    image.style.opacity = 0.8;
+    openImage(slides[slide], slide)
 }

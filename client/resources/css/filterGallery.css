@@ -9,32 +9,12 @@
 .filter {
     height: 25px;
     display: inline-block;
-    width: 20%;
-    padding: 2px;
+    width: 15%;
     margin: 7px 5px 5px 10px;
-    border: 1px inset #afbfc9;
     color: #404040;
 }
 
-.optionsButton {
-    height: 30px;
-    border: 1px outset #b29b8d;
-    border-radius: 8px;
-    background-color: #b29b8d;
-    color: whitesmoke;
-    opacity: 0.8;
-    width: 10%;
-    text-transform: uppercase;
-}
-
-.optionsButton:hover {
-    opacity: 1.0;
-    cursor: pointer;
-    font-style: italic;
-}
-
-#select,
-#move {
+#selectMove {
     float: right;
     margin: 10px;
 }
