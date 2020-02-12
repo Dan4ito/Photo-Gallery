@@ -100,6 +100,7 @@
                 '<img src="../../images/' . $image->name . '" class ="images" alt = ' . $image->timestamp . ' title = ' . $image->description . ' onclick="expandImage(this, ' . $i . ')";>
             </div>
             ';
+            $i += 1;
         }
         ?>
     </div>
