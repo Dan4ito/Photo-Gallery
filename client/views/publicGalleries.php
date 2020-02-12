@@ -6,7 +6,6 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="../resources/css/style.css">
         <link rel="stylesheet" href="../resources/css/displayGallery.css">
-        <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="../resources/js/script.js"></script>
     </head>
 
@@ -46,14 +45,16 @@
                 $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
                 $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
                 echo '
-            <div class="galleryDisplay">
-                <img onclick="openGallery(' . $gallery->id . ')" class="imageToBeExpanded" src="../assets/' . $imagePath . '">
-                <div class="imageInfo">
-                    <h3>' . $gallery->name . '</h3>
-                    <p>' . $gallery->timestamp . '</p>
+                <div class="galleryDisplay">
+                    <div class="galleryNode">
+                        <img onclick="openGallery(' . $gallery->id . ')" class="imageToBeExpanded" src="../assets/' . $imagePath . '">
+                        <div class="imageInfo">
+                            <h3>' . $gallery->name . '</h3>
+                            <p>' . $gallery->timestamp . '</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            ';
+                ';
             }
             ?>
         </div>

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="../resources/css/style.css">
     <link rel="stylesheet" href="../resources/css/displayGallery.css">
     <link rel="stylesheet" href="../resources/css/formsOutline.css">
-    <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/script.js"></script>
 </head>
 
@@ -60,7 +59,6 @@
                 <button class="galleryButton" id="close" onclick="toggleTextInput()" type="submit">Close</button>
             </div>
         </div>
-        <a href="mergeGalleries.php"><img src="../assets/merge.jpg" style="width:200px; height:200px"></a>
     </div>
 
     <script>

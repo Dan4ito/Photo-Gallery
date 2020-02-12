@@ -36,6 +36,7 @@ class GalleryService
             $imagesIds = array_map(function ($image) {
                 return $image->id;
             }, $imagesForAllGalleries);
+            $imagesIds = array_values(array_unique($imagesIds));
             $this->imageGalleryRepository->InsertImagesForGallery($imagesIds, $createdGalleryId);
         }
     }

@@ -5,7 +5,9 @@
     <title>PHP Gallery</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../resources/css/style.css">
-    <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../resources/css/displayGallery.css">
+    <link rel="stylesheet" href="../resources/css/formsOutline.css">
+    <link rel="stylesheet" href="../resources/css/mergeGalleries.css">
     <script type="text/javascript" src="../resources/js/script.js"></script>
 </head>
 
@@ -26,7 +28,7 @@
     ?>
     <?php include '../components/navbar.php' ?>
 
-    <div class="galleryContainer">
+    <div class="galleriesContainer">
         <?php
         $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
         $publicGalleries = $galleryRepository->GetPublicGalleries();
@@ -38,8 +40,9 @@
             $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
             $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
             echo '
-            <div style="display: inline-block;">
-                <div onclick="toggleGallery(' . $gallery->id . ')" style="height:200px; width:300px; background-size: contain; background-repeat: no-repeat; background-image: url(' . $imagePath . ');"></div>
+            <div class="galleryDisplay">
+                <img onclick="toggleGallery(' . $gallery->id . ', this)" id="galleryImageToBeDisplayed" src="' . $imagePath . '">
+      
                 <div class="imageInfo">
                     <h3>' . $gallery->name . '</h3>
                     <p>' . $gallery->timestamp . '</p>
@@ -51,23 +54,37 @@
 
     </div>
 
-    <?php echo '<button onclick="sendMergeGalleriesRequest()">Merge</button>' ?>
+    <?php echo '    
+    <div class="galleryCreate">
+        <img onclick="toggleTextInput()" class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
+        <div id="galleryInfo">
+            <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
+            <button class="galleryButton" id="create" onclick="sendMergeGalleriesRequest()" type="submit">Create</button>
+            <button class="galleryButton" id="close" onclick="toggleTextInput()" type="submit">Close</button>
+        </div>
+    </div>' ?>
     <script>
-    
         let selectedGalleries = [];
-        toggleGallery = (selectedGalleryId) => {
+        toggleGallery = (selectedGalleryId, selected) => {
             if (!selectedGalleries.includes(selectedGalleryId)) {
-                selectedGalleries.push(selectedGalleryId)
+                selectedGalleries.push(selectedGalleryId);
+                selected.classList.add("selected");
             } else {
                 selectedGalleries.splice(selectedGalleries.indexOf(selectedGalleryId), 1);
+                selected.classList.remove("selected");
             }
             console.log(selectedGalleries);
         }
         sendMergeGalleriesRequest = () => {
-            if(selectedGalleries.length < 2) alert("You must select more at least two galleries for merge!")
-            else{
+            if (selectedGalleries.length < 2) alert("You must select more at least two galleries for merge!")
+            else {
                 mergeGalleries(selectedGalleries);
             }
+        }
+
+        toggleTextInput = () => {
+            let status = document.getElementById("galleryInfo").style.visibility;
+            document.getElementById("galleryInfo").style.visibility = (status == "hidden" || status == "") ? "visible" : "hidden";
         }
     </script>
 </body>

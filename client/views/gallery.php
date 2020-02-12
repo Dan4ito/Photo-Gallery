@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../resources/css/polaroidGallery.css">
     <link rel="stylesheet" href="../resources/css/filterGallery.css">
 
-    <script type="text/javascript" src="../resources/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/script.js"></script>
     <script type="text/javascript" src="../resources/js/displayGallery.js"></script>
 </head>
@@ -38,6 +37,7 @@
     $galleryRepository = new GalleryRepository();
     $imageRepository = new ImageRepository();
 
+    $canUserEditGallery = $galleryUserValidatorService->canUserEditGallery($galleryId);
     ?>
     <?php include '../components/navbar.php' ?>
 
@@ -57,21 +57,24 @@
         ?>
     </div>
 
-    <div class="galleryUpload">
+    <?php
+    echo ($canUserEditGallery ? (' <div class="galleryUpload">
         <form class="formUpload" action="" method="post" enctype="multipart/form-data">
             <h1>Upload file</h1>
             <label for="image">Description</label>
             <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
 
             <label for="image">Image</label>
-            <input id="fileInput" type="file" name="file">
+            <input id="fileInput" type="file" name="file" multiple="multiple">
 
-            <label for="resize">% compression*</label>
-            <input id="resize" type="number" min="0" max="100" placeholder="Compression % (Optional)">
+            <label for="resize">% file quality*</label>
+            <input id="resize" type="number" min="0" max="100" placeholder="File quality % (Optional)">
 
-            <button class="logButton" onclick="uploadImage(<?php echo $urlService->GetQueryParam('id') ?>)">Upload</button>
+            <button class="logButton" onclick="uploadImage(' . $urlService->GetQueryParam('id') . ')">Upload</button>
         </form>
-    </div>
+    </div>') : "")
+    ?>
+
 
     <div class="galleryContainer">
         <?php
@@ -80,22 +83,22 @@
         $i = 0;
 
         foreach ($images as $image) {
-            $description = $image->description; //str_replace(" ", "+", $image->description);
-            $time = $image->timestamp; //str_replace(" ", "+", );
             echo '
             <div class="row">
-                <button class="deleteButton" onclick="deleteImageFromGallery(' . $image->id . ',' . $gallery->id . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')">&times;</button>
-                <img src="../../images/' . $image->name . '" class ="images" alt = ' . $time . ' title = ' . $description . ' onclick="expandImage(this, ' . $i . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')";>
+
+            ' . ($canUserEditGallery ? ('<button class="deleteButton" onclick="deleteImageFromGallery(' . $image->id . ',' . $gallery->id . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')">&times;</button>') : '') .
+                '<img src="../../images/' . $image->name . '" class ="images" alt = ' . $image->timestamp . ' title = ' . $image->description . ' onclick="expandImage(this, ' . $i . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')";>
                 <div class="imageInfo">
                     <h3>' . $image->description . '</h3>
                     <p>' . $image->timestamp . '</p>
                 </div>
             </div>
             ';
-            $i++;
         }
         ?>
     </div>
+
+
 
     <div id="polaroid">
         <span class="closeButton">&times;</span>

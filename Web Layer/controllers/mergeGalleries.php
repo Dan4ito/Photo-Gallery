@@ -14,9 +14,10 @@ $galleryService = new GalleryService();
 try {
     $data = json_decode(file_get_contents('php://input'), false);
 
+    $mergedGalleryName = $data->mergedGalleryName;
     $galleryIds = $data->galleryIds;
 
-    $galleryService->MergeGalleries("Random", $galleryIds);
+    $galleryService->MergeGalleries($mergedGalleryName, $galleryIds);
 
     http_response_code(302);
     header("Location: ../../client/views/myGalleries.php");
