@@ -1,13 +1,10 @@
 .options {
     margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
     border-radius: 8px;
     height: 40px;
 }
 
 .filter {
-    height: 25px;
     display: inline-block;
     width: 15%;
     margin: 7px 5px 5px 10px;
