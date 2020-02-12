@@ -13,11 +13,8 @@ class TagRepository extends DatabaseContext implements ITagRepository
     public function GetAllTags()
     {
         $query = 'SELECT * FROM php_gallery.tags';
-
         $results = mysqli_query($this->connection, $query);
-
         $tags = mysqli_fetch_all($results, MYSQLI_ASSOC);
-
         $tags = array_map(function ($tag) {
             return new Tag($tag['id'], $tag['tag']);
         }, $tags);

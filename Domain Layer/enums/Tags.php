@@ -7,5 +7,6 @@ class Tags
     const GAMES_VALUE = 2;
     const NATURE = 'Nature';
     const NATURE_VALUE = 3;
-}
 
+    
+}
