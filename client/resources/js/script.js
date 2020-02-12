@@ -76,11 +76,13 @@ submitCreateForm = async() => {
     }
 };
 
-uploadImage = async(galleryId, selectedTags) => {
+uploadImage = async(galleryId) => {
     event.preventDefault();
 
     let imageDescription = document.getElementById('imageDescriptionInput').value;
     let fileInput = document.getElementById('fileInput');
+    debugger;
+    let selectedTags = (document.getElementById('imageTagsInput').value).split(",").map(x => x.trim());
     let fileQuality = document.getElementById("resize").value;
     if (fileQuality == "") {
         fileQuality = "100";
@@ -89,6 +91,7 @@ uploadImage = async(galleryId, selectedTags) => {
     const formData = new FormData();
     formData.append('fileDescription', imageDescription);
     formData.append('galleryId', parseInt(galleryId));
+    debugger;
     formData.append('selectedTags', selectedTags);
     formData.append('fileQuality', parseInt(fileQuality));
 
@@ -224,25 +227,6 @@ openGallery = async(galleryId) => {
             headers: {
                 'Content-Type': 'application/json',
             }
-        });
-        if (response.status < 400) {
-            window.location.replace(response.url)
-        } else {
-            const body = await response.json();
-            throw new Error(body.error);
-        }
-    } catch (error) {
-        alert(error);
-    }
-};
-
-sortImages = async(galleryId) => {
-    event.preventDefault();
-
-    let sortType = document.getElementById("sortImages").value;
-    try {
-        const response = await fetch(`../../Web Layer/controllers/sortImages.php?id=${galleryId}&type=${sortType}`, {
-            method: 'GET',
         });
         if (response.status < 400) {
             window.location.replace(response.url)

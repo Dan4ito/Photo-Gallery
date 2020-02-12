@@ -70,10 +70,32 @@ class ImageRepository extends DatabaseContext implements IImageRepository
     
         $images = mysqli_fetch_all($results, MYSQLI_ASSOC);
         $images = array_map(function ($image) {
-            return new Image($image['id'], $image['description'], $image['name'], $image['userId'], $image['timestamp']);
+            return new Image($image['id'], $image['description'], $image['name'], $image['userId'], $image['timestamp'], $this->GetImageTags($image['id']));
         }, $images);
 
         return $images;
+    }
+
+    public function GetImageTags(int $imageId)
+    {
+        $query = "SELECT t.id, t.tag FROM php_gallery.image_tag a
+                    JOIN images i ON a.imageId = i.id
+                    JOIN tags t ON a.tagId = t.id
+                    WHERE i.id =?";         // junktion table
+
+        $statement = $this->connection->prepare($query);
+        $statement->bind_param('i', $imageId);
+
+        $statement->execute();
+
+        $results = $statement->get_result();
+    
+        $imageTags = mysqli_fetch_all($results, MYSQLI_ASSOC);
+        $imageTags = array_map(function ($tag) {
+            return new Tag($tag['id'], $tag['tag']);
+        }, $imageTags);
+
+        return $imageTags;
     }
 
     public function GetImagesForGalleries($galleryIds)

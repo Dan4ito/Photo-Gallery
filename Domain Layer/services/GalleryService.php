@@ -60,21 +60,15 @@ class GalleryService
             $this->imageValidationService->validateImages($imagesDescription, $files);
             $savedImageNames = $this->imageUploadService->uploadImages($files, $fileQuality);
 
-
-            $dbTags = $this->tagRepository->GetAllTags();
-            $pickedTags = array_map(function ($tag) {
-                return $tag->id;
-            }, array_filter($dbTags, function ($dbTag) use ($selectedTags) {
-                return (in_array($dbTag->tag, $selectedTags));
-            }));
-
             $user = $this->authorizationService->getLoggedInUser();
 
             foreach ($savedImageNames as $savedImageName) {
                 $imageId = $this->imageRepository->Save($savedImageName, $imagesDescription, $user->id);
                 $this->imageGalleryRepository->Create($imageId, $galleryId);
-                if (count($pickedTags) > 0) {
-                    $this->imageTagRepository->Create($imageId, $pickedTags);
+                foreach ($selectedTags as $tagName) {
+                    $tagId = $this->tagRepository->CreateTagIfMissing($tagName);
+                    if($tagId == 0) $tagId = $this->tagRepository->GetTag($tagName)->id;
+                    $this->imageTagRepository->Create($imageId, $tagId);
                 }
             }
         } else {

@@ -21,4 +21,34 @@ class TagRepository extends DatabaseContext implements ITagRepository
 
         return $tags;
     }
+
+    public function GetTag(string $tagName)
+    {
+        $query = 'SELECT * FROM php_gallery.tags 
+        WHERE tag = ?';
+
+        $statement = $this->connection->prepare($query);
+        $statement->bind_param('s', $tagName);
+
+        $statement->execute();
+
+        $results = $statement->get_result();
+
+        $tag = mysqli_fetch_array($results, MYSQLI_ASSOC);
+
+        return new Tag($tag['id'], $tag['tag']);
+    }
+
+    public function CreateTagIfMissing(string $tagName)
+    {
+        $query = 'INSERT INTO php_gallery.tags (tag) 
+        SELECT * FROM (SELECT ?) AS tmp 
+        WHERE NOT EXISTS ( SELECT tag FROM php_gallery.tags WHERE tag = ? ) LIMIT 1 ';
+
+        $statement = $this->connection->prepare($query);
+        $statement->bind_param('ss', $tagName, $tagName);
+        $statement->execute();
+
+        return $this->connection->insert_id;
+    }
 }
