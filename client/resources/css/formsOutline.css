@@ -1,4 +1,5 @@
-input {
+input, select {
+    background-color:whitesmoke;
     display: block;
     box-sizing: border-box;
     margin: auto;
@@ -6,16 +7,41 @@ input {
     margin-top: 10px;
     padding: 10px;
     font-size: 15px;
-    border-radius: 8px;
+    border-radius: 6px;
     border: none;
-    width: 60%;
-    /* box-sizing: border-box;
-    margin: 5px auto;
-    padding: 5px;
-    width: 100%;
+    width: 70%;
+    border: 0.5px solid black;
+}
+
+form {
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+    border: 1px solid #38a3c0;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+label {
+    color: #5c93a2;
+    font-weight: bold;
     font-size: 15px;
-    border: 2px solid #6495ed;
-    border-radius: 5px;
-    background-color: #e7e1dc;
-    color: #404040; */
+    margin: 5px auto;
+}
+
+button, input[type=submit], input[type=file] {
+    font-size: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    border: 1px solid gray;
+    background-color: white;
+}
+
+
+button:hover, input[type=submit]:hover {
+    font-weight: bold;
+    cursor: pointer;
 }

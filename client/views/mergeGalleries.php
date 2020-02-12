@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../resources/css/style.css">
-    <link rel="stylesheet" href="../resources/css/displayGallery.css">
+    <link rel="stylesheet" href="../resources/css/flexGallery.css">
     <link rel="stylesheet" href="../resources/css/formsOutline.css">
     <link rel="stylesheet" href="../resources/css/mergeGalleries.css">
     <script type="text/javascript" src="../resources/js/script.js"></script>
@@ -29,7 +29,14 @@
     ?>
     <?php include '../components/navbar.php' ?>
 
-    <div class="galleriesContainer">
+    <?php echo '    
+    <div class="galleryCreate">
+        <div id="galleryInfo">
+            <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
+            <button class="galleryButton" id="create" onclick="sendMergeGalleriesRequest()" type="submit">+ Merge</button>
+        </div>
+    </div>' ?>
+    <div class="galleriesContainer galleryFlexContainer">
         <?php
         $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
         $publicGalleries = $galleryRepository->GetPublicGalleries();
@@ -41,9 +48,10 @@
             $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
             $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
             echo '
-            <div class="galleryDisplay">
-                <img onclick="toggleGallery(' . $gallery->id . ', this)" id="galleryImageToBeDisplayed" src="' . $imagePath . '">
-      
+            <div class="galleryDisplay galleryFlexItem">
+                <div class="galleryFlexImg">
+                    <img onclick="toggleGallery(' . $gallery->id . ', this)" id="galleryImageToBeDisplayed" src="' . $imagePath . '">
+                </div>
                 <div class="imageInfo">
                     <h3>' . $gallery->name . '</h3>
                     <p>' . $gallery->timestamp . '</p>
@@ -54,16 +62,6 @@
         ?>
 
     </div>
-
-    <?php echo '    
-    <div class="galleryCreate">
-        <img onclick="toggleTextInput()" class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
-        <div id="galleryInfo">
-            <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
-            <button class="galleryButton" id="create" onclick="sendMergeGalleriesRequest()" type="submit">Create</button>
-            <button class="galleryButton" id="close" onclick="toggleTextInput()" type="submit">Close</button>
-        </div>
-    </div>' ?>
     <script>
         let selectedGalleries = [];
         toggleGallery = (selectedGalleryId, selected) => {

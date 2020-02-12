@@ -58,3 +58,17 @@ h1 {
     padding-top: 5px;
     padding-bottom: 20px;
 }
+
+.overlayDiv {
+    background-color: rgba(0, 0, 0, 0.90);
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    padding: 20px;
+    box-sizing: border-box;
+    left:0px;
+    z-index:1000;
+    text-align: center;
+    display: none;
+}

@@ -6,7 +6,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">  
         <link rel="stylesheet" href="../resources/css/style.css">
-        <link rel="stylesheet" href="../resources/css/displayGallery.css">
+        <link rel="stylesheet" href="../resources/css/FlexGallery.css">
+        <link rel="stylesheet" href="../resources/css/publicGallery.css">
         <script type="text/javascript" src="../resources/js/script.js"></script>
     </head>
 
@@ -27,7 +28,7 @@
         ?>
         <?php include '../components/navbar.php' ?>
 
-        <div class="galleriesContainer">
+        <div class="galleriesContainer galleryFlexContainer">
             <?php
             $publicGalleries = $galleryRepository->GetPublicGalleries();
 
@@ -37,7 +38,9 @@
                     <p class="imageInfo">
                         There are no public galleries yet. 
                     </p> 
-                    <img id="emptyImage" src="../assets/' . 'emptyGallery.png' . '">
+                    <div>
+                        <img id="emptyImage" src="../assets/' . 'emptyGallery.png' . '">
+                    </div>
                 </div>
             ';
             }
@@ -46,13 +49,13 @@
                 $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
                 $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
                 echo '
-                <div class="galleryDisplay">
-                    <div class="galleryNode">
+                <div class="galleryDisplay galleryFlexItem">
+                    <div class="galleryFlexImg">
                         <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="../assets/' . $imagePath . '">
-                        <div class="imageInfo">
-                            <h3>' . $gallery->name . '</h3>
-                            <p>' . $gallery->timestamp . '</p>
-                        </div>
+                    </div>
+                   <div class="imageInfo">
+                        <h3>' . $gallery->name . '</h3>
+                        <p>' . $gallery->timestamp . '</p>
                     </div>
                 </div>
                 ';

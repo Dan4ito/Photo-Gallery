@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../resources/css/style.css">
-    <link rel="stylesheet" href="../resources/css/displayGallery.css">
+    <link rel="stylesheet" href="../resources/css/listGallery.css">
     <link rel="stylesheet" href="../resources/css/formsOutline.css">
     <script type="text/javascript" src="../resources/js/script.js"></script>
     <script type="text/javascript" src="../resources/js/utils.js"></script>
@@ -31,9 +31,9 @@
     <div id="createGallery">
         <button onclick="toggleForm(galleryCreateDiv)">+ new</button>
     </div>
-    <div id="galleryCreateDiv">
+    <div id="galleryCreateDiv" class="overlayDiv">
         <button id="closeGalleryFormButton" onclick="toggleForm(galleryCreateDiv)">X</button>
-        <div id="galleryCreateForm">
+        <form id="galleryCreateForm">
             <img class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
             <div>  
                 <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
