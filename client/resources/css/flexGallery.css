@@ -37,6 +37,7 @@
 .galleryFlexImg {
     box-sizing: border-box;
     background-color: black;
+    color: white;
     overflow: hidden;
     border-radius: 10px;
     width: 100%;
