@@ -59,12 +59,15 @@
                     <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
 
                     <label for="image">Image</label>
-                    <input id="fileInput" type="file" name="file" multiple="multiple">'
+                    <input id="fileInput" type="file" name="file" multiple="multiple">
+                    
+                    <label for="image">Tags</label>
+                    <input id="imageTagsInput" type="text" name="imagesTags" placeholder="Images tags...">'
                 .
                 '<label for="resize">% file quality*</label>
                     <input id="resize" type="number" min="0" max="100" placeholder="File quality % (Optional)">
 
-                    <button class="logButton" onclick="sendUploadImageRequest(' . $urlService->GetQueryParam('id') . ')">Upload</button>
+                    <button class="logButton" onclick="uploadImage(' . $urlService->GetQueryParam('id') . ')">Upload</button>
                 </form>
             </div>
             <div id="uploadImagesBtnDiv">
@@ -73,20 +76,6 @@
     }
     ?>
 
-
-    <?php
-    // $gallery = $galleryRepository->GetById($galleryId);
-    // $id = $gallery->id;
-    // echo '
-    //     <input class="filter" id="filterDescription" type="text" placeholder="Filter images by tag" name="filter">
-    //     <button class="optionsButton" onclick="filterImages(' . $id . ')">Filter</button>
-    //     <input class="filter" id="sortImages" type="text" placeholder="Sort images by date ascending or descending" name="sort">
-    //     <button class="optionsButton" id="sort" onclick="sortImages(' . $id . ')">Sort</button>
-
-    //     <button class="optionsButton" id="move" onclick="moveImages(' . $id . ')">Move to</button>
-    //     <button class="optionsButton" id="select" onclick="selectImages(' . $id . ')">Select</button>
-    // ';
-    ?>
     <div class="options">
         <input class="filter" id="filterDescription" type="text" placeholder="Filter images" name="filter">
         <select class="filter">
@@ -132,22 +121,6 @@
         </div>
     </div>
 
-    <script>
-        let selectedTags = [];
-        toggleCheckbox = (tag) => {
-            tag = tag.value;
-            if (!selectedTags.includes(tag)) {
-                selectedTags.push(tag);
-            } else {
-                selectedTags.splice(selectedTags.indexOf(tag), 1);
-            }
-        }
-
-        sendUploadImageRequest = (galleryId) => {
-            uploadImage(galleryId, selectedTags);
-        }
-    </script>
-    <script type="text/javascript" src="../resources/js/displayGallery.js"></script>
 </body>
 
 </html>

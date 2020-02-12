@@ -56,9 +56,9 @@ CREATE TABLE php_gallery.tags (
 );
 
 
-INSERT INTO php_gallery.tags (tag) VALUES ('Kittens');
-INSERT INTO php_gallery.tags (tag) VALUES ('Games');
-INSERT INTO php_gallery.tags (tag) VALUES ('Nature');
+-- INSERT INTO php_gallery.tags (tag) VALUES ('Kittens');
+-- INSERT INTO php_gallery.tags (tag) VALUES ('Games');
+-- INSERT INTO php_gallery.tags (tag) VALUES ('Nature');
 
 
 CREATE TABLE php_gallery.image_tag (

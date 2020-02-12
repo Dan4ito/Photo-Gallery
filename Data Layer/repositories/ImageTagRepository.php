@@ -11,21 +11,13 @@ class ImageTagRepository extends DatabaseContext implements IImageTagRepository
         $this->connection = $this->getConnection();
     }
 
-    public function Create(int $imageId, $tagIds)
+    public function Create(int $imageId, $tagId)
     {
-        $query = "INSERT INTO php_gallery.image_tag (imageId, tagId) VALUES ";
-        
-        $imagesIdsCount = count($tagIds);
-        $clauseToAppend = null;
-        for ($i = 0; $i < $imagesIdsCount; $i++) {
-            $clauseToAppend = "(" . $imageId . ", '" . $tagIds[$i] . "')";
-            if ($i != $imagesIdsCount - 1) {
-                $clauseToAppend .= ", ";
-            }
-            $query .= $clauseToAppend;
-        }
+        $query = "INSERT INTO php_gallery.image_tag (imageId, tagId) VALUES (?, ?)";
 
-        $result = mysqli_query($this->connection, $query);
+        $statement = $this->connection->prepare($query);
+        $statement->bind_param('ii', $imageId, $tagId);
 
+        $statement->execute();
     }
 }
