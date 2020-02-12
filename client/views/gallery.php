@@ -77,14 +77,8 @@
     ?>
 
     <div class="options">
-        <input class="filter" id="filterDescription" type="text" placeholder="Filter images" name="filter">
-        <select class="filter">
-            <option value="" disabled selected>by</option>
-            <option value="tag">tag</option>
-            <option value="description">description</option>
-            <option value="date">upload date</option>
-        </select>
-        <button class="filterButton">Filter</button>
+        <input class="filter" id="filterDescription" type="text" placeholder="Filter images by tag" name="filter">
+        <button class="filterButton" onclick="filterByTag()">Filter</button>
         <button id="sortBtnId" class="sortButton" onclick="sortImages()">Sort by time asc</button>
     </div>
 
@@ -95,11 +89,18 @@
         $images = $imageRepository->GetImagesForGallery($galleryId);
         $i = 0;
 
+        function mapFunc($tag) {
+            return strtolower($tag->tag);
+        }
+
         foreach ($images as $image) {
+            $tags = array_map("mapFunc", $image->imageTags);
+            $tagsStr = implode(",", $tags);
+
             echo '
             <div class="imageItem">
             ' . ($canUserEditGallery ? ('<button class="deleteButton fa fa-trash" onclick="deleteImageFromGallery(' . $image->id . ',' . $gallery->id . ')"></button>') : '') .
-                '<img src="../../images/' . $image->name . '" class ="images" alt = "' . $image->timestamp . '"  title = "' . $image->description . '" onclick="expandImage(this, ' . $i . ')";>
+                '<img src="../../images/' . $image->name . '" class ="images" alt = "' . $image->timestamp . ';' . $tagsStr . '"  title = "' . $image->description . '" onclick="expandImage(this, ' . $i . ')";>
             </div>
             ';
             $i += 1;
@@ -117,10 +118,11 @@
             <div class="caption">
                 <p id="captionDescription"></p>
                 <p id="captionTime"></p>
+                <p id="tags"></p>
             </div>
         </div>
     </div>
-
+    
+    <script type="text/javascript" src="../resources/js/displayGallery.js"></script>
 </body>
-
 </html>

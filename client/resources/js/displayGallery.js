@@ -1,4 +1,4 @@
-var allSlides = document.getElementsByClassName("imageItem");
+var allSlides = Array.from(document.getElementsByClassName("imageItem"));
 var slide = 0;
 var reversed = false;
 
@@ -8,11 +8,20 @@ function openImage(image, slideNumber) {
     var expandedImage = document.getElementById("expandedImage");
     var captionDescription = document.getElementById("captionDescription");
     var captionTime = document.getElementById("captionTime");
+    var tagsParagraph = document.getElementById("tags");
 
     container.style.display = "block";
     expandedImage.src = image.src;
     captionDescription.innerHTML = image.title.replace("+", " ");
-    captionTime.innerHTML = image.alt.replace("+", " ");
+
+    let altSplit = image.alt.split(';')
+    captionTime.innerHTML = altSplit[0]
+
+    let tags = ""
+    if (altSplit.length > 1 && altSplit[1].length > 0) {
+        tags = altSplit[1].split(',').map(tag => "#" + tag).join(' ');
+    }
+    tagsParagraph.innerHTML = tags
 
     slide = slideNumber;
 }
@@ -29,8 +38,7 @@ function expandImage(image, slideNumber) {
 
 function changeSlide(number) {
     let slides = document.getElementsByClassName("images");
-    console.log(slides)
-    slide += number
+    slide += number + slides.length
     slide %= slides.length
 
     openImage(slides[slide], slide)
@@ -43,12 +51,12 @@ function sortImages() {
     // perform sort
     if (reversed) {       
         arr.sort(function(a, b) {
-            return Date.parse(b.children[1].alt) - Date.parse(a.children[1].alt);    
+            return Date.parse(b.children[1].alt.split(';')[0]) - Date.parse(a.children[1].alt.split(';')[0]);    
         });
     }
     else {   
         arr.sort(function(a, b) {
-            return Date.parse(a.children[1].alt) - Date.parse(b.children[1].alt);    
+            return Date.parse(a.children[1].alt.split(';')[0]) - Date.parse(b.children[1].alt.split(';')[0]);    
         });
     }
 
@@ -69,4 +77,28 @@ function sortImages() {
         reversed = true;
         document.getElementById('sortBtnId').innerHTML = "Sort by time desc";
     }
+}
+
+function filterByTag() {
+    tag = document.getElementById('filterDescription').value
+
+    newSlides = allSlides.filter(img => {
+        let split = img.children[1].alt.split(';')
+        if (split.length < 2) {
+            return false
+        }
+        console.log(split[1])
+        
+        return split[1].includes(tag)
+    })
+
+    let output = "";
+    newSlides.forEach(x => {
+        output += x.outerHTML;
+    })
+
+    // append output to div 'myDiv'
+    document.getElementById('imagesContainer').innerHTML = output;
+    reversed = false;
+    document.getElementById('sortBtnId').innerHTML = "Sort by time asc";
 }

@@ -22,6 +22,7 @@ form {
     border: 1px solid #38a3c0;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
 }
 
 label {
