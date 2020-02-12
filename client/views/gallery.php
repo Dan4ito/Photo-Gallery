@@ -22,6 +22,7 @@
     include_once('../../Domain Layer/services/UrlService.php');
     include_once('../../Domain Layer/services/GalleryUserValidatorService.php');
     include_once('../../Data Layer/repositories/ImageRepository.php');
+    include_once('../../Data Layer/repositories/TagRepository.php');
     include_once('../../Data Layer/repositories/GalleryRepository.php');
 
     $galleryUserValidatorService = new GalleryUserValidatorService();
@@ -36,6 +37,7 @@
 
     $galleryRepository = new GalleryRepository();
     $imageRepository = new ImageRepository();
+    $tagRepository = new TagRepository();
 
     $canUserEditGallery = $galleryUserValidatorService->canUserEditGallery($galleryId);
     ?>
@@ -58,21 +60,33 @@
     </div>
 
     <?php
-    echo ($canUserEditGallery ? (' <div class="galleryUpload">
-        <form class="formUpload" action="" method="post" enctype="multipart/form-data">
-            <h1>Upload file</h1>
-            <label for="image">Description</label>
-            <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
+    if ($canUserEditGallery) {
+        $tags = $tagRepository->GetAllTags();
+        $str = "";
+        foreach ($tags as $tag) {
+            $str .= '<label>' . $tag->tag . '</label>';
+            $str .= '<input type="checkbox" name=' . $tag->tag . ' value=' . $tag->tag . ' onclick="toggleCheckbox(' . $tag->tag . ')"/>';
+        }
+        echo
+            '<div class="galleryUpload">
+            <form class="formUpload" action="" method="post" enctype="multipart/form-data">
+                <h1>Upload file</h1>
+                <label for="image">Description</label>
+                <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
 
-            <label for="image">Image</label>
-            <input id="fileInput" type="file" name="file" multiple="multiple">
+                <label for="image">Image</label>
+                <input id="fileInput" type="file" name="file" multiple="multiple">
 
-            <label for="resize">% file quality*</label>
-            <input id="resize" type="number" min="0" max="100" placeholder="File quality % (Optional)">
+                <label for="resize">Tags</label>' .
+                $str
+                .
+                '<label for="resize">% file quality*</label>
+                <input id="resize" type="number" min="0" max="100" placeholder="File quality % (Optional)">
 
-            <button class="logButton" onclick="uploadImage(' . $urlService->GetQueryParam('id') . ')">Upload</button>
-        </form>
-    </div>') : "")
+                <button class="logButton" onclick="sendUploadImageRequest(' . $urlService->GetQueryParam('id') . ')">Upload</button>
+            </form>
+        </div>';
+    }
     ?>
 
 
@@ -129,6 +143,22 @@
             ?>
         </div>
     </div>
+
+    <script>
+        let selectedTags = [];
+        toggleCheckbox = (tag) => {
+            tag = tag.value;
+            if (!selectedTags.includes(tag)) {
+                selectedTags.push(tag);
+            } else {
+                selectedTags.splice(selectedTags.indexOf(tag), 1);
+            }
+        }
+
+        sendUploadImageRequest = (galleryId) => {
+            uploadImage(galleryId, selectedTags);
+        }
+    </script>
 </body>
 
 </html>

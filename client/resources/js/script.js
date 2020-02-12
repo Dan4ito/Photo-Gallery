@@ -76,7 +76,7 @@ submitCreateForm = async() => {
     }
 };
 
-uploadImage = async(galleryId) => {
+uploadImage = async(galleryId, selectedTags) => {
     event.preventDefault();
 
     let imageDescription = document.getElementById('imageDescriptionInput').value;
@@ -89,6 +89,7 @@ uploadImage = async(galleryId) => {
     const formData = new FormData();
     formData.append('fileDescription', imageDescription);
     formData.append('galleryId', parseInt(galleryId));
+    formData.append('selectedTags', selectedTags);
     formData.append('fileQuality', parseInt(fileQuality));
 
     let numberOfFiles = fileInput.files.length;
