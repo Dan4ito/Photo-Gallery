@@ -65,10 +65,12 @@ class GalleryService
             foreach ($savedImageNames as $savedImageName) {
                 $imageId = $this->imageRepository->Save($savedImageName, $imagesDescription, $user->id);
                 $this->imageGalleryRepository->Create($imageId, $galleryId);
-                foreach ($selectedTags as $tagName) {
-                    $tagId = $this->tagRepository->CreateTagIfMissing($tagName);
-                    if($tagId == 0) $tagId = $this->tagRepository->GetTag($tagName)->id;
-                    $this->imageTagRepository->Create($imageId, $tagId);
+                if ($selectedTags != null) {
+                    foreach ($selectedTags as $tagName) {
+                        $tagId = $this->tagRepository->CreateTagIfMissing($tagName);
+                        if ($tagId == 0) $tagId = $this->tagRepository->GetTag($tagName)->id;
+                        $this->imageTagRepository->Create($imageId, $tagId);
+                    }
                 }
             }
         } else {
