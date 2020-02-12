@@ -10,12 +10,27 @@ class ImageRepository extends DatabaseContext implements IImageRepository
         $this->connection = $this->getConnection();
     }
 
-    public function Save(string $savedImageName, string $imageDescription, int $authorId)
+    public function Save(string $savedImageName, string $imageDescription, int $authorId, string $timestamp = "")
     {
-        $query = "INSERT INTO php_gallery.images (name, description, userId) VALUES (?,?,?);";
+        if($timestamp == "") 
+        {
+            $query = "INSERT INTO php_gallery.images (name, description, userId) VALUES (?,?,?);";
+        }
+        else 
+        {
+            $query = "INSERT INTO php_gallery.images (name, description, userId, timestamp) VALUES (?,?,?,?);";
+        }
 
         $statement = $this->connection->prepare($query);
-        $statement->bind_param('ssi', $savedImageName, $imageDescription, $authorId);
+
+        if($timestamp == "") 
+        {
+            $statement->bind_param('ssi', $savedImageName, $imageDescription, $authorId);        
+        }
+        else 
+        {
+            $statement->bind_param('ssis', $savedImageName, $imageDescription, $authorId, $timestamp);
+        }
         $statement->execute();
 
         return $this->connection->insert_id;
@@ -44,15 +59,15 @@ class ImageRepository extends DatabaseContext implements IImageRepository
     {
         $query = "SELECT * FROM php_gallery.image_gallery a
                     JOIN images i ON a.imageId = i.id 
-                    WHERE galleryId =?";         // junktion table
+                    WHERE a.galleryId =?";         // junktion table
 
         $statement = $this->connection->prepare($query);
-        $statement->bind_param('s', $galleryId);
+        $statement->bind_param('i', $galleryId);
+
         $statement->execute();
 
         $results = $statement->get_result();
-
-
+    
         $images = mysqli_fetch_all($results, MYSQLI_ASSOC);
         $images = array_map(function ($image) {
             return new Image($image['id'], $image['description'], $image['name'], $image['userId'], $image['timestamp']);

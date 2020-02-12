@@ -11,37 +11,35 @@ include_once('../../Data Layer/repositories/ImageGalleryRepository.php');
 include_once('../../Domain Layer/services/AuthorizationService.php');
 include_once('../../Domain Layer/services/SortingValidationService.php');
 include_once('../../Domain Layer/services/SortingService.php');
+include_once('../../Domain Layer/services/ReloadingImagesService.php');
 
 $imageRepository = new ImageRepository();
-$imageGalleryRepository = new ImageGalleryRepository();
 $sortingValidationService = new SortingValidationService();
 $sortingService = new SortingService();
 $authorizationService = new AuthorizationService();
+$reloadingImagesService = new ReloadingImagesService();
 
 try {
-    $data = json_decode(file_get_contents('php://input'));
-    $galleryId = $data->galleryId;
-    $sorting = $data->sorting;
-
-    $user = $authorizationService->getLoggedInUser();
     
-    $sortingValidationService->validateSortingType($sorting);
-    $images = $imageRepository->GetImagesForGallery($galleryId);
-    $imagesSorted = $sortingService->sortImages($images, $sorting);
+    if($_SERVER['REQUEST_METHOD'] == 'GET')
+    {
+        $data = array();
+        parse_str($_SERVER['QUERY_STRING'], $data);
+        $galleryId = intval($data['id']);
+        $sorting = $data['type'];
+
+        $sortingValidationService->validateSortingType($sorting);
+        $imagesSorted = $sortingService->sortImages($galleryId, $sorting);
+        $user = $authorizationService->getLoggedInUser();
+        $reloadingImagesService->reloadImagesForUserGallery($imagesSorted, $galleryId, $user);        
     
-    foreach($images as $image)
+        http_response_code(302);
+        header("Location: ../../client/views/gallery.php?id=" . $galleryId);
+        } 
+    else 
     {
-        $imageRepository->DeleteImageFromGallery($image->id, $galleryId);
+        throw new Exception("Unsupported method!", 400);
     }
-
-    foreach($imagesSorted as $image)
-    {
-        $imageId = $imageRepository->Save($image->name, $imageDescription, $user->id);
-        $imageGalleryRepository->Create($imageId, $galleryId);
-    }
-
-    http_response_code(302);
-    header("Location: ../../client/views/gallery.php?id=" . $galleryId);
 } catch(Exception $ex) {
     
     http_response_code($ex->getCode());

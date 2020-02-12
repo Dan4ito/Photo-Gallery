@@ -86,17 +86,15 @@ uploadImage = async(galleryId) => {
         fileQuality = "100";
     }
 
-
     const formData = new FormData();
     formData.append('fileDescription', imageDescription);
     formData.append('galleryId', parseInt(galleryId));
     formData.append('fileQuality', parseInt(fileQuality));
-    
+
     let numberOfFiles = fileInput.files.length;
     for (let i = 0; i < numberOfFiles; i++) {
         formData.append("files[]", fileInput.files[i]);
     }
-
     try {
         const response = await fetch('../../Web Layer/controllers/uploadImage.php', {
             method: 'POST',
@@ -241,17 +239,9 @@ sortImages = async(galleryId) => {
     event.preventDefault();
 
     let sortType = document.getElementById("sortImages").value;
-
     try {
-        const response = await fetch('../../Web Layer/controllers/sortImages.php', {
-            method: 'POST',
-            body: JSON.stringify({
-                galleryId: galleryId,
-                sorting: sortType
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            }
+        const response = await fetch(`../../Web Layer/controllers/sortImages.php?id=${galleryId}&type=${sortType}`, {
+            method: 'GET',
         });
         if (response.status < 400) {
             window.location.replace(response.url)
@@ -271,7 +261,7 @@ mergeGalleries = async(galleryIds) => {
         const response = await fetch('../../Web Layer/controllers/mergeGalleries.php', {
             method: 'POST',
             body: JSON.stringify({
-                mergedGalleryName : mergedGalleryName,
+                mergedGalleryName: mergedGalleryName,
                 galleryIds: galleryIds
             }),
             headers: {
