@@ -50,6 +50,26 @@ CREATE TABLE php_gallery.galleries (
 	FOREIGN KEY (typeId) REFERENCES galleryTypes(id)
 );
 
+CREATE TABLE php_gallery.tags (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	tag VARCHAR(64) NOT NULL
+);
+
+
+INSERT INTO php_gallery.tags (tag) VALUES ('Kittens');
+INSERT INTO php_gallery.tags (tag) VALUES ('Games');
+INSERT INTO php_gallery.tags (tag) VALUES ('Nature');
+
+
+CREATE TABLE php_gallery.image_tag (
+	imageId INT NOT NULL,
+	tagId INT NOT NULL,
+	FOREIGN KEY (imageId) REFERENCES images(id),
+	FOREIGN KEY (tagId) REFERENCES tags(id),
+	CONSTRAINT PK_ImageGallery PRIMARY KEY (imageId, tagId)
+);
+
+
 -- INSERT INTO php_gallery.galleries (name, userId, typeId) VALUES ('SKRITA GALERIQ',1 , 2);
 -- INSERT INTO php_gallery.galleries (name, userId) VALUES ('Drugo ime',1);
 

@@ -15,8 +15,8 @@ class ImageUploadService
             if($fileInfo['mime'] == 'image/jpeg') {
                 $image = imagecreatefromjpeg($fileTmp);
             }
-            elseif ($info['mime'] == 'image/gif') {
-                $image = imagecreatefromgif($source);
+            elseif ($fileInfo['mime'] == 'image/gif') {
+                $image = imagecreatefromgif($fileTmp);
             }
             elseif($fileInfo['mime'] == 'image/png') {
                 $image = imagecreatefrompng($fileTmp);
@@ -28,7 +28,9 @@ class ImageUploadService
             if (!is_dir($this->imagesFolder)) {
                 mkdir($this->imagesFolder);
             }
-            imagejpeg($image, $imageDestination, $fileQuality);
+            
+            if($fileQuality == 100) move_uploaded_file($fileTmp, $imageDestination);    // upload the file
+            else imagejpeg($image, $imageDestination, $fileQuality);
             array_push($imageNames, $imageFullName);
         }
 
