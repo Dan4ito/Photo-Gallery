@@ -44,16 +44,19 @@
     <?php include '../components/navbar.php' ?>
 
     <div class="options">
-        <input class="filter" id="filterDescription" type="text" placeholder="Filter images" name="filter">
-        <select class="filter">
-            <option value="" disabled selected>by</option>
-            <option value="tag">tag</option>
-            <option value="description">description</option>
-            <option value="date">upload date</option>
-        </select>
-        <button class="filterButton">Filter</button>
-        <button class="filterButton" id="selectMove">Move to</button>
-        <button class="filterButton" id="selectMove">Select</button>
+        <?php
+            $gallery = $galleryRepository->GetById($galleryId);
+            $id = $gallery->id;
+            echo '
+                <input class="filter" id="filterDescription" type="text" placeholder="Filter images by tag" name="filter">
+                <button class="optionsButton" onclick="filterImages(' . $id . ')">Filter</button>
+                <input class="filter" id="sortImages" type="text" placeholder="Sort images by date ascending or descending" name="sort">
+                <button class="optionsButton" id="sort" onclick="sortImages(' . $id . ')">Sort</button>
+                
+                <button class="optionsButton" id="move" onclick="moveImages(' . $id . ')">Move to</button>
+                <button class="optionsButton" id="select" onclick="selectImages(' . $id . ')">Select</button>
+            ';
+        ?>
     </div>
 
     <?php
@@ -96,8 +99,9 @@
         foreach ($images as $image) {
             echo '
             <div class="row">
+
             ' . ($canUserEditGallery ? ('<button class="deleteButton" onclick="deleteImageFromGallery(' . $image->id . ',' . $gallery->id . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')">&times;</button>') : '') .
-                '<img src="../../images/' . $image->name . '" id="imageToBeExpanded" class ="images" alt = ' . $image->timestamp . ' title = ' . $image->description . ' onclick="expandImage(this, ' . $i . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')";>
+                '<img src="../../images/' . $image->name . '" class ="images" alt = ' . $image->timestamp . ' title = ' . $image->description . ' onclick="expandImage(this, ' . $i . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')";>
                 <div class="imageInfo">
                     <h3>' . $image->description . '</h3>
                     <p>' . $image->timestamp . '</p>

@@ -1,19 +1,22 @@
 .options {
     margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 8px;
     height: 40px;
 }
 
 .filter {
+    height: 25px;
     display: inline-block;
-    width: 15%;
+    width: 20%;
     padding: 2px;
     margin: 7px 5px 5px 10px;
     border: 1px inset #afbfc9;
     color: #404040;
 }
 
-.filterButton {
+.optionsButton {
     height: 30px;
     border: 1px outset #b29b8d;
     border-radius: 8px;
@@ -24,13 +27,14 @@
     text-transform: uppercase;
 }
 
-.filterButton:hover {
+.optionsButton:hover {
     opacity: 1.0;
     cursor: pointer;
     font-style: italic;
 }
 
-#selectMove {
+#select,
+#move {
     float: right;
     margin: 10px;
 }

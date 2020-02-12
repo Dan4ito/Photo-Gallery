@@ -86,18 +86,16 @@ uploadImage = async(galleryId, selectedTags) => {
         fileQuality = "100";
     }
 
-
     const formData = new FormData();
     formData.append('fileDescription', imageDescription);
     formData.append('galleryId', parseInt(galleryId));
     formData.append('selectedTags', selectedTags);
     formData.append('fileQuality', parseInt(fileQuality));
-    
+
     let numberOfFiles = fileInput.files.length;
     for (let i = 0; i < numberOfFiles; i++) {
         formData.append("files[]", fileInput.files[i]);
     }
-
     try {
         const response = await fetch('../../Web Layer/controllers/uploadImage.php', {
             method: 'POST',
@@ -139,7 +137,6 @@ deleteImageFromGallery = async(imageId, galleryId) => {
         alert(error);
     }
 };
-
 
 createGallery = async() => {
     event.preventDefault();
@@ -239,14 +236,33 @@ openGallery = async(galleryId) => {
     }
 };
 
-mergeGalleries = async (galleryIds) => {
+sortImages = async(galleryId) => {
+    event.preventDefault();
+
+    let sortType = document.getElementById("sortImages").value;
+    try {
+        const response = await fetch(`../../Web Layer/controllers/sortImages.php?id=${galleryId}&type=${sortType}`, {
+            method: 'GET',
+        });
+        if (response.status < 400) {
+            window.location.replace(response.url)
+        } else {
+            const body = await response.json();
+            throw new Error(body.error);
+        }
+    } catch (error) {
+        alert(error);
+    }
+};
+
+mergeGalleries = async(galleryIds) => {
     event.preventDefault();
     let mergedGalleryName = document.getElementById('galleryNameInput').value;
     try {
         const response = await fetch('../../Web Layer/controllers/mergeGalleries.php', {
             method: 'POST',
             body: JSON.stringify({
-                mergedGalleryName : mergedGalleryName,
+                mergedGalleryName: mergedGalleryName,
                 galleryIds: galleryIds
             }),
             headers: {
