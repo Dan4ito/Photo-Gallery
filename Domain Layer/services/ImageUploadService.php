@@ -17,24 +17,34 @@ class ImageUploadService
             if (!is_dir($this->imagesFolder)) {
                 mkdir($this->imagesFolder);
             }
-
-            $fileInfo = getimagesize($fileTmp);
-            if($fileInfo['mime'] == 'image/jpeg') {
-                $image = imagecreatefromjpeg($fileTmp);
-                $fileQuality = ($fileQuality / 100) * 90;
-
-                imagejpeg($image, $imageDestination, $fileQuality);
+            
+            if($fileQuality == 100) {
+                move_uploaded_file($fileTmp, $imageDestination);
+                array_push($imageNames, $imageFullName);
+                continue;
             }
-            elseif($fileInfo['mime'] == 'image/png') {
-                $image = imagecreatefrompng($fileTmp);
-                imagealphablending($image, false);
-                imagesavealpha($image, true);
+
+            try {
+                $fileInfo = getimagesize($fileTmp);
+                if($fileInfo['mime'] == 'image/jpeg') {
+                    $image = imagecreatefromjpeg($fileTmp);
+                    $saveQuality = ($fileQuality / 100) * 95;
+
+                    imagejpeg($image, $imageDestination, $saveQuality);
+                }
+                elseif($fileInfo['mime'] == 'image/png') {
+                    $image = imagecreatefrompng($fileTmp);
+                    imagealphablending($image, false);
+                    imagesavealpha($image, true);
+                    
+                    $saveQuality = 9 - ($fileQuality / 100) * 8;
+                    imagepng($image, $imageDestination, $saveQuality);
+                }
                 
-                $fileQuality = 9 - ($fileQuality / 100) * 8;
-                imagepng($image, $imageDestination, $fileQuality);
+                array_push($imageNames, $imageFullName);
+            } catch (Exception $ex) {
+                // TO DO: Log message for corrupted image.
             }
-
-            array_push($imageNames, $imageFullName);
         }
 
         return $imageNames;
