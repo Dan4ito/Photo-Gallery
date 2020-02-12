@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../resources/css/style.css">
     <link rel="stylesheet" href="../resources/css/listGallery.css">
     <link rel="stylesheet" href="../resources/css/formsOutline.css">
+    <link rel="stylesheet" href="../resources/css/flexGallery.css">
     <script type="text/javascript" src="../resources/js/script.js"></script>
     <script type="text/javascript" src="../resources/js/utils.js"></script>
 </head>
@@ -41,20 +42,20 @@
             </div>
         </div>
     </div>
-    <div class="galleriesContainer">
+    <div class="galleriesContainer galleryFlexContainer">
         <?php
         $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
         foreach ($myGalleries as $gallery) {
             $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
             $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
             echo '
-                <div class="galleryDisplay">
+                <div class="galleryDisplay galleryFlexItem">
                     <div class="galleryButtons">
                         <button class="galleryTypeChangeButton" onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>
                         <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>    
                     </div>
                     
-                    <div class="galleryImg">
+                    <div class="galleryImg galleryFlexImg">
                         <img onclick="openGallery(' . $gallery->id . ')" id="galleryImageToBeDisplayed" src="' . $imagePath . '">
                     </div>
                     <div class="imageInfo">
