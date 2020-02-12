@@ -13,7 +13,7 @@ $galleryService = new GalleryService();
 
 $imagesDescription = $_POST['fileDescription'];
 $galleryId = $_POST['galleryId'];
-$selectedTags = explode(",", $_POST['selectedTags']);
+$selectedTags = ($_POST['selectedTags'] != "") ? explode(",", $_POST['selectedTags']) : null;
 $fileQuality = $_POST['fileQuality'];
 $files = $_FILES['files'];
 
