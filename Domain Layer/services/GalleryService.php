@@ -59,9 +59,8 @@ class GalleryService
         if ($this->galleryUserValidatorService->canUserEditGallery($galleryId)) {
             $this->imageValidationService->validateImages($imagesDescription, $files);
             $savedImageNames = $this->imageUploadService->uploadImages($files, $fileQuality);
-
-            $selected = explode(',', $selectedTags);
-            foreach($selected as $tag) {
+            
+            foreach($selectedTags as $tag) {
                 if($tag[0] == " ") {
                     $tag = ltrim($tag, $tag[0]);    
                 }
@@ -69,7 +68,7 @@ class GalleryService
 
             $pickedTags = array_map(function($tag) {
                 return $this->tagRepository->Save($tag);
-            }, $selected);
+            }, $selectedTags);
 
             $user = $this->authorizationService->getLoggedInUser();
 

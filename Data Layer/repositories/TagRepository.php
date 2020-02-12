@@ -12,7 +12,7 @@ class TagRepository extends DatabaseContext implements ITagRepository
 
     public function Save($tag) 
     {
-        $query = 'INSERT INTO php_gallery.tags VALUES';
+        $query = 'INSERT INTO php_gallery.tags (tag) VALUES ';
         $statement = $this->connection->prepare($query);
         $statement->bind_param('s', $tag);
         $statement->execute();
