@@ -72,13 +72,13 @@
                 <input id="imageDescriptionInput" type="text" name="fileDescription" placeholder="Image description...">
 
                 <label for="image">Image</label>
-                <input id="fileInput" type="file" name="file">
+                <input id="fileInput" type="file" name="file" multiple="multiple">
 
                 <label for="resize">Tags</label>' .
                 $str
                 .
-                '<label for="resize">% compression*</label>
-                <input id="resize" type="number" min="0" max="100" placeholder="Compression % (Optional)">
+                '<label for="resize">% file quality*</label>
+                <input id="resize" type="number" min="0" max="100" placeholder="File quality % (Optional)">
 
                 <button class="logButton" onclick="sendUploadImageRequest(' . $urlService->GetQueryParam('id') . ')">Upload</button>
             </form>
@@ -152,7 +152,7 @@
         }
 
         sendUploadImageRequest = (galleryId) => {
-                uploadImage(galleryId, selectedTags);
+            uploadImage(galleryId, selectedTags);
         }
     </script>
 </body>
