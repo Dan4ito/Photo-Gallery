@@ -17,7 +17,6 @@
 
     <script type="text/javascript" src="../resources/js/script.js"></script>
     <script type="text/javascript" src="../resources/js/utils.js"></script>
-    <script type="text/javascript" src="../resources/js/displayGallery.js"></script>
 </head>
 
 <body>
@@ -97,10 +96,11 @@
             <option value="date">upload date</option>
         </select>
         <button class="filterButton">Filter</button>
+        <button id="sortBtnId" class="sortButton" onclick="sortImages()">Sort by time asc</button>
     </div>
 
 
-    <div class="galleryContainer">
+    <div id="imagesContainer" class="galleryContainer">
         <?php
         $gallery = $galleryRepository->GetById($galleryId);
         $images = $imageRepository->GetImagesForGallery($galleryId);
@@ -110,7 +110,7 @@
             echo '
             <div class="imageItem">
             ' . ($canUserEditGallery ? ('<button class="deleteButton fa fa-trash" onclick="deleteImageFromGallery(' . $image->id . ',' . $gallery->id . ')"></button>') : '') .
-                '<img src="../../images/' . $image->name . '" class ="images" alt = ' . $image->timestamp . ' title = ' . $image->description . ' onclick="expandImage(this, ' . $i . ')";>
+                '<img src="../../images/' . $image->name . '" class ="images" alt = "' . $image->timestamp . '"  title = "' . $image->description . '" onclick="expandImage(this, ' . $i . ')";>
             </div>
             ';
             $i += 1;
@@ -147,6 +147,7 @@
             uploadImage(galleryId, selectedTags);
         }
     </script>
+    <script type="text/javascript" src="../resources/js/displayGallery.js"></script>
 </body>
 
 </html>
