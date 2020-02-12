@@ -1,37 +1,49 @@
 html {
-    background-color: #d1c3bb;
+    background-color: white;
     font-family: 'Open Sans', sans-serif;
 }
 
-.mainHeader {
-    height: 40px;
-    background-color: #b29b8d;
-    border-radius: 8px;
+body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.navBar {
-    background-color: #b29b8d;
+#nav {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.navItem {
+    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 8px;
-    border: 2px solid #a88e7e;
     text-decoration: none;
-    color: #afbfc9;
-    font-weight: bold;
+    color: black;
     font-size: 20px;
-    margin: 30px;
-    padding: 5px;
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+    text-align: center;
 }
 
-.navBar:hover {
+.navItem:hover {
     text-decoration: none;
-    color: #9ebdb8;
+    font-weight: bold;
 }
 
 #loginInfo {
-    float: right;
-    color: #afbfc9;
-    font-weight: bold;
+    width: 100%;
+    padding: 20px;
     font-size: 20px;
-    margin: 5px 15px;
+    font-style: italic;
+    box-sizing: border-box;
+    margin: auto;
+    text-align: right;
+    background-color: white;
 }
 
 #homeTitle {

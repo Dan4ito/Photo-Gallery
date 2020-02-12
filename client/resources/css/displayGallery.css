@@ -1,145 +1,140 @@
-.galleryUpload {
-    position: sticky;
-    float: left;
-    top: 0;
-    left: 0;
-    width: 25%;
-    margin-bottom: 15px;
-    z-index: 1;
-}
-
-.galleryContainer {
-    margin-top: 50px;
-    margin-left: 25%;
-}
-
 .galleriesContainer {
-    margin-top: 50px;
-}
-
-.formUpload {
-    width: 80%;
-    margin: 20px 10% 0 10%;
-    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .galleryDisplay {
-    display: inline-block;
-    margin-top: 2px;
-}
-
-.galleryNode {
-    width: 300px;
-    height: auto;
-    max-height: 200px;
-    margin: 10px;
-}
-
-.imageInfo {
-    text-align: center;
-    font-size: medium;
-    color: #5c93a2;
-    max-width: 100%;
-}
-
-.galleryCreate {
-    margin-top: 15px;
-    display: inline-block;
-}
-
-#galleryInfo {
-    visibility: hidden;
-    width: 294px;
-}
-
-.row {
-    display: inline-block;
-    max-width: 320px;
-    max-height: 200px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 30%;
+    height: 450px;
+    margin: 20px;
     padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
+    background-color: whitesmoke;
 }
 
-#imageToBeExpanded {
-    max-width: 300px;
-    max-height: 200px;
-    opacity: 0.8;
-    cursor: pointer;
-    border: 2px outset #b5887c;
-    border-radius: 8px;
-    padding: 2px;
+@media only screen and (max-width: 900px) {
+    .galleryDisplay {
+        width: 90%;
+        height: 650px;
+    }
 }
 
-#galleryImageToBeDisplayed {
-    width: 300px;
-    height: 150px;
-    object-fit: contain;
-    opacity: 0.8;
-    cursor: pointer;
-    border: 2px outset #b5887c;
-    border-radius: 8px;
-    margin-left: 5px;
+@media only screen and (min-width: 901px) and (max-width: 1240px) {
+    .galleryDisplay {
+        width: 45%;
+        height: 550px;
+    }
 }
 
-#emptyImage {
-    display: block;
-    width: 50%;
-    max-width: auto;
-    max-height: 70vh;
-    object-fit: contain;
-    padding: 2px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#imageToBeExpanded:hover {
-    opacity: 1.0;
-    cursor: pointer;
-}
-
-.deleteButton {
-    border-radius: 50%;
-    background-color: #B5887C;
-    color: #ab2400;
-    font-size: medium;
+.galleryDisplay > .imageInfo {
     text-align: center;
-    top: 0;
-    opacity: 0.8;
-    float: right;
 }
 
-.deleteButton:hover {
+.galleryImg {
+    box-sizing: border-box;
+    background-color: black;
+    overflow: hidden;
+    border-radius: 10px;
+    width: 100%;
+    height: 70%;
+}
+
+.galleryImg img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    transition: transform 1.0s ease;
+}
+
+.galleryImg:hover img {
+    transform: scale(1.3);
     cursor: pointer;
-    opacity: 1.0;
+    opacity: 0.7;
 }
 
-.galleryTypeChangeButton {
-    display: inline-block;
-    background-color: #B5887C;
-    border-radius: 5px;
-    color: wheat;
-    font-size: small;
-    text-transform: uppercase;
+.galleryButtons {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.galleryButtons button, .newGalleryButton {
+    font-size: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    border: 1px solid gray;
+}
+
+.galleryButtons button {
+    margin-right: 10px;
+}
+
+.galleryButtons button:hover, .newGalleryButton:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#createGallery {
+    width: 100%;
+    padding: 20px;
+    font-size: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: white;
+}
+
+#createGallery button, #closeGalleryFormButton {
+    border: none;
+    border-radius: 6px;
+    border: 1px solid gray;
+    color: black;
+    font-size: 20px;
+    padding: 20px;
+}
+
+#createGallery button:hover, #closeGalleryFormButton:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#galleryCreateDiv {
+    opacity:0.95;
+    background-color:#ccc;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    padding: 20px;
+    box-sizing: border-box;
+    left:0px;
+    z-index:1000;
+    text-align: center;
+    display: none;
+}
+
+#galleryCreateForm {
+    width: 70%;
+    border: 1px solid black;
+    background-color: gray;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 30px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#galleryCreateForm > img {
     width: 40%;
-    margin-left: 15px;
-}
-
-.galleryButton {
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #B5887C;
-    border-radius: 5px;
-    color: wheat;
-    font-size: 10px;
-    text-transform: uppercase;
-    width: 45%;
-    top: 1px;
-}
-
-.galleryTypeChangeButton:hover,
-.galleryButton:hover {
-    cursor: pointer;
-    font-style: italic;
-    background-color: #a27a6f;
+    height: auto;
+    max-width: 300px;
+    min-width: 100px;
 }

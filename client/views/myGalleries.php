@@ -4,10 +4,12 @@
 <head>
     <title>PHP Gallery</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../resources/css/style.css">
     <link rel="stylesheet" href="../resources/css/displayGallery.css">
     <link rel="stylesheet" href="../resources/css/formsOutline.css">
     <script type="text/javascript" src="../resources/js/script.js"></script>
+    <script type="text/javascript" src="../resources/js/utils.js"></script>
 </head>
 
 <body>
@@ -26,9 +28,20 @@
     $imageRepository = new ImageRepository();
     ?>
     <?php include '../components/navbar.php' ?>
-
+    <div id="createGallery">
+        <button onclick="toggleForm(galleryCreateDiv)">+ new</button>
+    </div>
+    <div id="galleryCreateDiv">
+        <button id="closeGalleryFormButton" onclick="toggleForm(galleryCreateDiv)">X</button>
+        <div id="galleryCreateForm">
+            <img class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
+            <div>  
+                <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
+                <button class="newGalleryButton" id="create" onclick="createGallery()" type="submit">Create</button>
+            </div>
+        </div>
+    </div>
     <div class="galleriesContainer">
-
         <?php
         $myGalleries = $galleryRepository->GetLoggedUserGalleries($authorizationService->getLoggedInUser());
         foreach ($myGalleries as $gallery) {
@@ -36,29 +49,22 @@
             $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
             echo '
                 <div class="galleryDisplay">
-                    <button class="galleryTypeChangeButton" onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>
-                    <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>    
+                    <div class="galleryButtons">
+                        <button class="galleryTypeChangeButton" onclick="toggleGalleryType(' . $gallery->id . ')">' . $gallery->GetType() . '</button>
+                        <button class="deleteButton" onclick="deleteGallery(' . $gallery->id . ')">&times;</button>    
+                    </div>
                     
-                    <div class="galleryNode">
+                    <div class="galleryImg">
                         <img onclick="openGallery(' . $gallery->id . ')" id="galleryImageToBeDisplayed" src="' . $imagePath . '">
-                        <div class="imageInfo">
-                            <h3>' . $gallery->name . '</h3>
-                            <p>' . $gallery->timestamp . '</p>
-                        </div>
+                    </div>
+                    <div class="imageInfo">
+                        <h3>' . $gallery->name . '</h3>
+                        <p>' . $gallery->timestamp . '</p>
                     </div>
                 </div>
                 ';
         }
         ?>
-
-        <div class="galleryCreate">
-            <img onclick="toggleTextInput()" class="create" id="imageToBeExpanded" src="../assets/createGallery.jpg">
-            <div id="galleryInfo">
-                <input type="text" name="galleryName" id="galleryNameInput" placeholder="Gallery name">
-                <button class="galleryButton" id="create" onclick="createGallery()" type="submit">Create</button>
-                <button class="galleryButton" id="close" onclick="toggleTextInput()" type="submit">Close</button>
-            </div>
-        </div>
     </div>
 
     <script>
