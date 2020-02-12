@@ -236,6 +236,7 @@ sortImages = async(galleryId) => {
     event.preventDefault();
 
     let sortType = document.getElementById("sortImages").value;
+
     try {
         const response = await fetch('../../Web Layer/controllers/sortImages.php', {
             method: 'POST',
