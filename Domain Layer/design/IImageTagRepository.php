@@ -1,4 +1,3 @@
-
 <?php
 
 interface IImageTagRepository

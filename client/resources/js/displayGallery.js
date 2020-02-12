@@ -44,9 +44,8 @@ function openImage(image, slideNumber) {
 
     container.style.display = "block";
     expandedImage.src = image.src;
-    captionDescription.innerHTML = image.title.replace("+", " ");
-    captionTime.innerHTML = image.alt.replace("+", " ");
-
+    captionDescription.innerHTML = image.title.split("+").join(" ");
+    captionTime.innerHTML = image.alt.split("+").join(" ");
     var slides = document.getElementsByClassName("images");
     if (slideNumber == slides.length / 2) {
         document.getElementsByClassName("next")[0].hidden = true;

@@ -10,7 +10,6 @@ include_once('../../Domain Layer/services/GalleryService.php');
 
 $galleryService = new GalleryService();
 
-
 $imagesDescription = $_POST['fileDescription'];
 $galleryId = $_POST['galleryId'];
 $selectedTags = explode(",", $_POST['selectedTags']);

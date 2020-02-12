@@ -12,34 +12,26 @@ include_once('../../Domain Layer/services/AuthorizationService.php');
 include_once('../../Domain Layer/services/SortingValidationService.php');
 include_once('../../Domain Layer/services/SortingService.php');
 include_once('../../Domain Layer/services/ReloadingImagesService.php');
+include_once('../../Domain Layer/services/UrlService.php');
 
 $imageRepository = new ImageRepository();
 $sortingValidationService = new SortingValidationService();
 $sortingService = new SortingService();
 $authorizationService = new AuthorizationService();
 $reloadingImagesService = new ReloadingImagesService();
+$urlService = new UrlService();
 
 try {
-    
-    if($_SERVER['REQUEST_METHOD'] == 'GET')
-    {
-        $data = array();
-        parse_str($_SERVER['QUERY_STRING'], $data);
-        $galleryId = intval($data['id']);
-        $sorting = $data['type'];
+    $galleryId = intval($urlService->GetQueryParam('id'));
+    $sorting = $urlService->GetQueryParam('type');
 
-        $sortingValidationService->validateSortingType($sorting);
-        $imagesSorted = $sortingService->sortImages($galleryId, $sorting);
-        $user = $authorizationService->getLoggedInUser();
-        $reloadingImagesService->reloadImagesForUserGallery($imagesSorted, $galleryId, $user);        
-    
-        http_response_code(302);
-        header("Location: ../../client/views/gallery.php?id=" . $galleryId);
-        } 
-    else 
-    {
-        throw new Exception("Unsupported method!", 400);
-    }
+    $sortingValidationService->validateSortingType($sorting);
+    $imagesSorted = $sortingService->sortImages($galleryId, $sorting);
+    $user = $authorizationService->getLoggedInUser();
+    $reloadingImagesService->reloadImagesForUserGallery($imagesSorted, $galleryId, $user);        
+
+    http_response_code(302);
+    header("Location: ../../client/views/gallery.php?id=" . $galleryId); 
 } catch(Exception $ex) {
     
     http_response_code($ex->getCode());

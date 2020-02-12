@@ -76,20 +76,21 @@ submitCreateForm = async() => {
     }
 };
 
-uploadImage = async(galleryId, selectedTags) => {
+uploadImage = async(galleryId) => {
     event.preventDefault();
 
     let imageDescription = document.getElementById('imageDescriptionInput').value;
     let fileInput = document.getElementById('fileInput');
     let fileQuality = document.getElementById("resize").value;
+    let tags = String(document.getElementById('imageTagsInput').value).toLowerCase();
+
     if (fileQuality == "") {
         fileQuality = "100";
     }
-
     const formData = new FormData();
     formData.append('fileDescription', imageDescription);
     formData.append('galleryId', parseInt(galleryId));
-    formData.append('selectedTags', selectedTags);
+    formData.append('selectedTags', tags);
     formData.append('fileQuality', parseInt(fileQuality));
 
     let numberOfFiles = fileInput.files.length;
@@ -98,7 +99,7 @@ uploadImage = async(galleryId, selectedTags) => {
     }
     try {
         const response = await fetch('../../Web Layer/controllers/uploadImage.php', {
-            method: 'POST',
+            method: "POST",
             body: formData
         });
 

@@ -61,12 +61,6 @@
 
     <?php
     if ($canUserEditGallery) {
-        $tags = $tagRepository->GetAllTags();
-        $str = "";
-        foreach ($tags as $tag) {
-            $str .= '<label>' . $tag->tag . '</label>';
-            $str .= '<input type="checkbox" name=' . $tag->tag . ' value=' . $tag->tag . ' onclick="toggleCheckbox(' . $tag->tag . ')"/>';
-        }
         echo
             '<div class="galleryUpload">
             <form class="formUpload" action="" method="post" enctype="multipart/form-data">
@@ -77,18 +71,17 @@
                 <label for="image">Image</label>
                 <input id="fileInput" type="file" name="file" multiple="multiple">
 
-                <label for="resize">Tags</label>' .
-                $str
-                .
-                '<label for="resize">% file quality*</label>
+                <label for="tags">Tags</label>
+                <input id="imageTagsInput" type="text" name="tags" placeholder="Tags separated by , (Optional)">
+
+                <label for="resize">File quality %</label>
                 <input id="resize" type="number" min="0" max="100" placeholder="File quality % (Optional)">
 
-                <button class="logButton" onclick="sendUploadImageRequest(' . $urlService->GetQueryParam('id') . ')">Upload</button>
+                <button class="logButton" onclick="uploadImage(' . $urlService->GetQueryParam('id') . ')">Upload</button>
             </form>
         </div>';
     }
     ?>
-
 
     <div class="galleryContainer">
         <?php
@@ -97,22 +90,30 @@
         $i = 0;
 
         foreach ($images as $image) {
+            $tags = $tagRepository->GetAllTagsForImage($image->id);
+            if(count($tags)) {
+                $tagDisplay = '';
+                foreach($tags as $tag) {
+                    $tagDisplay .= '#' . $tag->tag . ', ';
+                }
+                $tagDisplay = substr_replace($tagDisplay, "", -2);
+            } 
+            else {
+                $tagDisplay = "<p>no tags to display</p>";
+            }
+            $time = str_replace(" ", "+", $image->timestamp);
+            $description = str_replace(" ", "+", $image->description);
+            $tag = str_replace(" ", "+", $tagDisplay);
+            $alt = $tag . '+' . $time;
             echo '
             <div class="row">
-
             ' . ($canUserEditGallery ? ('<button class="deleteButton" onclick="deleteImageFromGallery(' . $image->id . ',' . $gallery->id . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')">&times;</button>') : '') .
-                '<img src="../../images/' . $image->name . '" class ="images" alt = ' . $image->timestamp . ' title = ' . $image->description . ' onclick="expandImage(this, ' . $i . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')";>
-                <div class="imageInfo">
-                    <h3>' . $image->description . '</h3>
-                    <p>' . $image->timestamp . '</p>
-                </div>
+                '<img src="../../images/' . $image->name . '" class ="images" alt = "' . $alt . '" title = "' . $description . '" onclick="expandImage(this, ' . $i . ')" onmouseover="highlightImage(' . $i . ')" onmouseout="normalizeImage(' . $i . ')";>
             </div>
             ';
         }
         ?>
     </div>
-
-
 
     <div id="polaroid">
         <span class="closeButton">&times;</span>
@@ -131,11 +132,9 @@
             $images = $imageRepository->GetImagesForGallery($galleryId);
             $i = 1;
             foreach ($images as $image) {
-                $description = str_replace(" ", "+", $image->description);
-                $time = str_replace(" ", "+", $image->timestamp);
                 echo '
                     <div class="previewRow">
-                        <img src="../../images/' . $image->name . '" class="preview images" alt = ' . $time . ' title = ' . $description . ' onclick="currentSlide(' . $i . ')";>
+                        <img src="../../images/' . $image->name . '" class="preview images" onclick="currentSlide(' . $i . ')";>
                     </div>
                     ';
                 $i++;
@@ -144,7 +143,7 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         let selectedTags = [];
         toggleCheckbox = (tag) => {
             tag = tag.value;
@@ -158,7 +157,7 @@
         sendUploadImageRequest = (galleryId) => {
             uploadImage(galleryId, selectedTags);
         }
-    </script>
+    </script> -->
 </body>
 
 </html>
