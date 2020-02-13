@@ -73,12 +73,6 @@
     }
 }
 
-@media only screen and (max-width: 600px) {
-    #expandedImage {
-        width: 100px;
-    }
-}
-
 .prev,
 .next {
     cursor: pointer;

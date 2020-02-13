@@ -25,6 +25,20 @@ form {
     text-align: center;
 }
 
+@media only screen and (max-width: 900px) {
+    form {
+        width: 90%;
+        margin-top: 30px;
+    }
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1240px) {
+    form {
+        width: 80%;
+        margin-top: 30px;
+    }
+}
+
 label {
     color: #5c93a2;
     font-weight: bold;
