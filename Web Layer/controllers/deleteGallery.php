@@ -6,24 +6,19 @@ header('Access-Control-Allow-Headers: ' .
     'Access-Control-Allow-Headers, Content-Type, ' .
     'Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-include_once('../../Domain Layer/services/GalleryUserValidatorService.php');
+include_once('../../Domain Layer/services/GalleryService.php');
 include_once('../../Data Layer/repositories/GalleryRepository.php');
 
-$galleryUserValidatorService = new GalleryUserValidatorService();
-$galleryRepository = new GalleryRepository();
+$galleryService = new GalleryService();
 
 try {
     $data = json_decode(file_get_contents('php://input'));
     $galleryId = $data->galleryId;
 
-    if ($galleryUserValidatorService->isUserGalleryOwner($galleryId)) {
+    $galleryService->DeleteGallery($galleryId);
 
-        $galleryRepository->DeleteGallery($galleryId);
-        http_response_code(302);
-        header("Location: ../../client/views/myGalleries.php");
-    } else {
-        throw new Exception("You cannot delete other peoples' galleries!", 400);
-    }
+    http_response_code(302);
+    header("Location: ../../client/views/myGalleries.php");
 } catch (Exception $ex) {
     http_response_code($ex->getCode());
     echo json_encode(array(

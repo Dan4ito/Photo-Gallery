@@ -15,7 +15,7 @@ class CookieService
     {
         $cookie = base64_encode("$user->email:" . md5($user->password));
         setcookie('loginInfo', $cookie, time() + 3600, '/', NULL, NULL, TRUE);
-        $loginInfoToDisplay = $user->username . '(' . $user->roleId . ')';
+        $loginInfoToDisplay = $user->username; //. '(' . $user->roleId . ')';
         setcookie('loginInfoToDisplay', $loginInfoToDisplay, time() + 3600, '/');
     }
 

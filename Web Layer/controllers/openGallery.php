@@ -6,16 +6,8 @@ header('Access-Control-Allow-Headers: ' .
     'Access-Control-Allow-Headers, Content-Type, ' .
     'Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-include_once('../../Data Layer/repositories/ImageRepository.php');
-include_once('../../Domain Layer/services/ImageValidationService.php');
-include_once('../../Domain Layer/services/ImageUploadService.php');
-include_once('../../Domain Layer/services/AuthorizationService.php');
 include_once('../../Domain Layer/services/GalleryUserValidatorService.php');
 
-$imageRepository = new ImageRepository();
-$imageValidationService = new ImageValidationService();
-$imageUploadService = new ImageUploadService();
-$authorizationService = new AuthorizationService();
 $galleryUserValidatorService = new GalleryUserValidatorService();
 
 try {
