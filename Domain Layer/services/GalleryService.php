@@ -77,4 +77,21 @@ class GalleryService
             throw new Exception("You cannot edit other peoples' galleries!", 400);
         }
     }
+
+    public function DeleteGallery($galleryId)
+    {
+        if ($this->galleryUserValidatorService->isUserGalleryOwner($galleryId)) {
+            $this->galleryRepository->DeleteGallery($galleryId);
+        } else {
+            throw new Exception("You cannot delete other peoples' galleries!", 400);
+        }
+    }
+
+    public function CreateGallery($galleryName)
+    {
+        $this->galleryValidationService->validateGallery($galleryName);
+        $user = $this->authorizationService->getLoggedInUser();
+        $this->galleryRepository->Create($galleryName, $user->id);
+    }
+
 }
