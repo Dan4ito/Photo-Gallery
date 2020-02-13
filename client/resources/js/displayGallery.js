@@ -51,12 +51,14 @@ function sortImages() {
     // perform sort
     if (reversed) {       
         arr.sort(function(a, b) {
-            return Date.parse(b.children[1].alt.split(';')[0]) - Date.parse(a.children[1].alt.split(';')[0]);    
+            let ind = a.children.length - 1
+            return Date.parse(b.children[ind].alt.split(';')[0]) - Date.parse(a.children[ind].alt.split(';')[0]);    
         });
     }
     else {   
         arr.sort(function(a, b) {
-            return Date.parse(a.children[1].alt.split(';')[0]) - Date.parse(b.children[1].alt.split(';')[0]);    
+            let ind = a.children.length - 1
+            return Date.parse(a.children[ind].alt.split(';')[0]) - Date.parse(b.children[ind].alt.split(';')[0]);    
         });
     }
 
@@ -83,11 +85,11 @@ function filterByTag() {
     tag = document.getElementById('filterDescription').value
 
     newSlides = allSlides.filter(img => {
-        let split = img.children[1].alt.split(';')
+        let ind = img.children.length - 1
+        let split = img.children[ind].alt.split(';')
         if (split.length < 2) {
             return false
         }
-        console.log(split[1])
         
         return split[1].includes(tag)
     })
