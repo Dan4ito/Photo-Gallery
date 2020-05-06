@@ -57,7 +57,7 @@
                 echo '
                 <div class="galleryDisplay galleryFlexItem">
                     <div class="galleryFlexImg">
-                        <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="../assets/' . $imagePath . '">
+                        <img onclick="openGallery(' . $gallery->id . ')" id="imageToBeExpanded" src="'. $imagePath . '">
                     </div>
                    <div class="imageInfo">
                         <h3>' . $gallery->name . '</h3>
