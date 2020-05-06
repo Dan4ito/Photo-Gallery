@@ -32,6 +32,9 @@
     $cookieService = new CookieService();
     $urlService = new UrlService();
 
+    $config = require('../../AWS/config.php');
+    $imageLocation = 'https://' . $config['s3']['bucket'] . '.s3.amazonaws.com/';
+    
     $galleryId = $urlService->GetQueryParam("id");
 
     if (!$cookieService->isCookieValid() || !$galleryUserValidatorService->canUserViewGallery($galleryId)) {
@@ -100,7 +103,7 @@
             echo '
             <div class="imageItem">
             ' . ($canUserEditGallery ? ('<button class="deleteButton fa fa-trash" onclick="deleteImageFromGallery(' . $image->id . ',' . $gallery->id . ')"></button>') : '') .
-                '<img src="../../images/' . $image->name . '" class ="images" alt = "' . $image->timestamp . ';' . $tagsStr . '"  title = "' . $image->description . '" onclick="expandImage(this, ' . $i . ')";>
+                '<img src="' . $imageLocation . $image->name . '" class ="images" alt = "' . $image->timestamp . ';' . $tagsStr . '"  title = "' . $image->description . '" onclick="expandImage(this, ' . $i . ')";>
             </div>
             ';
             $i += 1;

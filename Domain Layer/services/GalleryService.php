@@ -9,7 +9,7 @@ include_once('../../Domain Layer/services/GalleryValidationService.php');
 include_once('../../Domain Layer/services/AuthorizationService.php');
 include_once('../../Domain Layer/services/GalleryUserValidatorService.php');
 include_once('../../Domain Layer/services/ImageValidationService.php');
-include_once('../../Domain Layer/services/ImageUploadService.php');
+include_once('../../Domain Layer/services/S3UploadService.php');
 include_once('../../Domain Layer/enums/Tags.php');
 
 class GalleryService
@@ -22,7 +22,7 @@ class GalleryService
     private $imageRepository;
     private $imageGalleryRepository;
     private $imageValidationService;
-    private $imageUploadService;
+    private $S3UploadService;
     private $imageTagRepository;
     private $tagRepository;
 
@@ -35,7 +35,7 @@ class GalleryService
         $this->imageRepository = new ImageRepository();
         $this->imageGalleryRepository = new ImageGalleryRepository();
         $this->imageValidationService = new ImageValidationService();
-        $this->imageUploadService = new ImageUploadService();
+        $this->S3UploadService = new S3UploadService();
         $this->imageTagRepository = new ImageTagRepository();
         $this->tagRepository = new TagRepository();
     }
@@ -58,7 +58,7 @@ class GalleryService
     {
         if ($this->galleryUserValidatorService->canUserEditGallery($galleryId)) {
             $this->imageValidationService->validateImages($imagesDescription, $files);
-            $savedImageNames = $this->imageUploadService->uploadImages($files, $fileQuality);
+            $savedImageNames = $this->S3UploadService->uploadImages($files, $fileQuality);
 
             $user = $this->authorizationService->getLoggedInUser();
 

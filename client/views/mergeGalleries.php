@@ -28,6 +28,10 @@
     $galleryRepository = new GalleryRepository();
     $authorizationService = new AuthorizationService();
     $imageRepository = new ImageRepository();
+
+    $config = require('../../AWS/config.php');
+    $imageLocation = 'https://' . $config['s3']['bucket'] . '.s3.amazonaws.com/';
+
     ?>
     <?php include '../components/navbar.php' ?>
 
@@ -48,7 +52,7 @@
         $allVisibleGalleriesForYou = array_merge($myGalleries, $otherPeoplePublicGalleriesWithoutYours);
         foreach ($allVisibleGalleriesForYou as $gallery) {
             $topImage = $imageRepository->GetTopImageForGallery($gallery->id);
-            $imagePath = ($topImage->id != null) ? '../../images/' . $topImage->name : '../assets/missingImage.jpg';
+            $imagePath = ($topImage->id != null) ? $imageLocation . $topImage->name : '../assets/missingImage.jpg';
             echo '
             <div class="galleryDisplay galleryFlexItem">
                 <div class="galleryFlexImg">
