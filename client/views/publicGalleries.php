@@ -8,7 +8,7 @@
         
         <link rel="icon" href="../assets/icon.png"/>
         <link rel="stylesheet" href="../resources/css/style.css">
-        <link rel="stylesheet" href="../resources/css/FlexGallery.css">
+        <link rel="stylesheet" href="../resources/css/flexGallery.css">
         <link rel="stylesheet" href="../resources/css/publicGallery.css">
         <script type="text/javascript" src="../resources/js/script.js"></script>
     </head>
