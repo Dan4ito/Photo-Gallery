@@ -17,7 +17,7 @@ CREATE TABLE php_gallery.users (
 	username VARCHAR(100) CHARACTER SET utf8 NOT NULL,
 	password VARCHAR(2056) NOT NULL,
 	roleId INT NOT NULL DEFAULT 1,
-	FOREIGN KEY (roleId) REFERENCES roles(id)
+	FOREIGN KEY (roleId) REFERENCES php_gallery.roles(id)
 );
 
 INSERT INTO php_gallery.users(email, username, password, roleId) VALUES('yordan.petkov97@gmail.com', 'Dan4ito', '$2y$10$LLyr9O/5n9.MJtGYMCltUerYIO8pbfzWYBJxT9EbCnIqF84PIJqLa', '1');
@@ -28,7 +28,7 @@ CREATE TABLE php_gallery.images (
 	name VARCHAR(100) CHARACTER SET utf8 NOT NULL,
 	userId INT NOT NULL,
 	timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (userId) REFERENCES users(id)
+	FOREIGN KEY (userId) REFERENCES php_gallery.users(id)
 );
 
 CREATE TABLE php_gallery.galleryTypes (
@@ -46,8 +46,8 @@ CREATE TABLE php_gallery.galleries (
 	timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	userId INT NOT NULL,
 	typeId INT NOT NULL DEFAULT 2,
-	FOREIGN KEY (userId) REFERENCES users(id),
-	FOREIGN KEY (typeId) REFERENCES galleryTypes(id)
+	FOREIGN KEY (userId) REFERENCES php_gallery.users(id),
+	FOREIGN KEY (typeId) REFERENCES php_gallery.galleryTypes(id)
 );
 
 CREATE TABLE php_gallery.tags (
@@ -64,8 +64,8 @@ CREATE TABLE php_gallery.tags (
 CREATE TABLE php_gallery.image_tag (
 	imageId INT NOT NULL,
 	tagId INT NOT NULL,
-	FOREIGN KEY (imageId) REFERENCES images(id),
-	FOREIGN KEY (tagId) REFERENCES tags(id),
+	FOREIGN KEY (imageId) REFERENCES php_gallery.images(id),
+	FOREIGN KEY (tagId) REFERENCES php_gallery.tags(id),
 	CONSTRAINT PK_ImageGallery PRIMARY KEY (imageId, tagId)
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE php_gallery.image_tag (
 CREATE TABLE php_gallery.image_gallery (
 	imageId INT NOT NULL,
 	galleryId INT NOT NULL,
-	FOREIGN KEY (imageId) REFERENCES images(id),
-	FOREIGN KEY (galleryId) REFERENCES galleries(id) ON DELETE CASCADE,
+	FOREIGN KEY (imageId) REFERENCES php_gallery.images(id),
+	FOREIGN KEY (galleryId) REFERENCES php_gallery.galleries(id) ON DELETE CASCADE,
 	CONSTRAINT PK_ImageGallery PRIMARY KEY (imageId, galleryId)
 );

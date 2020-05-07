@@ -1,10 +1,10 @@
 <?php
 abstract class DatabaseContext
 {
-    private $host = 'localhost';
+    private $host = 'localhost';    // 3.89.35.197:3306 - mysql ec2
     private $dbname = 'php_gallery';
-    private $username = 'root';
-    private $password = '';
+    private $username = 'root';     // admin - mysql ec2
+    private $password = '';         // admin - mysql ec2
     private $charset = 'utf8';
     private $connection;
 
