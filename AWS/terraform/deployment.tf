@@ -23,25 +23,25 @@ variable "elb_port" {
 
 
 
-resource "aws_security_group" "mysql_group" {
-  name = "mysql-security-group"  
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
+# resource "aws_security_group" "mysql_group" {
+#   name = "mysql-security-group"  
+#   ingress {
+#     from_port   = 22
+#     to_port     = 22
+#     protocol    = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+# }
 
-resource "aws_instance" "mysql_ec2" {       # EC2 Instance
-  ami                    = var.ec2_ami
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.mysql_group.id] 
+# resource "aws_instance" "mysql_ec2" {       # EC2 Instance
+#   ami                    = var.ec2_ami
+#   instance_type          = "t2.micro"
+#   vpc_security_group_ids = [aws_security_group.mysql_group.id] 
 
-  tags = {
-    Name = "mysql-ec2"
-  }
-}
+#   tags = {
+#     Name = "mysql-ec2"
+#   }
+# }
 
 resource "aws_security_group" "galleries_group" {
   name = "gallery-instances-security-group"  
@@ -59,10 +59,10 @@ resource "aws_security_group" "galleries_group" {
   }
 }
 
-output "public_ip" {
-  value       = aws_instance.mysql_ec2.public_ip
-  description = "The public IP of the mysql EC2"
-}
+# output "public_ip" {
+#   value       = aws_instance.mysql_ec2.public_ip
+#   description = "The public IP of the mysql EC2"
+# }
 
 resource "aws_launch_configuration" "config" {
   image_id        = var.ec2_ami

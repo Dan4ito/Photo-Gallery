@@ -8,10 +8,16 @@ variable "region" {
     default = "us-east-1"
 }
 
-variable "s3_bucket_infra" {
-    type    = string
-    default = "gallery2020-infrastructure-bucket"
+variable "availability_zone_a" {
+    type = string
+    default = "us-east-1a"
 }
+
+variable "availability_zone_b" {
+    type = string
+    default = "us-east-1b"
+}
+
 
 variable "application_name" {
     type = string

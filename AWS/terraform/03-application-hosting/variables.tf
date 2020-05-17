@@ -8,12 +8,12 @@ variable "region" {
     default = "us-east-1"
 }
 
-variable "s3_bucket_infra" {
-    type    = string
-    default = "gallery2020-infrastructure-bucket"
-}
-
 variable "application_name" {
     type = string
     default = "gallery-project"
+}
+
+variable "vpc_id" {
+    type = string
+    default = "vpc-08e86ff2591af6cd6"
 }

@@ -10,7 +10,7 @@ variable "region" {
 
 variable "s3_bucket_infra" {
     type    = string
-    default = "gallery2020-infrastructure-bucket"
+    default = "gallery2020-infrastructure-bucket-zdravko"
 }
 
 variable "application_name" {
