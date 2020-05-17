@@ -11,7 +11,8 @@ resource "aws_s3_bucket" "s3_bucket_infra" {
 
     tags = {
         Name = var.s3_bucket_infra,
-        Application = var.application_name
+        Application = var.application_name,
+        Environment = var.environment
     }
 }
 
@@ -55,7 +56,8 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   }
 
   tags = {
-    Name = "Terraform Lock Table for ${var.env} Photo gallery",
-    Application = var.application_name
+    Name = "Terraform Lock Table for ${var.environment} Photo gallery",
+    Application = var.application_name,
+    Environment = var.environment
   }
 }
