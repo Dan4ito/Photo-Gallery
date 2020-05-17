@@ -11,8 +11,10 @@ resource "aws_security_group" "gallery_sec_group" {
 }
 
 resource "aws_launch_configuration" "config" {
+    name            = "gallery-launch-configuration"
     image_id        = var.server_ami
     instance_type   = "t2.micro"
+    iam_instance_profile = aws_iam_instance_profile.configuration_profile.name
     security_groups = [aws_security_group.gallery_sec_group.id]
 
     lifecycle {
@@ -23,8 +25,8 @@ resource "aws_launch_configuration" "config" {
 resource "aws_autoscaling_group" "replica_autoscaling_group" {
     launch_configuration = aws_launch_configuration.config.id
     vpc_zone_identifier = data.aws_subnet_ids.private_subnets.ids
-    min_size = 3
-    max_size = 10
+    min_size = 2
+    max_size = 3
     name = "gallery-autoscaling-group"
 
     tag {

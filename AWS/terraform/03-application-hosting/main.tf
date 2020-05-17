@@ -8,7 +8,7 @@ provider "aws" {
 terraform {
     required_version = ">= 0.12.9"
     backend "s3" {
-        bucket = "gallery2020-infrastructure-bucket"
+        bucket = "gallery2020-infrastructure-bucket-zdravko"
         encrypt = true
         key = "terraform/03-application-hosting.tfstate"
         dynamodb_table = "dynamodb-photo-gallery-terraform-lock"

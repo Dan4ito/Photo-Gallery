@@ -15,5 +15,5 @@ variable "application_name" {
 
 variable "vpc_id" {
     type = string
-    default = "vpc-08e86ff2591af6cd6"
+    default = "vpc-08c6e107536c207ec"
 }

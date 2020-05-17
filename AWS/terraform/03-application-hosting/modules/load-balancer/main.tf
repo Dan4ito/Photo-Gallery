@@ -56,7 +56,7 @@ resource "aws_lb_target_group" "gallery_alb_target_group" {
         unhealthy_threshold = 10    
         timeout             = 5    
         interval            = 10    
-        path                = "/"    
+        path                = "/Photo-Gallery/client/views/index.php"    
         port                = 80
     }
 }
