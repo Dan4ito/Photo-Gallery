@@ -32,7 +32,7 @@ resource "aws_s3_bucket_public_access_block" "s3_bucket_infra_block_public" {
 # Copy the project into the S3 bucket so the autoscalling group can access it afterwards
 resource "null_resource" "s3_copy_deployment_file" {
     provisioner "local-exec" {
-        command = "aws s3 sync ../00-deployment-files/ s3://${aws_s3_bucket.s3_bucket_infra.id}/00-deployment-files/ --delete --region ${data.aws_region.current.name}"
+        command = "aws s3 sync ../../Server/ s3://${aws_s3_bucket.s3_bucket_infra.id}/00-deployment-files/ --delete --region ${data.aws_region.current.name}"
     }
 }
 
