@@ -16,13 +16,24 @@ terraform {
     }
 }
 
-# module "mysql_module" {
-#     source = "./modules/mysql"
-#     gallery_vpc_id = "vpc-0b0b3baf7a7ffc220"
-#     private_subnet_id = "subnet-0cfd224f4148a2e7a"
-#     environment = "dev"
-#     application_name = "Gallery"
-# }
+resource "aws_s3_bucket" "images_bucket" {
+    bucket = var.images_bucket_name
+    acl    = "public-read"
+    force_destroy = true
+
+    tags = {
+        Application = var.application_name
+        Environment = var.environment
+    }
+}
+
+module "mysql_module" {
+    source = "./modules/mysql"
+    gallery_vpc_id = var.vpc_id
+    private_subnet_id = "subnet-0cfd224f4148a2e7a"
+    environment = var.environment
+    application_name = var.application_name
+}
 
 module "load_balancer_module" {
     source = "./modules/load-balancer"
@@ -39,9 +50,17 @@ module "autoscaling_module" {
     environment = var.environment
     application_name = var.application_name
     vpc_id = var.vpc_id
+    region_name = var.region
+    infrastructure_bucket = "gallery2020-infrastructure-bucket-zdravko"
+    images_bucket = aws_s3_bucket.images_bucket.id
+    mysql_ip = "${module.mysql_module.private_ip}:3306"
 }
 
 output "elb_domain_name" {
     value = module.load_balancer_module.alb_dns_name
     description = "The domain name of the ELB"
+}
+
+output "mysql_private_ip" {
+    value = module.mysql_module.private_ip
 }

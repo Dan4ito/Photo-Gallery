@@ -146,3 +146,13 @@ resource "aws_route_table_association" "gallery-private-subnet-rta-b" {
     subnet_id = aws_subnet.gallery_private_subnet_b.id
     route_table_id = aws_route_table.gallery_private_rt.id
 }
+
+resource "aws_vpc_endpoint" "s3_endpoint" {
+    vpc_id       = aws_vpc.gallery_vpc.id
+    service_name = "com.amazonaws.us-east-1.s3"
+}
+
+resource "aws_vpc_endpoint_route_table_association" "s3_endpoint_rta" {
+    route_table_id = aws_route_table.gallery_private_rt.id
+    vpc_endpoint_id = aws_vpc_endpoint.s3_endpoint.id
+}

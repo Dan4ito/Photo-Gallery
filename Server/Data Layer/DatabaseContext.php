@@ -3,8 +3,8 @@ abstract class DatabaseContext
 {
     private $host = 'PLACE_DB_ADDRESS_HERE';    // 3.89.35.197:3306 - mysql ec2
     private $dbname = 'php_gallery';
-    private $username = 'root';     // admin - mysql ec2
-    private $password = '';         // admin - mysql ec2
+    private $username = 'admin';     // admin - mysql ec2
+    private $password = 'admin';         // admin - mysql ec2
     private $charset = 'utf8';
     private $connection;
 

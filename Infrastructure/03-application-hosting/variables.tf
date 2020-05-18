@@ -15,5 +15,10 @@ variable "application_name" {
 
 variable "vpc_id" {
     type = string
-    default = "vpc-08c6e107536c207ec"
+    default = "vpc-03f9c3f05d75ede14"
+}
+
+variable "images_bucket_name" {
+    type = string
+    default = "gallery-project-images-zdravko"
 }

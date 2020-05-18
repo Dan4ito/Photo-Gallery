@@ -8,6 +8,19 @@ resource "aws_security_group" "gallery_sec_group" {
         protocol    = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+
+    # Allow all outbound
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    tags = {
+        Environment = var.environment,
+        Application = var.application_name
+    }
 }
 
 resource "aws_launch_configuration" "config" {
@@ -17,6 +30,7 @@ resource "aws_launch_configuration" "config" {
     iam_instance_profile = aws_iam_instance_profile.configuration_profile.name
     security_groups = [aws_security_group.gallery_sec_group.id]
     user_data       = data.template_file.init.rendered
+    key_name        = "test-zdravko"
 
     lifecycle {
         create_before_destroy = true

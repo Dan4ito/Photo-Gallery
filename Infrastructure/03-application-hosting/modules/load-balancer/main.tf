@@ -17,6 +17,11 @@ resource "aws_security_group" "alb_sec_grp" {
         protocol    = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+
+    tags = {
+        Environment = var.environment,
+        Application = var.application_name
+    }
 }
 
 
@@ -56,7 +61,7 @@ resource "aws_lb_target_group" "gallery_alb_target_group" {
         unhealthy_threshold = 10    
         timeout             = 5    
         interval            = 10    
-        path                = "/Photo-Gallery/client/views/index.php"    
+        path                = "/client/views/index.php"    
         port                = 80
     }
 }

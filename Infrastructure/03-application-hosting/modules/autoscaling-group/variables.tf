@@ -18,3 +18,19 @@ variable "application_name" {
 variable "vpc_id" {
     type = string
 }
+
+variable "infrastructure_bucket" {
+    type = string
+}
+
+variable "images_bucket" {
+    type = string
+}
+
+variable "mysql_ip" {
+    type = string
+}
+
+variable "region_name" {
+    type = string
+}

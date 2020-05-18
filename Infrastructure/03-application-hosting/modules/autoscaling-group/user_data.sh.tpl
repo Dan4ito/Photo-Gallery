@@ -1,6 +1,6 @@
 #!/bin/bash
 
-aws s3 sync s3://${code_bucket_name}/00-deployment-files/ /var/www/html/ --delete"
+aws s3 sync s3://${code_bucket_name}/00-deployment-files/ /var/www/html/ --delete
 echo -n "<html><body><h1>ID: " > /var/www/html/index.html
 echo -n $RANDOM >> /var/www/html/index.html
 echo "</h1></body></html>" >> /var/www/html/index.html
