@@ -62,14 +62,14 @@ class GalleryService
         if ($this->galleryUserValidatorService->canUserEditGallery($galleryId)) {
             $this->imageValidationService->validateImages($imagesDescription, $files);
             $savedImageNames = $this->S3UploadService->uploadImages($files, $fileQuality);
-
             $user = $this->authorizationService->getLoggedInUser();
-
+           
             foreach ($savedImageNames as $savedImageName) {
-                $timestamp = $this->imageDateService->getImageDate($savedImageName);
+		$timestamp = $this->imageDateService->getImageDate($savedImageName);
                 $imageId = $this->imageRepository->Save($savedImageName, $imagesDescription, $user->id, $timestamp);
-                $this->imageGalleryRepository->Create($imageId, $galleryId);
-                if ($selectedTags != null) {
+		$this->imageGalleryRepository->Create($imageId, $galleryId);
+          
+               if ($selectedTags != null) {
                 	foreach($selectedTags as $tagName) {
                         $tagId = $this->tagRepository->CreateTagIfMissing($tagName);
                         if ($tagId == 0) $tagId = $this->tagRepository->GetTag($tagName)->id;
