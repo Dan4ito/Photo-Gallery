@@ -30,7 +30,6 @@ resource "aws_s3_bucket" "images_bucket" {
 module "mysql_module" {
     source = "./modules/mysql"
     gallery_vpc_id = var.vpc_id
-    private_subnet_id = "subnet-0cfd224f4148a2e7a"
     environment = var.environment
     application_name = var.application_name
 }
