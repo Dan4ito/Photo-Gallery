@@ -1,3 +1,5 @@
 /images
 .*
 /AWS/vendor
+*.tfstate
+*.tfstate.backup
