@@ -9,6 +9,7 @@ include_once('../../Domain Layer/services/GalleryValidationService.php');
 include_once('../../Domain Layer/services/AuthorizationService.php');
 include_once('../../Domain Layer/services/GalleryUserValidatorService.php');
 include_once('../../Domain Layer/services/ImageValidationService.php');
+include_once('../../Domain Layer/services/ImageDateService.php');
 include_once('../../Domain Layer/services/S3UploadService.php');
 include_once('../../Domain Layer/enums/Tags.php');
 
@@ -22,6 +23,7 @@ class GalleryService
     private $imageRepository;
     private $imageGalleryRepository;
     private $imageValidationService;
+    private $imageDateService;
     private $S3UploadService;
     private $imageTagRepository;
     private $tagRepository;
@@ -35,6 +37,7 @@ class GalleryService
         $this->imageRepository = new ImageRepository();
         $this->imageGalleryRepository = new ImageGalleryRepository();
         $this->imageValidationService = new ImageValidationService();
+	$this->imageDateService = new ImageDateService();
         $this->S3UploadService = new S3UploadService();
         $this->imageTagRepository = new ImageTagRepository();
         $this->tagRepository = new TagRepository();
@@ -59,14 +62,15 @@ class GalleryService
         if ($this->galleryUserValidatorService->canUserEditGallery($galleryId)) {
             $this->imageValidationService->validateImages($imagesDescription, $files);
             $savedImageNames = $this->S3UploadService->uploadImages($files, $fileQuality);
-
             $user = $this->authorizationService->getLoggedInUser();
-
+           
             foreach ($savedImageNames as $savedImageName) {
-                $imageId = $this->imageRepository->Save($savedImageName, $imagesDescription, $user->id);
-                $this->imageGalleryRepository->Create($imageId, $galleryId);
-                if ($selectedTags != null) {
-                    foreach ($selectedTags as $tagName) {
+		$timestamp = $this->imageDateService->getImageDate($savedImageName);
+                $imageId = $this->imageRepository->Save($savedImageName, $imagesDescription, $user->id, $timestamp);
+		$this->imageGalleryRepository->Create($imageId, $galleryId);
+          
+               if ($selectedTags != null) {
+                	foreach($selectedTags as $tagName) {
                         $tagId = $this->tagRepository->CreateTagIfMissing($tagName);
                         if ($tagId == 0) $tagId = $this->tagRepository->GetTag($tagName)->id;
                         $this->imageTagRepository->Create($imageId, $tagId);
