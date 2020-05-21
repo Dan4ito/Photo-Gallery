@@ -45,14 +45,19 @@ module "load_balancer_module" {
 module "autoscaling_module" {
     source = "./modules/autoscaling-group"
 
-    gallery_alb_target_group_arn = module.load_balancer_module.gallery_alb_target_group_arn
-    environment = var.environment
-    application_name = var.application_name
-    vpc_id = var.vpc_id
-    region_name = var.region
     infrastructure_bucket = "gallery2020-infrastructure-bucket-zdravko"
     images_bucket = aws_s3_bucket.images_bucket.id
+
+    vpc_id = var.vpc_id
+
+    environment = var.environment
+    application_name = var.application_name
+    region_name = var.region
+
+    gallery_alb_target_group_arn = module.load_balancer_module.gallery_alb_target_group_arn
+
     mysql_ip = "${module.mysql_module.private_ip}:3306"
+    mysql_sec_grp_id = module.mysql_module.db_sec_grp_id
 }
 
 output "elb_domain_name" {

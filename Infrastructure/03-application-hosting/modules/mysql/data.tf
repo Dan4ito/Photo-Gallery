@@ -3,6 +3,6 @@ data "aws_subnet" "instance_subnet" {
     availability_zone = "us-east-1a"
 
     tags = {
-        Access = "public"
+        Access = "private"
     }
 }

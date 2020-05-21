@@ -23,6 +23,16 @@ resource "aws_security_group" "gallery_sec_group" {
     }
 }
 
+resource "aws_security_group_rule" "mysql_ingress" {
+  type              = "ingress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+
+  security_group_id = var.mysql_sec_grp_id
+  source_security_group_id = aws_security_group.gallery_sec_group.id
+}
+
 resource "aws_launch_configuration" "config" {
     name            = "gallery-launch-configuration"
     image_id        = var.server_ami
@@ -30,7 +40,6 @@ resource "aws_launch_configuration" "config" {
     iam_instance_profile = aws_iam_instance_profile.configuration_profile.name
     security_groups = [aws_security_group.gallery_sec_group.id]
     user_data       = data.template_file.init.rendered
-    key_name        = "test-zdravko"
 
     lifecycle {
         create_before_destroy = true

@@ -15,7 +15,7 @@ variable "application_name" {
 
 variable "vpc_id" {
     type = string
-    default = "vpc-0a88a5f129102d1cf"
+    default = "vpc-085c12a275f014c75"
 }
 
 variable "images_bucket_name" {

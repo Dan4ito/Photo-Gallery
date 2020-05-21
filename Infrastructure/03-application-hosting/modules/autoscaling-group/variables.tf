@@ -1,6 +1,6 @@
 variable "server_ami" {
     type = string
-    default = "ami-0b76596675a4f248a"
+    default = "ami-0a5f8ca3664208e54"
 }
 
 variable "gallery_alb_target_group_arn" {
@@ -32,5 +32,9 @@ variable "mysql_ip" {
 }
 
 variable "region_name" {
+    type = string
+}
+
+variable "mysql_sec_grp_id" {
     type = string
 }
