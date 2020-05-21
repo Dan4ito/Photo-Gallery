@@ -22,6 +22,8 @@ class ImageDateService
         $date = $exif['EXIF']['DateTimeOriginal'];    
 
 	if($date == "") {
+		// Last-Modified date will be the same as current timestamp date when uploading to S3 bucket;
+		// leaving it empty to access the default current timestamp
 		$date = "";
 	}
 
