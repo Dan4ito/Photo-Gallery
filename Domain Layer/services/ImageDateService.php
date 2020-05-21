@@ -26,7 +26,7 @@ class ImageDateService
 	}
 
 	unlink($tmpImage);
-	rmdir(imagesFolder);
+	rmdir($imagesFolder);
 	
         return $date;
     }
